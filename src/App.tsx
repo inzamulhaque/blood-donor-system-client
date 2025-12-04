@@ -1,10 +1,9 @@
-import { Button } from "antd";
-import "./App.css";
+import Layout from "./components/layout/layout";
 
 function App() {
   return (
     <>
-      <Button type="primary">Blood Donor Management</Button>
+      <Layout />
     </>
   );
 }
