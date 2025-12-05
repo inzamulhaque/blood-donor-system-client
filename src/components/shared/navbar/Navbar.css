@@ -5,6 +5,13 @@ nav {
   position: sticky;
   top: 0;
   z-index: 1000;
+  overflow: hidden;
+}
+
+.navLogo {
+  height: 40px;
+  margin-right: 10px;
+  border-radius: 5px;
 }
 
 .menuItem {
@@ -71,4 +78,70 @@ nav {
   background: white;
   color: #667eea;
   scale: 1.1;
+}
+
+.menuIcon {
+  display: none;
+  font-size: 22px;
+  color: white;
+  cursor: pointer;
+  margin-right: 12px;
+}
+
+.smMenu {
+  display: none;
+  flex-direction: column;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(8px);
+  padding: 15px;
+  border-radius: 8px;
+  margin: 10px;
+  transition: all 0.3s ease;
+  gap: 12px;
+}
+
+.smMenu.smMenuOpen {
+  display: flex;
+}
+
+.smMenuItem {
+  color: white;
+  font-size: 1.1rem;
+  padding: 10px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.smMenuBtn {
+  width: 100%;
+  margin-top: 10px;
+}
+
+@media (max-width: 768px) {
+  .menuIcon {
+    display: block;
+  }
+
+  .lgMenu {
+    display: none !important;
+  }
+
+  .lgAuthBtns {
+    display: none !important;
+  }
+
+  .smMenu {
+    width: 85%;
+  }
+
+  .navLogo {
+    height: 35px;
+    margin-left: 10px;
+  }
+}
+
+@media (max-width: 450px) {
+  .navLogo {
+    height: 35px;
+    margin-left: 10px;
+  }
 }

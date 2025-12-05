@@ -2,8 +2,11 @@ import { Flex } from "antd";
 import "./Navbar.css";
 import Logo from "../../../assets/al-dima-logo.png";
 import { Link } from "react-router-dom";
+import { MenuOutlined } from "@ant-design/icons";
+import { useState } from "react";
 
 const Navbar = () => {
+  const [open, setOpen] = useState(false);
   return (
     <>
       <nav>
@@ -19,6 +22,7 @@ const Navbar = () => {
             margin: "0 auto",
           }}
         >
+          {/* website logo */}
           <Flex
             align="center"
             justify="start"
@@ -27,15 +31,7 @@ const Navbar = () => {
             }}
           >
             <Link to={"/"}>
-              <img
-                src={Logo}
-                alt="Al-Dima Logo"
-                style={{
-                  height: "40px",
-                  marginRight: "10px",
-                  borderRadius: "5px",
-                }}
-              />
+              <img src={Logo} alt="Al-Dima Logo" className="navLogo" />
             </Link>
           </Flex>
 
@@ -47,7 +43,9 @@ const Navbar = () => {
               fontSize: "18px",
             }}
           > */}
-          <Flex justify="space-around" gap={5}>
+
+          {/* main menu */}
+          <Flex justify="space-around" gap={5} className="lgMenu">
             <Link to={"/"} className="menuItem">
               Home
             </Link>
@@ -61,7 +59,9 @@ const Navbar = () => {
               Contact
             </Link>
           </Flex>
-          <Flex justify="space-between" gap={30}>
+
+          {/* auth buttons */}
+          <Flex justify="space-between" className="lgAuthBtns" gap={30}>
             <Link to={"/signup"}>
               <button className="navBtn navBtn-signup">SignUp</button>
             </Link>
@@ -69,8 +69,47 @@ const Navbar = () => {
               <button className="navBtn navBtn-signin">SignIn</button>
             </Link>
           </Flex>
+
           {/* </Flex> */}
+
+          {/* menu icon for toggle small screen menu */}
+          <MenuOutlined className="menuIcon" onClick={() => setOpen(!open)} />
         </Flex>
+
+        {/* small screen menu */}
+        <div className={`smMenu ${open ? "smMenuOpen" : ""}`}>
+          <Link to="/" className="smMenuItem" onClick={() => setOpen(false)}>
+            Home
+          </Link>
+          <Link
+            to="/about"
+            className="smMenuItem"
+            onClick={() => setOpen(false)}
+          >
+            About
+          </Link>
+          <Link
+            to="/our-team"
+            className="smMenuItem"
+            onClick={() => setOpen(false)}
+          >
+            Our Team
+          </Link>
+          <Link
+            to="/contact"
+            className="smMenuItem"
+            onClick={() => setOpen(false)}
+          >
+            Contact
+          </Link>
+
+          <Link to="/signup" onClick={() => setOpen(false)}>
+            <button className="navBtn navBtn-signup smMenuBtn">SignUp</button>
+          </Link>
+          <Link to="/signin" onClick={() => setOpen(false)}>
+            <button className="navBtn navBtn-signin smMenuBtn">SignIn</button>
+          </Link>
+        </div>
       </nav>
     </>
   );
