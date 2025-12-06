@@ -1,0 +1,7 @@
+.heroSection {
+  background-image: url("../../assets/homeImages/Hero-BG.png");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
+  min-height: calc(75vh - 60px);
+}
