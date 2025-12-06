@@ -3,6 +3,7 @@ import "./home.css";
 import { Typography } from "antd";
 import { UserAddOutlined } from "@ant-design/icons";
 import { Link } from "react-router-dom";
+import { motion } from "framer-motion";
 
 const { Title, Paragraph } = Typography;
 
@@ -33,20 +34,26 @@ const HeroSection = () => {
                 , বাঁচাতে পারে একটি জীবন
               </Title>
 
-              <Paragraph
-                style={{
-                  textAlign: "justify",
-                  background: "rgba(255, 255, 255, 0.7)",
-                  padding: "20px",
-                  borderRadius: "8px",
-                  boxShadow: "0 4px 10px rgba(0,0,0,0.2)",
-                }}
+              <motion.span
+                initial={{ x: -200, opacity: 0 }}
+                animate={{ x: 0, opacity: 1 }}
+                transition={{ duration: 0.8, ease: "easeOut" }}
               >
-                পাবনা জেলায় জরুরি মুহূর্তে রক্তদাতার প্রয়োজনে আমরা সবাইকে
-                একত্রিত করছি— Ihsan Al-Dima একটি মানবিক প্ল্যাটফর্ম, যেখানে
-                আপনার রক্ত হতে পারে কারো জীবনের শেষ ভরসা। আজই রক্তদাতা হিসেবে
-                নিবন্ধন করুন, মানবিকতার সর্বোচ্চ কাজের অংশ হোন।
-              </Paragraph>
+                <Paragraph
+                  style={{
+                    textAlign: "justify",
+                    background: "rgba(255, 255, 255, 0.7)",
+                    padding: "20px",
+                    borderRadius: "8px",
+                    boxShadow: "0 4px 10px rgba(0,0,0,0.2)",
+                  }}
+                >
+                  পাবনা জেলায় জরুরি মুহূর্তে রক্তদাতার প্রয়োজনে আমরা সবাইকে
+                  একত্রিত করছি— Ihsan Al-Dima একটি মানবিক প্ল্যাটফর্ম, যেখানে
+                  আপনার রক্ত হতে পারে কারো জীবনের শেষ ভরসা। আজই রক্তদাতা হিসেবে
+                  নিবন্ধন করুন, মানবিকতার সর্বোচ্চ কাজের অংশ হোন।
+                </Paragraph>
+              </motion.span>
             </Flex>
           </Col>
           <Col className="gutter-row" xs={24} sm={24} md={10}>
@@ -57,9 +64,17 @@ const HeroSection = () => {
                   margin: "0 auto",
                 }}
               >
-                <Button type="primary">
-                  Register Now <UserAddOutlined />
-                </Button>
+                <motion.div
+                  initial={{ y: 100, opacity: 0 }}
+                  animate={{ y: 0, opacity: 1 }}
+                  transition={{ duration: 0.6, ease: "easeOut" }}
+                  whileHover={{ scale: 1.1 }}
+                  whileTap={{ scale: 0.9 }}
+                >
+                  <Button type="primary">
+                    Register Now <UserAddOutlined />
+                  </Button>
+                </motion.div>
               </Link>
             </Flex>
           </Col>
