@@ -3,5 +3,12 @@
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center center;
-  min-height: calc(75vh - 60px);
+  height: calc(75vh - 60px);
+}
+
+@media (max-width: 768px) {
+  .heroSection {
+    height: 100%;
+    padding: 20px;
+  }
 }

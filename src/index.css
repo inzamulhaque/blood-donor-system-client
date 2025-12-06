@@ -3,3 +3,8 @@
   margin: 0;
   box-shadow: none;
 }
+
+html,
+body {
+  height: 100%;
+}
