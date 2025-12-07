@@ -2,6 +2,7 @@ import { motion } from "framer-motion";
 import HeroSection from "../components/home/HeroSection";
 import WhoWeAre from "../components/home/WhoWeAre";
 import MissionAndVission from "../components/home/MissionAndVission";
+import QuestionAnswer from "../components/home/QuestionAnswer";
 
 const Home = () => {
   return (
@@ -16,6 +17,7 @@ const Home = () => {
         <HeroSection />
         <WhoWeAre />
         <MissionAndVission />
+        <QuestionAnswer />
       </motion.div>
     </>
   );

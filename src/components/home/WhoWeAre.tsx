@@ -21,7 +21,7 @@ const WhoWeAre = () => {
           <motion.h3
             className="whoWeAreTitle"
             initial={{ y: -150, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
+            whileInView={{ y: 0, opacity: 1 }}
             transition={{ duration: 0.7, ease: "easeOut" }}
             whileHover={{ scale: 1.1 }}
             whileTap={{ scale: 0.7 }}
@@ -34,7 +34,7 @@ const WhoWeAre = () => {
           <Col xs={24} sm={24} md={7} lg={12} xl={12}>
             <motion.div
               initial={{ y: 150, opacity: 0 }}
-              animate={{ y: 0, opacity: 1 }}
+              whileInView={{ y: 0, opacity: 1 }}
               transition={{ duration: 0.7, ease: "easeOut" }}
               whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.9 }}
@@ -54,7 +54,7 @@ const WhoWeAre = () => {
           <Col xs={24} sm={24} md={17} lg={12} xl={12}>
             <motion.div
               initial={{ x: 150, opacity: 0 }}
-              animate={{ x: 0, opacity: 1 }}
+              whileInView={{ x: 0, opacity: 1 }}
               transition={{ duration: 0.7, ease: "easeOut" }}
               style={{
                 textAlign: "justify",
