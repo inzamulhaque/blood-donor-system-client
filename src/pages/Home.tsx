@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import HeroSection from "../components/home/HeroSection";
+import WhoWeAre from "../components/home/WhoWeAre";
 
 const Home = () => {
   return (
@@ -12,6 +13,7 @@ const Home = () => {
         transition={{ duration: 0.4 }}
       >
         <HeroSection />
+        <WhoWeAre />
       </motion.div>
     </>
   );

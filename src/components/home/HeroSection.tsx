@@ -72,7 +72,7 @@ const HeroSection = () => {
                   whileTap={{ scale: 0.9 }}
                 >
                   <Button type="primary">
-                    Register Now <UserAddOutlined />
+                    নিবন্ধন করুন <UserAddOutlined />
                   </Button>
                 </motion.div>
               </Link>
