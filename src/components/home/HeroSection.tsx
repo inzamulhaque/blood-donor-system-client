@@ -36,8 +36,8 @@ const HeroSection = () => {
 
               <motion.span
                 initial={{ x: -200, opacity: 0 }}
-                animate={{ x: 0, opacity: 1 }}
-                transition={{ duration: 0.8, ease: "easeOut" }}
+                whileInView={{ x: 0, opacity: 1 }}
+                transition={{ duration: 0.7, ease: "easeOut" }}
               >
                 <Paragraph
                   style={{
@@ -66,7 +66,7 @@ const HeroSection = () => {
               >
                 <motion.div
                   initial={{ y: 100, opacity: 0 }}
-                  animate={{ y: 0, opacity: 1 }}
+                  whileInView={{ y: 0, opacity: 1 }}
                   transition={{ duration: 0.6, ease: "easeOut" }}
                   whileHover={{ scale: 1.1 }}
                   whileTap={{ scale: 0.9 }}

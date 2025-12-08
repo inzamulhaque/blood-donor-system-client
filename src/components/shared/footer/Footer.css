@@ -1,0 +1,24 @@
+.footerLink {
+  color: #b2bec3;
+  text-decoration: none;
+  font-size: 18px;
+  transition: all 0.3s ease;
+  display: block;
+  align-items: center;
+  margin-top: 8px;
+}
+
+.footerLink::before {
+  content: "→";
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.footerLink:hover {
+  color: #667eea;
+  transform: translateX(5px);
+}
+
+.footerLink:hover::before {
+  opacity: 1;
+}
