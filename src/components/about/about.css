@@ -5,3 +5,27 @@
   background-position: center center;
   height: calc(75vh - 60px);
 }
+
+.ourStoryTitle {
+  text-align: center;
+  font-weight: 900;
+  position: relative;
+}
+
+.ourStoryTitle::before {
+  content: "";
+  position: absolute;
+  bottom: -10px;
+  left: 10%;
+  width: 80%;
+  height: 5px;
+  background: linear-gradient(135deg, #c62828 0%, #8e24aa 100%);
+  border-radius: 5px;
+}
+
+@media (max-width: 768px) {
+  .intro {
+    height: 100%;
+    padding: 20px;
+  }
+}

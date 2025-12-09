@@ -19,7 +19,11 @@ const Intro = () => {
             height: "100%",
           }}
         >
-          <Col xs={24} sm={24} md={10}>
+          <Col
+            xs={{ span: 24, order: 2 }}
+            sm={{ span: 24, order: 2 }}
+            md={{ span: 10, order: 1 }}
+          >
             <Flex vertical gap={5} justify="center" style={{ height: "100%" }}>
               <Link
                 to={"/signup"}
@@ -42,7 +46,11 @@ const Intro = () => {
             </Flex>
           </Col>
 
-          <Col xs={24} sm={24} md={14}>
+          <Col
+            xs={{ span: 24, order: 1 }}
+            sm={{ span: 24, order: 1 }}
+            md={{ span: 14, order: 2 }}
+          >
             <Flex vertical gap={5} justify="center" style={{ height: "100%" }}>
               <Title level={3}>মানবতার পাশে দাঁড়ানোর এক আন্তরিক উদ্যোগ</Title>
 
