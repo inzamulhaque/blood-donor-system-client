@@ -20,7 +20,7 @@ const HeroSection = () => {
             height: "100%",
           }}
         >
-          <Col className="gutter-row" xs={24} sm={24} md={14}>
+          <Col xs={24} sm={24} md={14}>
             <Flex vertical gap={5} justify="center" style={{ height: "100%" }}>
               <Title level={3}>
                 এক ফোঁটা{" "}
@@ -56,7 +56,7 @@ const HeroSection = () => {
               </motion.span>
             </Flex>
           </Col>
-          <Col className="gutter-row" xs={24} sm={24} md={10}>
+          <Col xs={24} sm={24} md={10}>
             <Flex vertical gap={5} justify="center" style={{ height: "100%" }}>
               <Link
                 to={"/signup"}

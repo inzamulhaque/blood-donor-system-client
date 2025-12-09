@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import Intro from "../components/about/Intro";
 
 const About = () => {
   return (
@@ -10,7 +11,7 @@ const About = () => {
         exit={{ opacity: 0, x: 100 }}
         transition={{ duration: 0.7, ease: "easeOut" }}
       >
-        <h1>This is the About Page</h1>
+        <Intro />
       </motion.div>
     </>
   );

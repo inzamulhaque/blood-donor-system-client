@@ -200,7 +200,7 @@ const Footer = () => {
                   }}
                 >
                   <MailOutlined />
-                  <p>ishsanaldimapabna@gmail.com</p>
+                  <p>ihsanaldimapabna@gmail.com</p>
                 </Flex>
 
                 <Flex

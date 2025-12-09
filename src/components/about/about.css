@@ -1,0 +1,7 @@
+.intro {
+  background-image: url("../../assets/aboutImages/intro.png");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
+  height: calc(75vh - 60px);
+}

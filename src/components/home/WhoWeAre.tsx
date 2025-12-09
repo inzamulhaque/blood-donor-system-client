@@ -33,7 +33,7 @@ const WhoWeAre = () => {
         <Row gutter={[20, 20]} align="middle">
           <Col xs={24} sm={24} md={7} lg={12} xl={12}>
             <motion.div
-              initial={{ y: 150, opacity: 0 }}
+              initial={{ y: -150, opacity: 0 }}
               whileInView={{ y: 0, opacity: 1 }}
               transition={{ duration: 0.7, ease: "easeOut" }}
               whileHover={{ scale: 1.1 }}
