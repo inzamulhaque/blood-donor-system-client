@@ -2,6 +2,7 @@ import { motion } from "framer-motion";
 import Intro from "../components/about/Intro";
 import OurStory from "../components/about/OurStory";
 import WhatWeDo from "../components/about/WhatWeDo";
+import Goal from "../components/about/Goal";
 
 const About = () => {
   return (
@@ -16,6 +17,7 @@ const About = () => {
         <Intro />
         <OurStory />
         <WhatWeDo />
+        <Goal />
       </motion.div>
     </>
   );
