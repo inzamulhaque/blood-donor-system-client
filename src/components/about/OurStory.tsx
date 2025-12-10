@@ -118,6 +118,7 @@ const OurStory = () => {
                 style={{
                   width: "100%",
                   maxWidth: "400px",
+                  maxHeight: "300px",
                   borderRadius: "10px",
                   boxShadow: " 0 10px 25px rgba(0, 0, 0, 0.15)",
                 }}
