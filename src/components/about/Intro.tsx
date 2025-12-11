@@ -9,7 +9,12 @@ const { Title, Paragraph } = Typography;
 const Intro = () => {
   return (
     <>
-      <div className="intro">
+      <motion.div
+        className="intro"
+        initial={{ scale: 0.2, opacity: 0 }}
+        whileInView={{ scale: 1, opacity: 1 }}
+        transition={{ duration: 0.6, ease: "easeOut" }}
+      >
         <Row
           gutter={{ xs: 8, sm: 16, md: 24 }}
           style={{
@@ -77,7 +82,7 @@ const Intro = () => {
             </Flex>
           </Col>
         </Row>
-      </div>
+      </motion.div>
     </>
   );
 };
