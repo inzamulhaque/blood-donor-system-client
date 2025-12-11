@@ -4,6 +4,7 @@ import About from "../pages/About";
 import Home from "../pages/Home";
 import MainLayout from "../components/layout/MainLayout";
 import NotFound from "../NotFound";
+import OurTeam from "../pages/OurTeam";
 
 const router = createBrowserRouter([
   {
@@ -18,6 +19,10 @@ const router = createBrowserRouter([
       {
         path: "/about",
         element: <About />,
+      },
+      {
+        path: "/our-team",
+        element: <OurTeam />,
       },
     ],
   },

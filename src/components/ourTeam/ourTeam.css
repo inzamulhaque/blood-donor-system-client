@@ -1,0 +1,14 @@
+.ourTeamIntro {
+  background-image: url("../../assets/ourTeamImages/ourTeamIntro.png");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
+  height: calc(75vh - 60px);
+}
+
+@media (max-width: 768px) {
+  .ourTeamIntro {
+    height: 100%;
+    padding: 20px;
+  }
+}

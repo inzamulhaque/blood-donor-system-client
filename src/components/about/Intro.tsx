@@ -13,7 +13,7 @@ const Intro = () => {
         className="intro"
         initial={{ scale: 0.2, opacity: 0 }}
         whileInView={{ scale: 1, opacity: 1 }}
-        transition={{ duration: 0.6, ease: "easeOut" }}
+        transition={{ duration: 0.7, ease: "easeOut" }}
       >
         <Row
           gutter={{ xs: 8, sm: 16, md: 24 }}
@@ -39,7 +39,7 @@ const Intro = () => {
                 <motion.div
                   initial={{ y: -100, opacity: 0 }}
                   whileInView={{ y: 0, opacity: 1 }}
-                  transition={{ duration: 0.6, ease: "easeOut" }}
+                  transition={{ duration: 0.7, ease: "easeOut" }}
                   whileHover={{ scale: 1.1 }}
                   whileTap={{ scale: 0.9 }}
                 >
@@ -59,26 +59,20 @@ const Intro = () => {
             <Flex vertical gap={5} justify="center" style={{ height: "100%" }}>
               <Title level={3}>মানবতার পাশে দাঁড়ানোর এক আন্তরিক উদ্যোগ</Title>
 
-              <motion.span
-                initial={{ x: 200, opacity: 0 }}
-                whileInView={{ x: 0, opacity: 1 }}
-                transition={{ duration: 0.7, ease: "easeOut" }}
+              <Paragraph
+                style={{
+                  textAlign: "justify",
+                  background: "rgba(255, 255, 255, 0.7)",
+                  padding: "20px",
+                  borderRadius: "8px",
+                  boxShadow: "0 4px 10px rgba(0,0,0,0.2)",
+                }}
               >
-                <Paragraph
-                  style={{
-                    textAlign: "justify",
-                    background: "rgba(255, 255, 255, 0.7)",
-                    padding: "20px",
-                    borderRadius: "8px",
-                    boxShadow: "0 4px 10px rgba(0,0,0,0.2)",
-                  }}
-                >
-                  Ihsan Al-Dima হলো পাবনা জেলার জন্য একটি মানবিক রক্তদাতা
-                  প্ল্যাটফর্ম, যেখানে জরুরি মুহূর্তে রক্তপ্রয়োজনে থাকা মানুষদের
-                  সাথে সহমর্মী দাতাদের দ্রুত সংযুক্ত করা হয়। জীবনের মূল্য বুঝে
-                  মানবতার জন্য কাজ করাই আমাদের বিশ্বাস ও অঙ্গীকার।
-                </Paragraph>
-              </motion.span>
+                Ihsan Al-Dima হলো পাবনা জেলার জন্য একটি মানবিক রক্তদাতা
+                প্ল্যাটফর্ম, যেখানে জরুরি মুহূর্তে রক্তপ্রয়োজনে থাকা মানুষদের
+                সাথে সহমর্মী দাতাদের দ্রুত সংযুক্ত করা হয়। জীবনের মূল্য বুঝে
+                মানবতার জন্য কাজ করাই আমাদের বিশ্বাস ও অঙ্গীকার।
+              </Paragraph>
             </Flex>
           </Col>
         </Row>
