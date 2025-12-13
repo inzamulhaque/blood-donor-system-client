@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import Intro from "../components/ourTeam/Intro";
+import OurAdmins from "../components/ourTeam/OurAdmins";
 
 const OurTeam = () => {
   return (
@@ -12,6 +13,7 @@ const OurTeam = () => {
         transition={{ duration: 0.7, ease: "easeOut" }}
       >
         <Intro />
+        <OurAdmins />
       </motion.div>
     </>
   );

@@ -1,18 +1,23 @@
 import "./ourTeam.css";
 
-const Card = () => {
+interface ICardProps {
+  imgUrl: string;
+  name: string;
+  designation: string;
+  socialLink: string;
+}
+
+const Card = ({ imgUrl, name, designation, socialLink }: ICardProps) => {
   return (
     <>
       <div className="teamCard">
         <div className="cardImageWrapper">
-          <img
-            src="https://i.pravatar.cc/300?img=12"
-            alt="admin picture"
-            className="cardImage"
-          />
+          <img src={imgUrl} alt="admin picture" className="cardImage" />
         </div>
-        <h3 className="cardName">MD Inzamul Haque</h3>
-        <p className="cardDesignation">Chief Administrator</p>
+        <a href={socialLink} target="_blank">
+          <h3 className="cardName">{name}</h3>
+        </a>
+        <p className="cardDesignation">{designation}</p>
       </div>
     </>
   );
