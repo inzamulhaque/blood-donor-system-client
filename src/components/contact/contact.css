@@ -1,0 +1,14 @@
+.intro {
+  background-image: url("../../assets/contactImages/contactBG.png");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
+  height: calc(75vh - 60px);
+}
+
+@media (max-width: 768px) {
+  .intro {
+    height: 100%;
+    padding: 20px;
+  }
+}
