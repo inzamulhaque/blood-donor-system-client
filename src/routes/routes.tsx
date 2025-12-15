@@ -7,6 +7,7 @@ import NotFound from "../NotFound";
 import OurTeam from "../pages/OurTeam";
 import Contact from "../pages/Contact";
 import PrivacyPolicy from "../pages/PrivacyPolicy";
+import TermsOfService from "../pages/TermsOfService";
 
 const router = createBrowserRouter([
   {
@@ -33,6 +34,10 @@ const router = createBrowserRouter([
       {
         path: "/policy",
         element: <PrivacyPolicy />,
+      },
+      {
+        path: "/terms",
+        element: <TermsOfService />,
       },
     ],
   },
