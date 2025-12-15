@@ -1,4 +1,4 @@
-.intro {
+.aboutIntro {
   background-image: url("../../assets/aboutImages/intro.png");
   background-size: cover;
   background-repeat: no-repeat;
@@ -24,7 +24,7 @@
 }
 
 @media (max-width: 768px) {
-  .intro {
+  .aboutIntro {
     height: 100%;
     padding: 20px;
   }

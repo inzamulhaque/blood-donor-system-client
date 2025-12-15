@@ -10,7 +10,7 @@ const Intro = () => {
   return (
     <>
       <motion.div
-        className="intro"
+        className="aboutIntro"
         initial={{ scale: 0.2, opacity: 0 }}
         whileInView={{ scale: 1, opacity: 1 }}
         transition={{ duration: 0.7, ease: "easeOut" }}

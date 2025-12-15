@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import Intro from "../components/contact/Intro";
+import HowContact from "../components/contact/HowContact";
 
 const Contact = () => {
   return (
@@ -12,6 +13,7 @@ const Contact = () => {
         transition={{ duration: 0.7, ease: "easeOut" }}
       >
         <Intro />
+        <HowContact />
       </motion.div>
     </>
   );

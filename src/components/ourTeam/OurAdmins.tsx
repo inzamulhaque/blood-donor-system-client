@@ -34,6 +34,7 @@ const OurAdmins = () => {
         <Row
           gutter={[20, 20]}
           align="middle"
+          justify="center"
           style={{
             margin: "15px 0",
           }}
