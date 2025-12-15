@@ -29,17 +29,19 @@ const Footer = () => {
               whileInView={{ x: 0, opacity: 1 }}
               transition={{ duration: 0.7, ease: "easeOut" }}
             >
-              <img
-                src={logo}
-                alt="Logo"
-                style={{
-                  width: "150px",
-                  height: "60px",
-                  borderRadius: "5px",
-                  boxShadow:
-                    "0 6px 12px rgba(0, 0, 0, 0.45), 0 0 18px rgba(255, 255, 255, 0.08)",
-                }}
-              />
+              <Link to="/">
+                <img
+                  src={logo}
+                  alt="Logo"
+                  style={{
+                    width: "150px",
+                    height: "60px",
+                    borderRadius: "5px",
+                    boxShadow:
+                      "0 6px 12px rgba(0, 0, 0, 0.45), 0 0 18px rgba(255, 255, 255, 0.08)",
+                  }}
+                />
+              </Link>
 
               <p
                 style={{

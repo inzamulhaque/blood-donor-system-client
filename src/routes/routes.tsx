@@ -6,6 +6,7 @@ import MainLayout from "../components/layout/MainLayout";
 import NotFound from "../NotFound";
 import OurTeam from "../pages/OurTeam";
 import Contact from "../pages/Contact";
+import PrivacyPolicy from "../pages/PrivacyPolicy";
 
 const router = createBrowserRouter([
   {
@@ -28,6 +29,10 @@ const router = createBrowserRouter([
       {
         path: "/contact",
         element: <Contact />,
+      },
+      {
+        path: "/policy",
+        element: <PrivacyPolicy />,
       },
     ],
   },
