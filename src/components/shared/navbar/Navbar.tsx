@@ -1,7 +1,7 @@
 import { Flex } from "antd";
 import "./Navbar.css";
 import Logo from "../../../assets/al-dima-logo.png";
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import { MenuOutlined } from "@ant-design/icons";
 import { useState } from "react";
 
@@ -30,34 +30,45 @@ const Navbar = () => {
               height: "100%",
             }}
           >
-            <Link to={"/"}>
+            <Link to={"/"} onClick={() => setOpen(false)}>
               <img src={Logo} alt="Al-Dima Logo" className="navLogo" />
             </Link>
           </Flex>
 
-          {/* <Flex
-            align="center"
-            justify="space-between"
-            style={{
-              height: "100%",
-              fontSize: "18px",
-            }}
-          > */}
-
           {/* main menu */}
           <Flex justify="space-around" gap={5} className="lgMenu">
-            <Link to={"/"} className="menuItem">
+            <NavLink
+              to={"/"}
+              className={({ isActive }) =>
+                `menuItem ${isActive ? "activeMenuItem" : ""}`
+              }
+            >
               Home
-            </Link>
-            <Link to={"/about"} className="menuItem">
+            </NavLink>
+            <NavLink
+              to={"/about"}
+              className={({ isActive }) =>
+                `menuItem ${isActive ? "activeMenuItem" : ""}`
+              }
+            >
               About
-            </Link>
-            <Link to={"/our-team"} className="menuItem">
+            </NavLink>
+            <NavLink
+              to={"/our-team"}
+              className={({ isActive }) =>
+                `menuItem ${isActive ? "activeMenuItem" : ""}`
+              }
+            >
               Our Team
-            </Link>
-            <Link to={"/contact"} className="menuItem">
+            </NavLink>
+            <NavLink
+              to={"/contact"}
+              className={({ isActive }) =>
+                `menuItem ${isActive ? "activeMenuItem" : ""}`
+              }
+            >
               Contact
-            </Link>
+            </NavLink>
           </Flex>
 
           {/* auth buttons */}
@@ -70,38 +81,48 @@ const Navbar = () => {
             </Link>
           </Flex>
 
-          {/* </Flex> */}
-
           {/* menu icon for toggle small screen menu */}
           <MenuOutlined className="menuIcon" onClick={() => setOpen(!open)} />
         </Flex>
 
         {/* small screen menu */}
         <div className={`smMenu ${open ? "smMenuOpen" : ""}`}>
-          <Link to="/" className="smMenuItem" onClick={() => setOpen(false)}>
+          <NavLink
+            to="/"
+            className={({ isActive }) =>
+              `smMenuItem ${isActive ? "smActiveMenuItem" : ""}`
+            }
+            onClick={() => setOpen(false)}
+          >
             Home
-          </Link>
-          <Link
+          </NavLink>
+          <NavLink
             to="/about"
-            className="smMenuItem"
+            className={({ isActive }) =>
+              `smMenuItem ${isActive ? "smActiveMenuItem" : ""}`
+            }
             onClick={() => setOpen(false)}
           >
             About
-          </Link>
-          <Link
+          </NavLink>
+          <NavLink
             to="/our-team"
-            className="smMenuItem"
+            className={({ isActive }) =>
+              `smMenuItem ${isActive ? "smActiveMenuItem" : ""}`
+            }
             onClick={() => setOpen(false)}
           >
             Our Team
-          </Link>
-          <Link
+          </NavLink>
+          <NavLink
             to="/contact"
-            className="smMenuItem"
+            className={({ isActive }) =>
+              `smMenuItem ${isActive ? "smActiveMenuItem" : ""}`
+            }
             onClick={() => setOpen(false)}
           >
             Contact
-          </Link>
+          </NavLink>
 
           <Link to="/signup" onClick={() => setOpen(false)}>
             <button className="navBtn navBtn-signup smMenuBtn">SignUp</button>

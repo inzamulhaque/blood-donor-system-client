@@ -45,6 +45,10 @@ nav {
   width: 80%;
 }
 
+.activeMenuItem {
+  background: rgba(255, 255, 255, 0.15);
+}
+
 .navBtn {
   padding: 8px 20px;
   border-radius: 25px;
@@ -109,6 +113,10 @@ nav {
   font-size: 1.1rem;
   padding: 10px 0;
   border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.smActiveMenuItem {
+  color: gray;
 }
 
 .smMenuBtn {

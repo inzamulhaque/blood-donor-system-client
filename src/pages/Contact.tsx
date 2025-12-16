@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import Intro from "../components/contact/Intro";
 import HowContact from "../components/contact/HowContact";
+import ContactForm from "../components/contact/ContactForm";
 
 const Contact = () => {
   return (
@@ -14,6 +15,7 @@ const Contact = () => {
       >
         <Intro />
         <HowContact />
+        <ContactForm />
       </motion.div>
     </>
   );
