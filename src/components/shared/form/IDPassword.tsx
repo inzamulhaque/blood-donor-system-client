@@ -1,10 +1,9 @@
-import { Form, Input } from "antd";
 import { Controller } from "react-hook-form";
 import "./form.css";
+import { Form, Input } from "antd";
 import type React from "react";
 
 type TInputProps = {
-  type: string;
   name: string;
   label: string;
   disabled?: boolean;
@@ -12,8 +11,7 @@ type TInputProps = {
   prefix?: React.ReactNode;
 };
 
-const IDInput = ({
-  type,
+const IDPassword = ({
   name,
   label,
   disabled,
@@ -26,9 +24,8 @@ const IDInput = ({
         name={name}
         render={({ field }) => (
           <Form.Item label={label} required={required}>
-            <Input
+            <Input.Password
               {...field}
-              type={type}
               id={name}
               size="large"
               placeholder={label}
@@ -44,4 +41,4 @@ const IDInput = ({
   );
 };
 
-export default IDInput;
+export default IDPassword;
