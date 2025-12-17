@@ -1,6 +1,6 @@
 nav {
   background: linear-gradient(135deg, #c62828 0%, #8e24aa 100%);
-  padding: 0;
+  padding: 0px 10px;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
   position: sticky;
   top: 0;

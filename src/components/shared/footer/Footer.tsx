@@ -28,6 +28,7 @@ const Footer = () => {
               initial={{ x: -200, opacity: 0 }}
               whileInView={{ x: 0, opacity: 1 }}
               transition={{ duration: 0.7, ease: "easeOut" }}
+              viewport={{ once: true }}
             >
               <Link to="/">
                 <img
@@ -117,6 +118,7 @@ const Footer = () => {
               initial={{ y: -200, opacity: 0 }}
               whileInView={{ y: 0, opacity: 1 }}
               transition={{ duration: 0.7, ease: "easeOut" }}
+              viewport={{ once: true }}
             >
               <h3>Quick Links</h3>
 
@@ -146,6 +148,7 @@ const Footer = () => {
               initial={{ x: 200, opacity: 0 }}
               whileInView={{ x: 0, opacity: 1 }}
               transition={{ duration: 0.7, ease: "easeOut" }}
+              viewport={{ once: true }}
             >
               <h3>Important Links</h3>
 
@@ -175,6 +178,7 @@ const Footer = () => {
               initial={{ y: -200, opacity: 0 }}
               whileInView={{ y: 0, opacity: 1 }}
               transition={{ duration: 0.7, ease: "easeOut" }}
+              viewport={{ once: true }}
             >
               <h3>Get In Touch</h3>
 

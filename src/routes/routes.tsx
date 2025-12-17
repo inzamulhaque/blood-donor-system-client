@@ -8,6 +8,7 @@ import OurTeam from "../pages/OurTeam";
 import Contact from "../pages/Contact";
 import PrivacyPolicy from "../pages/PrivacyPolicy";
 import TermsOfService from "../pages/TermsOfService";
+import SignIn from "../pages/AuthPagaes/SignIn";
 
 const router = createBrowserRouter([
   {
@@ -40,6 +41,11 @@ const router = createBrowserRouter([
         element: <TermsOfService />,
       },
     ],
+  },
+
+  {
+    path: "/signin",
+    element: <SignIn />,
   },
 
   {

@@ -29,6 +29,7 @@ const WhatWeDo = () => {
               transition={{ duration: 0.7, ease: "easeOut" }}
               whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.9 }}
+              viewport={{ once: true }}
             >
               <img
                 src={whatWeDoImg}
@@ -62,6 +63,7 @@ const WhatWeDo = () => {
               initial={{ x: -150, opacity: 0 }}
               whileInView={{ x: 0, opacity: 1 }}
               transition={{ duration: 0.7, ease: "easeOut" }}
+              viewport={{ once: true }}
               style={{
                 textAlign: "justify",
                 padding: "20px 25px",

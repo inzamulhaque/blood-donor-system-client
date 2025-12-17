@@ -38,7 +38,7 @@ const ContactForm = () => {
                 whileHover={{ scale: 1.03 }}
                 viewport={{ once: true }}
               >
-                <IDInput name="name" type="text" label="Name" />
+                <IDInput name="name" type="text" label="Name" required={true} />
               </motion.div>
             </Col>
             <Col xs={22} md={20} lg={9}>
@@ -49,7 +49,12 @@ const ContactForm = () => {
                 whileHover={{ scale: 1.03 }}
                 viewport={{ once: true }}
               >
-                <IDInput name="email" type="email" label="Email" />
+                <IDInput
+                  name="email"
+                  type="email"
+                  label="Email"
+                  required={true}
+                />
               </motion.div>
             </Col>
             <Col xs={22} md={20} lg={9}>
@@ -60,7 +65,12 @@ const ContactForm = () => {
                 whileHover={{ scale: 1.03 }}
                 viewport={{ once: true }}
               >
-                <IDInput name="phone" type="text" label="Phone Number" />
+                <IDInput
+                  name="phone"
+                  type="text"
+                  label="Phone Number"
+                  required={false}
+                />
               </motion.div>
             </Col>
             <Col xs={22} md={20} lg={9}>
@@ -71,7 +81,12 @@ const ContactForm = () => {
                 whileHover={{ scale: 1.03 }}
                 viewport={{ once: true }}
               >
-                <IDInput name="subject" type="text" label="Subject" />
+                <IDInput
+                  name="subject"
+                  type="text"
+                  label="Subject"
+                  required={true}
+                />
               </motion.div>
             </Col>
             <Col xs={22} md={20} lg={18}>
@@ -82,7 +97,7 @@ const ContactForm = () => {
                 whileHover={{ scale: 1.03 }}
                 viewport={{ once: true }}
               >
-                <IDTextArea name="message" label="Message" />
+                <IDTextArea name="message" label="Message" required={true} />
               </motion.div>
             </Col>
             <Col

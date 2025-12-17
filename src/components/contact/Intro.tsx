@@ -14,6 +14,7 @@ const Intro = () => {
         initial={{ scale: 0.2, opacity: 0 }}
         whileInView={{ scale: 1, opacity: 1 }}
         transition={{ duration: 0.7, ease: "easeOut" }}
+        viewport={{ once: true }}
       >
         <Row
           gutter={{ xs: 8, sm: 16, md: 24 }}
@@ -42,6 +43,7 @@ const Intro = () => {
                   transition={{ duration: 0.7, ease: "easeOut" }}
                   whileHover={{ scale: 1.1 }}
                   whileTap={{ scale: 0.9 }}
+                  viewport={{ once: true }}
                 >
                   <Button type="primary">
                     নিবন্ধন করুন <UserAddOutlined />

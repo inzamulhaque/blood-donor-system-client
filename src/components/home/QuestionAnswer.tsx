@@ -79,6 +79,7 @@ const QuestionAnswer = () => {
               whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.9 }}
               style={{ overflow: "hidden" }}
+              viewport={{ once: true }}
             >
               <img
                 src={QAImg}
@@ -115,6 +116,7 @@ const QuestionAnswer = () => {
               initial={{ x: 150, opacity: 0 }}
               whileInView={{ x: 0, opacity: 1 }}
               transition={{ duration: 0.7, ease: "easeOut" }}
+              viewport={{ once: true }}
             >
               <Collapse accordion items={items} defaultActiveKey={["1"]} />
             </motion.div>

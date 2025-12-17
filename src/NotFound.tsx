@@ -46,6 +46,7 @@ const NotFound = () => {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.7 }}
+        viewport={{ once: true }}
         style={{ marginTop: "20px" }}
       >
         <Link to="/">

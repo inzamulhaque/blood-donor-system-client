@@ -7,15 +7,16 @@ type TInputProps = {
   name: string;
   label: string;
   disabled?: boolean;
+  required?: boolean;
 };
 
-const IDInput = ({ type, name, label, disabled }: TInputProps) => {
+const IDInput = ({ type, name, label, disabled, required }: TInputProps) => {
   return (
     <>
       <Controller
         name={name}
         render={({ field }) => (
-          <Form.Item label={label}>
+          <Form.Item label={label} required={required}>
             <Input
               {...field}
               type={type}
@@ -24,6 +25,7 @@ const IDInput = ({ type, name, label, disabled }: TInputProps) => {
               placeholder={label}
               disabled={disabled}
               className="IDInput"
+              required={required}
             />
           </Form.Item>
         )}
