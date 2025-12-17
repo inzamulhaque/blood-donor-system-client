@@ -23,9 +23,26 @@
   border-radius: 5px;
 }
 
+.contactFormContainer {
+  height: 75vh;
+  border-radius: 14px;
+  padding: 30px 40px;
+  margin: 20px 10px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12), 0 4px 12px rgba(0, 0, 0, 0.08);
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 @media (max-width: 768px) {
   .contactIntro {
     height: 100%;
     padding: 20px;
+  }
+
+  .contactFormContainer {
+    height: 100%;
+    padding: 10px 20px;
   }
 }

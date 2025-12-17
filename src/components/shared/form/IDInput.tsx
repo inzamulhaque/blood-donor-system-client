@@ -1,10 +1,11 @@
 import { Form, Input } from "antd";
 import { Controller } from "react-hook-form";
+import "./form.css";
 
 type TInputProps = {
   type: string;
   name: string;
-  label?: string;
+  label: string;
   disabled?: boolean;
 };
 
@@ -20,8 +21,9 @@ const IDInput = ({ type, name, label, disabled }: TInputProps) => {
               type={type}
               id={name}
               size="large"
-              placeholder={name}
+              placeholder={label}
               disabled={disabled}
+              className="IDInput"
             />
           </Form.Item>
         )}
