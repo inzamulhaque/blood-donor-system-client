@@ -3,11 +3,14 @@ import {
   LockOutlined,
   UserOutlined,
 } from "@ant-design/icons";
-import { Button, Card, Form, Input, Typography } from "antd";
+import { Button, Card, Typography } from "antd";
 import { motion } from "framer-motion";
 import type { FieldValues } from "react-hook-form";
 import { Link } from "react-router-dom";
 import "./authStyle.css";
+import IDForm from "../../components/shared/form/IDForm";
+import IDInput from "../../components/shared/form/IDInput";
+import IDPassword from "../../components/shared/form/IDPassword";
 
 const { Title, Text } = Typography;
 
@@ -61,35 +64,21 @@ const SignIn = () => {
               </Text>
             </div>
 
-            <Form layout="vertical" onFinish={handleSubmit} size="large">
-              <Form.Item
+            <IDForm onSubmit={handleSubmit}>
+              <IDInput
                 label="Email"
                 name="email"
-                rules={[
-                  { required: true, message: "Please input your Email!" },
-                  { type: "email", message: "Please enter a valid email!" },
-                ]}
-              >
-                <Input
-                  prefix={<UserOutlined />}
-                  placeholder="example@mail.com"
-                  style={{ borderRadius: "6px" }}
-                />
-              </Form.Item>
+                type="email"
+                prefix={<UserOutlined />}
+                required={true}
+              />
 
-              <Form.Item
+              <IDPassword
                 label="Password"
                 name="password"
-                rules={[
-                  { required: true, message: "Please input your Password!" },
-                ]}
-              >
-                <Input.Password
-                  prefix={<LockOutlined />}
-                  placeholder="Password"
-                  style={{ borderRadius: "6px" }}
-                />
-              </Form.Item>
+                prefix={<LockOutlined />}
+                required={true}
+              />
 
               <div
                 style={{
@@ -98,43 +87,44 @@ const SignIn = () => {
                   marginBottom: "10px",
                 }}
               >
-                <Link to="#" style={{ color: "#8e24aa" }}>
+                <Link to="/forget-password" style={{ color: "#8e24aa" }}>
                   Forgot Password?
                 </Link>
               </div>
 
-              <Form.Item>
-                <motion.div
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                  style={{ width: "100%" }}
+              <motion.div
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                style={{ width: "100%" }}
+              >
+                <Button
+                  type="primary"
+                  htmlType="submit"
+                  block
+                  style={{
+                    background:
+                      "linear-gradient(135deg, #c62828 0%, #8e24aa 100%)", // Applied to Button
+                    border: "none",
+                    height: "45px",
+                    fontSize: "16px",
+                    fontWeight: "600",
+                    borderRadius: "6px",
+                  }}
                 >
-                  <Button
-                    type="primary"
-                    htmlType="submit"
-                    block
-                    style={{
-                      background:
-                        "linear-gradient(135deg, #c62828 0%, #8e24aa 100%)", // Applied to Button
-                      border: "none",
-                      height: "45px",
-                      fontSize: "16px",
-                      fontWeight: "600",
-                      borderRadius: "6px",
-                    }}
-                  >
-                    Sign In
-                  </Button>
-                </motion.div>
-              </Form.Item>
+                  Sign In
+                </Button>
+              </motion.div>
 
               <div style={{ textAlign: "center" }}>
                 <Text type="secondary">Don't have an account? </Text>
-                <Link to="#" style={{ color: "#c62828", fontWeight: "600" }}>
+                <Link
+                  to="/signup"
+                  style={{ color: "#c62828", fontWeight: "600" }}
+                >
                   Sign up now
                 </Link>
               </div>
-            </Form>
+            </IDForm>
           </Card>
         </motion.div>
       </motion.div>
