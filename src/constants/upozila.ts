@@ -11,3 +11,8 @@ export const UPOZILAS_PABNA = [
 ] as const;
 
 export type TUpozilaPabna = (typeof UPOZILAS_PABNA)[number];
+
+export const UPOZILAS_PABNA_OPTIONS = UPOZILAS_PABNA.map((upozila) => ({
+  value: upozila,
+  label: upozila,
+}));

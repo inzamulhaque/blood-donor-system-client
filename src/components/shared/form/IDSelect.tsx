@@ -7,6 +7,7 @@ type TPHSelectProps = {
   options: { value: string; label: string; disabled?: boolean }[] | undefined;
   disabled?: boolean;
   placeholder?: string;
+  required: boolean;
   mode?: "multiple" | undefined;
 };
 
@@ -16,6 +17,7 @@ const IDSelect = ({
   options,
   disabled,
   placeholder,
+  required,
   mode,
 }: TPHSelectProps) => {
   return (
@@ -23,7 +25,7 @@ const IDSelect = ({
       <Controller
         name={name}
         render={({ field, fieldState: { error } }) => (
-          <Form.Item label={label}>
+          <Form.Item label={label} required={required}>
             <Select
               {...field}
               mode={mode}

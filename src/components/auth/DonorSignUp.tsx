@@ -1,4 +1,4 @@
-import { Button, Typography } from "antd";
+import { Button, Checkbox, Typography } from "antd";
 import { useState } from "react";
 import type { FieldValues } from "react-hook-form";
 import IDForm from "../shared/form/IDForm";
@@ -13,11 +13,18 @@ import {
 } from "@ant-design/icons";
 import { motion } from "framer-motion";
 import IDPassword from "../shared/form/IDPassword";
+import IDSelect from "../shared/form/IDSelect";
+import { UPOZILAS_PABNA_OPTIONS } from "../../constants/upozila";
+import { BLOOD_GROUPS_OPTIONS } from "../../constants/bloodGroup";
 
 const { Title, Text } = Typography;
 
 const DonorSignUp = () => {
+  const [acceptTermsPolicy, setAcceptTermsPolicy] = useState<
+    Record<string, boolean>
+  >({ terms: false, policy: false });
   const [openSection, setOpenSection] = useState<number>(1);
+
   const handleSubmit = (values: FieldValues) => {
     console.log(values);
   };
@@ -80,20 +87,66 @@ const DonorSignUp = () => {
               required={true}
               prefix={<PhoneOutlined />}
             />
+
+            <IDSelect
+              label="Upozila"
+              name="upozila"
+              required={true}
+              options={UPOZILAS_PABNA_OPTIONS}
+              placeholder="Select your upozila"
+            />
           </>
         )}
 
-        {openSection === 4 && <>4</>}
+        {openSection === 4 && (
+          <>
+            <IDSelect
+              label="Blood Group"
+              name="bloodGroup"
+              required={true}
+              options={BLOOD_GROUPS_OPTIONS}
+              placeholder="Select your blood group"
+            />
+
+            <Checkbox
+              onChange={() =>
+                setAcceptTermsPolicy({
+                  policy: !acceptTermsPolicy.policy,
+                  terms: acceptTermsPolicy.terms,
+                })
+              }
+            >
+              I accept{" "}
+              <Link to="/policy" target="_blank">
+                our policy
+              </Link>
+            </Checkbox>
+
+            <Checkbox
+              onChange={() =>
+                setAcceptTermsPolicy({
+                  terms: !acceptTermsPolicy.terms,
+                  policy: acceptTermsPolicy.policy,
+                })
+              }
+            >
+              I accept{" "}
+              <Link to="/terms" target="_blank">
+                our terms of service
+              </Link>
+            </Checkbox>
+          </>
+        )}
 
         <motion.div
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
           transition={{ duration: 0.7, ease: "easeOut" }}
           style={{ width: "100%" }}
-          onClick={() => setOpenSection(openSection + 1)}
         >
-          {openSection <= 4 && (
+          {openSection < 4 && (
             <Button
+              onClick={() => setOpenSection(openSection + 1)}
               type="primary"
               block
               style={{
@@ -109,9 +162,11 @@ const DonorSignUp = () => {
             </Button>
           )}
 
-          {openSection > 4 && (
+          {openSection == 4 && (
             <Button
+              onClick={() => setOpenSection(1)}
               type="primary"
+              disabled={!acceptTermsPolicy.policy || !acceptTermsPolicy.terms}
               htmlType="submit"
               block
               style={{
@@ -129,9 +184,9 @@ const DonorSignUp = () => {
         </motion.div>
 
         <div style={{ textAlign: "center" }}>
-          <Text type="secondary">Don't have an account? </Text>
-          <Link to="/signup" style={{ color: "#c62828", fontWeight: "600" }}>
-            Sign up now
+          <Text type="secondary">Already have an account? </Text>
+          <Link to="/signin" style={{ color: "#c62828", fontWeight: "600" }}>
+            Sign In now
           </Link>
         </div>
       </IDForm>
