@@ -1,4 +1,4 @@
-import { Button, Checkbox, Typography } from "antd";
+import { Button, Typography } from "antd";
 import { useState } from "react";
 import type { FieldValues } from "react-hook-form";
 import IDForm from "../shared/form/IDForm";
@@ -16,6 +16,7 @@ import IDPassword from "../shared/form/IDPassword";
 import IDSelect from "../shared/form/IDSelect";
 import { UPOZILAS_PABNA_OPTIONS } from "../../constants/upozila";
 import { BLOOD_GROUPS_OPTIONS } from "../../constants/bloodGroup";
+import AcceptPolicyTerms from "./AcceptPolicyTerms";
 
 const { Title, Text } = Typography;
 
@@ -41,7 +42,14 @@ const DonorSignUp = () => {
 
       <IDForm onSubmit={handleSubmit}>
         {openSection === 1 && (
-          <>
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            whileTap={{ scale: 0.95 }}
+            transition={{ duration: 0.7, ease: "easeOut" }}
+            style={{ width: "100%" }}
+          >
             <IDInput
               label="Name"
               name="name"
@@ -57,11 +65,18 @@ const DonorSignUp = () => {
               required={true}
               prefix={<MailOutlined />}
             />
-          </>
+          </motion.div>
         )}
 
         {openSection === 2 && (
-          <>
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            whileTap={{ scale: 0.95 }}
+            transition={{ duration: 0.7, ease: "easeOut" }}
+            style={{ width: "100%" }}
+          >
             <IDPassword
               label="Password"
               name="password"
@@ -75,11 +90,18 @@ const DonorSignUp = () => {
               required={true}
               prefix={<LockOutlined />}
             />
-          </>
+          </motion.div>
         )}
 
         {openSection === 3 && (
-          <>
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            whileTap={{ scale: 0.95 }}
+            transition={{ duration: 0.7, ease: "easeOut" }}
+            style={{ width: "100%" }}
+          >
             <IDInput
               label="Phone"
               name="phoneNumber"
@@ -95,11 +117,18 @@ const DonorSignUp = () => {
               options={UPOZILAS_PABNA_OPTIONS}
               placeholder="Select your upozila"
             />
-          </>
+          </motion.div>
         )}
 
         {openSection === 4 && (
-          <>
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            whileTap={{ scale: 0.95 }}
+            transition={{ duration: 0.7, ease: "easeOut" }}
+            style={{ width: "100%" }}
+          >
             <IDSelect
               label="Blood Group"
               name="bloodGroup"
@@ -108,43 +137,22 @@ const DonorSignUp = () => {
               placeholder="Select your blood group"
             />
 
-            <Checkbox
-              onChange={() =>
-                setAcceptTermsPolicy({
-                  policy: !acceptTermsPolicy.policy,
-                  terms: acceptTermsPolicy.terms,
-                })
-              }
-            >
-              I accept{" "}
-              <Link to="/policy" target="_blank">
-                our policy
-              </Link>
-            </Checkbox>
-
-            <Checkbox
-              onChange={() =>
-                setAcceptTermsPolicy({
-                  terms: !acceptTermsPolicy.terms,
-                  policy: acceptTermsPolicy.policy,
-                })
-              }
-            >
-              I accept{" "}
-              <Link to="/terms" target="_blank">
-                our terms of service
-              </Link>
-            </Checkbox>
-          </>
+            <AcceptPolicyTerms
+              acceptTermsPolicy={acceptTermsPolicy}
+              setAcceptTermsPolicy={setAcceptTermsPolicy}
+            />
+          </motion.div>
         )}
 
-        <motion.div
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.95 }}
-          transition={{ duration: 0.7, ease: "easeOut" }}
-          style={{ width: "100%" }}
-        >
-          {openSection < 4 && (
+        {openSection < 4 && (
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            whileTap={{ scale: 0.95 }}
+            transition={{ duration: 0.7, ease: "easeOut" }}
+            style={{ width: "100%" }}
+          >
             <Button
               onClick={() => setOpenSection(openSection + 1)}
               type="primary"
@@ -160,9 +168,18 @@ const DonorSignUp = () => {
             >
               Next <RightOutlined />
             </Button>
-          )}
+          </motion.div>
+        )}
 
-          {openSection == 4 && (
+        {openSection == 4 && (
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            whileTap={{ scale: 0.95 }}
+            transition={{ duration: 0.7, ease: "easeOut" }}
+            style={{ width: "100%" }}
+          >
             <Button
               onClick={() => setOpenSection(1)}
               type="primary"
@@ -180,8 +197,8 @@ const DonorSignUp = () => {
             >
               Sign Up
             </Button>
-          )}
-        </motion.div>
+          </motion.div>
+        )}
 
         <div style={{ textAlign: "center" }}>
           <Text type="secondary">Already have an account? </Text>
