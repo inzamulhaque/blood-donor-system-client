@@ -95,6 +95,7 @@ const SignIn = () => {
               <motion.div
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
+                transition={{ duration: 0.7, ease: "easeOut" }}
                 style={{ width: "100%" }}
               >
                 <Button
@@ -103,7 +104,7 @@ const SignIn = () => {
                   block
                   style={{
                     background:
-                      "linear-gradient(135deg, #c62828 0%, #8e24aa 100%)", // Applied to Button
+                      "linear-gradient(135deg, #c62828 0%, #8e24aa 100%)",
                     border: "none",
                     height: "45px",
                     fontSize: "16px",
