@@ -16,6 +16,7 @@ const AcceptPolicyTerms = ({
   return (
     <>
       <Checkbox
+        checked={acceptTermsPolicy.policy}
         onChange={() =>
           setAcceptTermsPolicy({
             policy: !acceptTermsPolicy.policy,
@@ -30,6 +31,7 @@ const AcceptPolicyTerms = ({
       </Checkbox>
 
       <Checkbox
+        checked={acceptTermsPolicy.terms}
         onChange={() =>
           setAcceptTermsPolicy({
             terms: !acceptTermsPolicy.terms,

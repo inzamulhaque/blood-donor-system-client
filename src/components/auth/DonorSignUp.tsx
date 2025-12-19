@@ -1,4 +1,4 @@
-import { Button, Typography } from "antd";
+import { Typography } from "antd";
 import { useState } from "react";
 import type { FieldValues } from "react-hook-form";
 import IDForm from "../shared/form/IDForm";
@@ -8,7 +8,6 @@ import {
   LockOutlined,
   MailOutlined,
   PhoneOutlined,
-  RightOutlined,
   UserOutlined,
 } from "@ant-design/icons";
 import { motion } from "framer-motion";
