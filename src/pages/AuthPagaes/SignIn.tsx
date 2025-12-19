@@ -1,7 +1,7 @@
 import {
   ArrowLeftOutlined,
   LockOutlined,
-  UserOutlined,
+  MailOutlined,
 } from "@ant-design/icons";
 import { Button, Card, Typography } from "antd";
 import { motion } from "framer-motion";
@@ -69,7 +69,7 @@ const SignIn = () => {
                 label="Email"
                 name="email"
                 type="email"
-                prefix={<UserOutlined />}
+                prefix={<MailOutlined />}
                 required={true}
               />
 

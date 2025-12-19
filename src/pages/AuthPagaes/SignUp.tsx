@@ -1,10 +1,16 @@
-import { Button } from "antd";
+import { Button, Card, Flex, Space, Typography } from "antd";
 import { motion } from "framer-motion";
 import "./authStyle.css";
 import { Link } from "react-router-dom";
 import { ArrowLeftOutlined } from "@ant-design/icons";
+import { useState } from "react";
+import DonorSignUp from "../../components/auth/DonorSignUp";
 
+type TRole = "donor" | "finder";
+
+const { Text } = Typography;
 const SignUp = () => {
+  const [selectedRole, setSelectedRole] = useState<TRole>("donor");
   return (
     <>
       <motion.div
@@ -41,7 +47,34 @@ const SignUp = () => {
           viewport={{ once: true }}
           style={{ width: "100%", maxWidth: "450px" }}
         >
-          hgvgh
+          <Card className="authFormCard">
+            <Flex align="center" justify="space-between" gap="small">
+              <Text strong style={{ fontSize: 16 }}>
+                Register as a
+              </Text>
+
+              <Space style={{ marginLeft: "10px" }}>
+                <Button
+                  type={selectedRole === "donor" ? "primary" : "default"}
+                  onClick={() => setSelectedRole("donor")}
+                >
+                  Donor
+                </Button>
+
+                <Button
+                  type={selectedRole === "finder" ? "primary" : "default"}
+                  onClick={() => setSelectedRole("finder")}
+                >
+                  Finder
+                </Button>
+              </Space>
+            </Flex>
+
+            <div style={{ textAlign: "center", margin: "10px 0px" }}>
+              {selectedRole === "donor" && <DonorSignUp />}
+              {selectedRole === "finder" && "Finder"}
+            </div>
+          </Card>
         </motion.div>
       </motion.div>
     </>
