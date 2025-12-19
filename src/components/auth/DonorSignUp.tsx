@@ -17,6 +17,7 @@ import IDSelect from "../shared/form/IDSelect";
 import { UPOZILAS_PABNA_OPTIONS } from "../../constants/upozila";
 import { BLOOD_GROUPS_OPTIONS } from "../../constants/bloodGroup";
 import AcceptPolicyTerms from "./AcceptPolicyTerms";
+import NextOrSignupBtn from "./NextOrSignupBtn";
 
 const { Title, Text } = Typography;
 
@@ -27,6 +28,8 @@ const DonorSignUp = () => {
   const [openSection, setOpenSection] = useState<number>(1);
 
   const handleSubmit = (values: FieldValues) => {
+    setOpenSection(1);
+    setAcceptTermsPolicy({ terms: false, policy: false });
     console.log(values);
   };
   return (
@@ -144,61 +147,12 @@ const DonorSignUp = () => {
           </motion.div>
         )}
 
-        {openSection < 4 && (
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
-            whileTap={{ scale: 0.95 }}
-            transition={{ duration: 0.7, ease: "easeOut" }}
-            style={{ width: "100%" }}
-          >
-            <Button
-              onClick={() => setOpenSection(openSection + 1)}
-              type="primary"
-              block
-              style={{
-                background: "linear-gradient(135deg, #c62828 0%, #8e24aa 100%)",
-                border: "none",
-                height: "45px",
-                fontSize: "16px",
-                fontWeight: "600",
-                borderRadius: "6px",
-              }}
-            >
-              Next <RightOutlined />
-            </Button>
-          </motion.div>
-        )}
-
-        {openSection == 4 && (
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
-            whileTap={{ scale: 0.95 }}
-            transition={{ duration: 0.7, ease: "easeOut" }}
-            style={{ width: "100%" }}
-          >
-            <Button
-              onClick={() => setOpenSection(1)}
-              type="primary"
-              disabled={!acceptTermsPolicy.policy || !acceptTermsPolicy.terms}
-              htmlType="submit"
-              block
-              style={{
-                background: "linear-gradient(135deg, #c62828 0%, #8e24aa 100%)",
-                border: "none",
-                height: "45px",
-                fontSize: "16px",
-                fontWeight: "600",
-                borderRadius: "6px",
-              }}
-            >
-              Sign Up
-            </Button>
-          </motion.div>
-        )}
+        <NextOrSignupBtn
+          acceptTermsPolicy={acceptTermsPolicy}
+          setOpenSection={setOpenSection}
+          totalSection={4}
+          openSection={openSection}
+        />
 
         <div style={{ textAlign: "center" }}>
           <Text type="secondary">Already have an account? </Text>
