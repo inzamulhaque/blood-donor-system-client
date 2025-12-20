@@ -71,7 +71,16 @@ const SignUp = () => {
             </Flex>
 
             <div style={{ textAlign: "center", margin: "10px 0px" }}>
-              {selectedRole === "donor" && <DonorSignUp />}
+              {selectedRole === "donor" && (
+                <motion.div
+                  initial={{ x: 150, opacity: 0 }}
+                  whileInView={{ x: 0, opacity: 1 }}
+                  transition={{ duration: 0.7, ease: "easeOut" }}
+                  viewport={{ once: true }}
+                >
+                  <DonorSignUp />
+                </motion.div>
+              )}
               {selectedRole === "finder" && "Finder"}
             </div>
           </Card>

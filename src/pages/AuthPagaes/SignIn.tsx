@@ -11,13 +11,15 @@ import "./authStyle.css";
 import IDForm from "../../components/shared/form/IDForm";
 import IDInput from "../../components/shared/form/IDInput";
 import IDPassword from "../../components/shared/form/IDPassword";
+import FormHeaer from "../../components/auth/FormHeaer";
 
-const { Title, Text } = Typography;
+const { Text } = Typography;
 
 const SignIn = () => {
   const handleSubmit = (values: FieldValues) => {
     console.log(values);
   };
+
   return (
     <>
       <motion.div
@@ -55,14 +57,10 @@ const SignIn = () => {
           style={{ width: "100%", maxWidth: "450px" }}
         >
           <Card className="authFormCard">
-            <div style={{ textAlign: "center", marginBottom: "10px" }}>
-              <Title level={2} style={{ margin: 0 }}>
-                Welcome Back
-              </Title>
-              <Text type="secondary">
-                Please enter your details to sign in.
-              </Text>
-            </div>
+            <FormHeaer
+              title="Welcome Back"
+              shortDes="  Please enter your details to sign in."
+            />
 
             <IDForm onSubmit={handleSubmit}>
               <IDInput

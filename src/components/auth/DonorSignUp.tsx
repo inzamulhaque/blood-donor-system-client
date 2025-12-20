@@ -17,8 +17,9 @@ import { UPOZILAS_PABNA_OPTIONS } from "../../constants/upozila";
 import { BLOOD_GROUPS_OPTIONS } from "../../constants/bloodGroup";
 import AcceptPolicyTerms from "./AcceptPolicyTerms";
 import NextOrSignupBtn from "./NextOrSignupBtn";
+import FormHeaer from "./FormHeaer";
 
-const { Title, Text } = Typography;
+const { Text } = Typography;
 
 const DonorSignUp = () => {
   const [acceptTermsPolicy, setAcceptTermsPolicy] = useState<
@@ -33,14 +34,10 @@ const DonorSignUp = () => {
   };
   return (
     <>
-      <div style={{ textAlign: "center", marginBottom: "10px" }}>
-        <Title level={2} style={{ margin: 0 }}>
-          Join as a Blood Donor
-        </Title>
-        <Text type="secondary">
-          Your one step today can save a life tomorrow.
-        </Text>
-      </div>
+      <FormHeaer
+        title="Join as a Blood Donor"
+        shortDes=" Your one step today can save a life tomorrow."
+      />
 
       <IDForm onSubmit={handleSubmit}>
         {openSection === 1 && (
