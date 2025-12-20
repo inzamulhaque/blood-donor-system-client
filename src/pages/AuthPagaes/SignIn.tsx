@@ -11,7 +11,7 @@ import "./authStyle.css";
 import IDForm from "../../components/shared/form/IDForm";
 import IDInput from "../../components/shared/form/IDInput";
 import IDPassword from "../../components/shared/form/IDPassword";
-import FormHeaer from "../../components/auth/FormHeaer";
+import FormHeader from "../../components/auth/FormHeader";
 
 const { Text } = Typography;
 
@@ -57,9 +57,9 @@ const SignIn = () => {
           style={{ width: "100%", maxWidth: "450px" }}
         >
           <Card className="authFormCard">
-            <FormHeaer
-              title="Welcome Back"
-              shortDes="  Please enter your details to sign in."
+            <FormHeader
+              title="Continue Your Mission"
+              shortDes="Your presence can make a difference today."
             />
 
             <IDForm onSubmit={handleSubmit}>

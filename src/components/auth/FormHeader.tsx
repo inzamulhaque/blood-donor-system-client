@@ -2,7 +2,7 @@ import { Typography } from "antd";
 
 const { Title, Text } = Typography;
 
-const FormHeaer = ({
+const FormHeader = ({
   title,
   shortDes,
 }: {
@@ -21,4 +21,4 @@ const FormHeaer = ({
   );
 };
 
-export default FormHeaer;
+export default FormHeader;

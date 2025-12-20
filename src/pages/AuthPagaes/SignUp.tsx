@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import { ArrowLeftOutlined } from "@ant-design/icons";
 import { useState } from "react";
 import DonorSignUp from "../../components/auth/DonorSignUp";
+import FinderSignUp from "../../components/auth/FinderSignUp";
 
 type TRole = "donor" | "finder";
 
@@ -65,7 +66,7 @@ const SignUp = () => {
                   type={selectedRole === "finder" ? "primary" : "default"}
                   onClick={() => setSelectedRole("finder")}
                 >
-                  Finder
+                  Finder Only
                 </Button>
               </Space>
             </Flex>
@@ -81,7 +82,16 @@ const SignUp = () => {
                   <DonorSignUp />
                 </motion.div>
               )}
-              {selectedRole === "finder" && "Finder"}
+              {selectedRole === "finder" && (
+                <motion.div
+                  initial={{ x: 150, opacity: 0 }}
+                  whileInView={{ x: 0, opacity: 1 }}
+                  transition={{ duration: 0.7, ease: "easeOut" }}
+                  viewport={{ once: true }}
+                >
+                  <FinderSignUp />
+                </motion.div>
+              )}
             </div>
           </Card>
         </motion.div>

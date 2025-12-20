@@ -1,27 +1,22 @@
-import { Typography } from "antd";
 import { useState } from "react";
+import FormHeader from "./FormHeader";
 import type { FieldValues } from "react-hook-form";
+import { motion } from "framer-motion";
 import IDForm from "../shared/form/IDForm";
-import { Link } from "react-router-dom";
-import IDInput from "../shared/form/IDInput";
+import IDSelect from "../shared/form/IDSelect";
+import { UPOZILAS_PABNA_OPTIONS } from "../../constants/upozila";
 import {
   LockOutlined,
   MailOutlined,
   PhoneOutlined,
   UserOutlined,
 } from "@ant-design/icons";
-import { motion } from "framer-motion";
+import IDInput from "../shared/form/IDInput";
 import IDPassword from "../shared/form/IDPassword";
-import IDSelect from "../shared/form/IDSelect";
-import { UPOZILAS_PABNA_OPTIONS } from "../../constants/upozila";
-import { BLOOD_GROUPS_OPTIONS } from "../../constants/bloodGroup";
 import AcceptPolicyTerms from "./AcceptPolicyTerms";
 import NextOrSignupBtn from "./NextOrSignupBtn";
-import FormHeader from "./FormHeader";
 
-const { Text } = Typography;
-
-const DonorSignUp = () => {
+const FinderSignUp = () => {
   const [acceptTermsPolicy, setAcceptTermsPolicy] = useState<
     Record<string, boolean>
   >({ terms: false, policy: false });
@@ -32,11 +27,12 @@ const DonorSignUp = () => {
     setAcceptTermsPolicy({ terms: false, policy: false });
     console.log(values);
   };
+
   return (
     <>
       <FormHeader
-        title="Donate Blood. Save Lives."
-        shortDes=" Your one step today can save a life tomorrow."
+        title="Find Blood. Save Lives."
+        shortDes="Find blood as a finder or donor — become a donor to help save lives."
       />
 
       <IDForm onSubmit={handleSubmit}>
@@ -116,25 +112,6 @@ const DonorSignUp = () => {
               options={UPOZILAS_PABNA_OPTIONS}
               placeholder="Select your upozila"
             />
-          </motion.div>
-        )}
-
-        {openSection === 4 && (
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
-            whileTap={{ scale: 0.95 }}
-            transition={{ duration: 0.7, ease: "easeOut" }}
-            style={{ width: "100%" }}
-          >
-            <IDSelect
-              label="Blood Group"
-              name="bloodGroup"
-              required={true}
-              options={BLOOD_GROUPS_OPTIONS}
-              placeholder="Select your blood group"
-            />
 
             <AcceptPolicyTerms
               acceptTermsPolicy={acceptTermsPolicy}
@@ -146,19 +123,12 @@ const DonorSignUp = () => {
         <NextOrSignupBtn
           acceptTermsPolicy={acceptTermsPolicy}
           setOpenSection={setOpenSection}
-          totalSection={4}
+          totalSection={3}
           openSection={openSection}
         />
-
-        <div style={{ textAlign: "center" }}>
-          <Text type="secondary">Already have an account? </Text>
-          <Link to="/signin" style={{ color: "#c62828", fontWeight: "600" }}>
-            Sign In now
-          </Link>
-        </div>
       </IDForm>
     </>
   );
 };
 
-export default DonorSignUp;
+export default FinderSignUp;
