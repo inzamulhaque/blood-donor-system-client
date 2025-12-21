@@ -1,21 +1,22 @@
 import { Form } from "antd";
-import type { ReactNode } from "react";
+import type React from "react";
+import { useEffect, type ReactNode } from "react";
 import {
   useForm,
   type FieldValues,
   type SubmitHandler,
-  type Resolver,
   FormProvider,
 } from "react-hook-form";
 
 type TFormConfig = {
   defaultValues?: Record<string, unknown>;
-  resolver?: Resolver<Record<string, unknown>>;
+  resolver?: any;
 };
 
 type TFormProps = {
   onSubmit: SubmitHandler<FieldValues>;
   children: ReactNode;
+  setFormErrors: React.Dispatch<React.SetStateAction<Record<string, string>>>;
 } & TFormConfig;
 
 const IDForm = ({
@@ -23,6 +24,7 @@ const IDForm = ({
   children,
   defaultValues,
   resolver,
+  setFormErrors,
 }: TFormProps) => {
   const formConfig: TFormConfig = {};
 
@@ -35,6 +37,10 @@ const IDForm = ({
   }
 
   const methods = useForm(formConfig);
+
+  useEffect(() => {
+    setFormErrors(methods.formState.errors);
+  }, [methods.formState.errors]);
 
   const submit: SubmitHandler<FieldValues> = (data) => {
     onSubmit(data);

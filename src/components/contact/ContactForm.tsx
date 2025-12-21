@@ -6,8 +6,11 @@ import { Button, Col, Row } from "antd";
 import IDTextArea from "../shared/form/IDTextArea";
 import { SendOutlined } from "@ant-design/icons";
 import { motion } from "framer-motion";
+import { useState } from "react";
 
 const ContactForm = () => {
+  const [formErrors, setFormErrors] = useState<Record<string, string>>({});
+
   const handleSubmit = (data: FieldValues) => {
     console.log(data);
   };
@@ -23,7 +26,7 @@ const ContactForm = () => {
         <h2 style={{ textAlign: "center", fontStyle: "italic" }}>
           Get In Touch
         </h2>
-        <IDForm onSubmit={handleSubmit}>
+        <IDForm setFormErrors={setFormErrors} onSubmit={handleSubmit}>
           <Row
             gutter={[20, 5]}
             align="middle"

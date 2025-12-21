@@ -17,6 +17,8 @@ import AcceptPolicyTerms from "./AcceptPolicyTerms";
 import NextOrSignupBtn from "./NextOrSignupBtn";
 
 const FinderSignUp = () => {
+  const [formErrors, setFormErrors] = useState<Record<string, string>>({});
+
   const [acceptTermsPolicy, setAcceptTermsPolicy] = useState<
     Record<string, boolean>
   >({ terms: false, policy: false });
@@ -35,7 +37,7 @@ const FinderSignUp = () => {
         shortDes="Find blood as a finder or donor — become a donor to help save lives."
       />
 
-      <IDForm onSubmit={handleSubmit}>
+      <IDForm setFormErrors={setFormErrors} onSubmit={handleSubmit}>
         {openSection === 1 && (
           <motion.div
             initial={{ opacity: 0, y: 20 }}

@@ -1,6 +1,6 @@
 import { Typography } from "antd";
-import { useState } from "react";
-import type { FieldValues } from "react-hook-form";
+import { useMemo, useState } from "react";
+
 import IDForm from "../shared/form/IDForm";
 import { Link } from "react-router-dom";
 import IDInput from "../shared/form/IDInput";
@@ -18,14 +18,26 @@ import { BLOOD_GROUPS_OPTIONS } from "../../constants/bloodGroup";
 import AcceptPolicyTerms from "./AcceptPolicyTerms";
 import NextOrSignupBtn from "./NextOrSignupBtn";
 import FormHeader from "./FormHeader";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { DonorRegisterSchema } from "../../schemas/Donor";
+import type { FieldValues } from "react-hook-form";
+import simplifyZodErrors from "../../utils/SimplifyZodErrors";
 
 const { Text } = Typography;
 
 const DonorSignUp = () => {
+  const [formErrors, setFormErrors] = useState<Record<string, string>>({});
+
   const [acceptTermsPolicy, setAcceptTermsPolicy] = useState<
     Record<string, boolean>
   >({ terms: false, policy: false });
   const [openSection, setOpenSection] = useState<number>(1);
+
+  const simpleErroes = useMemo(() => {
+    return simplifyZodErrors(formErrors) || {};
+  }, [formErrors]);
+
+  console.log(simpleErroes);
 
   const handleSubmit = (values: FieldValues) => {
     setOpenSection(1);
@@ -39,7 +51,11 @@ const DonorSignUp = () => {
         shortDes=" Your one step today can save a life tomorrow."
       />
 
-      <IDForm onSubmit={handleSubmit}>
+      <IDForm
+        onSubmit={handleSubmit}
+        resolver={zodResolver(DonorRegisterSchema)}
+        setFormErrors={setFormErrors}
+      >
         {openSection === 1 && (
           <motion.div
             initial={{ opacity: 0, y: 20 }}

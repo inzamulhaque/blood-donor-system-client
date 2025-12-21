@@ -12,10 +12,13 @@ import IDForm from "../../components/shared/form/IDForm";
 import IDInput from "../../components/shared/form/IDInput";
 import IDPassword from "../../components/shared/form/IDPassword";
 import FormHeader from "../../components/auth/FormHeader";
+import { useState } from "react";
 
 const { Text } = Typography;
 
 const SignIn = () => {
+  const [formErrors, setFormErrors] = useState<Record<string, string>>({});
+
   const handleSubmit = (values: FieldValues) => {
     console.log(values);
   };
@@ -62,7 +65,7 @@ const SignIn = () => {
               shortDes="Your presence can make a difference today."
             />
 
-            <IDForm onSubmit={handleSubmit}>
+            <IDForm setFormErrors={setFormErrors} onSubmit={handleSubmit}>
               <IDInput
                 label="Email"
                 name="email"

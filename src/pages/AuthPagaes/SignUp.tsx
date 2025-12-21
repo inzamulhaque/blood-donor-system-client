@@ -66,7 +66,7 @@ const SignUp = () => {
                   type={selectedRole === "finder" ? "primary" : "default"}
                   onClick={() => setSelectedRole("finder")}
                 >
-                  Finder Only
+                  Find Only
                 </Button>
               </Space>
             </Flex>
