@@ -1,5 +1,5 @@
 import { Form, Input } from "antd";
-import { Controller, useFormContext } from "react-hook-form";
+import { Controller } from "react-hook-form";
 import "./form.css";
 import type React from "react";
 
@@ -10,6 +10,7 @@ type TInputProps = {
   disabled?: boolean;
   required?: boolean;
   prefix?: React.ReactNode;
+  err?: string;
 };
 
 const IDInput = ({
@@ -19,11 +20,8 @@ const IDInput = ({
   disabled,
   required,
   prefix,
+  err,
 }: TInputProps) => {
-  const {
-    formState: { errors },
-  } = useFormContext();
-
   return (
     <>
       <Controller
@@ -42,11 +40,7 @@ const IDInput = ({
               prefix={prefix}
             />
 
-            {errors[name] && (
-              <p style={{ color: "red", marginTop: 4 }}>
-                {errors[name]?.message as string}
-              </p>
-            )}
+            {err && <p style={{ color: "red", marginTop: 4 }}>{err}</p>}
           </Form.Item>
         )}
       />

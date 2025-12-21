@@ -9,6 +9,7 @@ type TPHSelectProps = {
   placeholder?: string;
   required: boolean;
   mode?: "multiple" | undefined;
+  err?: string;
 };
 
 const IDSelect = ({
@@ -19,12 +20,13 @@ const IDSelect = ({
   placeholder,
   required,
   mode,
+  err,
 }: TPHSelectProps) => {
   return (
     <>
       <Controller
         name={name}
-        render={({ field, fieldState: { error } }) => (
+        render={({ field }) => (
           <Form.Item label={label} required={required}>
             <Select
               {...field}
@@ -36,7 +38,7 @@ const IDSelect = ({
               style={{ width: "100%" }}
             />
 
-            {error && <small style={{ color: "red" }}>{error.message}</small>}
+            {err && <p style={{ color: "red", marginTop: 4 }}>{err}</p>}
           </Form.Item>
         )}
       />

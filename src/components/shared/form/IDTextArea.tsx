@@ -6,9 +6,16 @@ type TTextAreaProps = {
   label: string;
   disabled?: boolean;
   required?: boolean;
+  err?: string;
 };
 
-const IDTextArea = ({ name, label, disabled, required }: TTextAreaProps) => {
+const IDTextArea = ({
+  name,
+  label,
+  disabled,
+  required,
+  err,
+}: TTextAreaProps) => {
   return (
     <>
       <Controller
@@ -23,6 +30,7 @@ const IDTextArea = ({ name, label, disabled, required }: TTextAreaProps) => {
               disabled={disabled}
               className="IDInput"
             />
+            {err && <p style={{ color: "red", marginTop: 4 }}>{err}</p>}
           </Form.Item>
         )}
       />

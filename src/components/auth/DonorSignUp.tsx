@@ -22,6 +22,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { DonorRegisterSchema } from "../../schemas/Donor";
 import type { FieldValues } from "react-hook-form";
 import simplifyZodErrors from "../../utils/SimplifyZodErrors";
+import { toast } from "sonner";
 
 const { Text } = Typography;
 
@@ -34,15 +35,27 @@ const DonorSignUp = () => {
   const [openSection, setOpenSection] = useState<number>(1);
 
   const simpleErroes = useMemo(() => {
-    return simplifyZodErrors(formErrors) || {};
-  }, [formErrors]);
+    const serr = simplifyZodErrors(formErrors) || {};
 
-  console.log(simpleErroes);
+    const errFields = Object.keys(serr).join(", ");
+
+    if (errFields) {
+      toast.error(
+        `আপনার ${errFields} ফিল্ডে সমস্যা আছে। দয়া করে সেগুলো ঠিক করুন।`,
+        {
+          duration: 7000,
+          position: "top-center",
+        }
+      );
+    }
+
+    return serr;
+  }, [formErrors]);
 
   const handleSubmit = (values: FieldValues) => {
     setOpenSection(1);
     setAcceptTermsPolicy({ terms: false, policy: false });
-    console.log(values);
+    console.log({ values });
   };
   return (
     <>
@@ -71,6 +84,7 @@ const DonorSignUp = () => {
               type="text"
               prefix={<UserOutlined />}
               required={true}
+              err={simpleErroes["name"]}
             />
 
             <IDInput
@@ -79,6 +93,7 @@ const DonorSignUp = () => {
               type="email"
               required={true}
               prefix={<MailOutlined />}
+              err={simpleErroes["email"]}
             />
           </motion.div>
         )}
@@ -97,6 +112,7 @@ const DonorSignUp = () => {
               name="password"
               required={true}
               prefix={<LockOutlined />}
+              err={simpleErroes["password"]}
             />
 
             <IDPassword
@@ -104,6 +120,7 @@ const DonorSignUp = () => {
               name="confirmPassword"
               required={true}
               prefix={<LockOutlined />}
+              err={simpleErroes["confirmPassword"]}
             />
           </motion.div>
         )}
@@ -123,6 +140,7 @@ const DonorSignUp = () => {
               type="text"
               required={true}
               prefix={<PhoneOutlined />}
+              err={simpleErroes["phoneNumber"]}
             />
 
             <IDSelect
@@ -131,6 +149,7 @@ const DonorSignUp = () => {
               required={true}
               options={UPOZILAS_PABNA_OPTIONS}
               placeholder="Select your upozila"
+              err={simpleErroes["upozila"]}
             />
           </motion.div>
         )}
@@ -150,6 +169,7 @@ const DonorSignUp = () => {
               required={true}
               options={BLOOD_GROUPS_OPTIONS}
               placeholder="Select your blood group"
+              err={simpleErroes["bloodGroup"]}
             />
 
             <AcceptPolicyTerms

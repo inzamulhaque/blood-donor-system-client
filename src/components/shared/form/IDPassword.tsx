@@ -9,6 +9,7 @@ type TInputProps = {
   disabled?: boolean;
   required?: boolean;
   prefix?: React.ReactNode;
+  err?: string;
 };
 
 const IDPassword = ({
@@ -17,6 +18,7 @@ const IDPassword = ({
   disabled,
   required,
   prefix,
+  err,
 }: TInputProps) => {
   return (
     <>
@@ -34,6 +36,7 @@ const IDPassword = ({
               required={required}
               prefix={prefix}
             />
+            {err && <p style={{ color: "red", marginTop: 4 }}>{err}</p>}
           </Form.Item>
         )}
       />

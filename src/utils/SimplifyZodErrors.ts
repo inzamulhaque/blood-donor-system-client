@@ -5,10 +5,17 @@ const simplifyZodErrors = (
 
   for (const key in errors) {
     if (errors[key]?.message) {
-      simplifiedErrors[key] = (errors[key]?.message as string).replace(
-        /^(Invalid (option|input):\s*)/,
-        ""
-      );
+      let message = errors[key].message as string;
+
+      if (message.includes("expected string, received undefined")) {
+        message = `${key} is required`;
+      } else if (message.startsWith("Invalid option:")) {
+        message = "Please select one!";
+      } else {
+        message = message.replace(/^(Invalid (option|input):\s*)/, "");
+      }
+
+      simplifiedErrors[key] = message;
     }
   }
 
