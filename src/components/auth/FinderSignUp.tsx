@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import FormHeader from "./FormHeader";
 import type { FieldValues } from "react-hook-form";
 import { motion } from "framer-motion";
@@ -15,18 +15,42 @@ import IDInput from "../shared/form/IDInput";
 import IDPassword from "../shared/form/IDPassword";
 import AcceptPolicyTerms from "./AcceptPolicyTerms";
 import NextOrSignupBtn from "./NextOrSignupBtn";
+import { toast } from "sonner";
+import simplifyZodErrors from "../../utils/SimplifyZodErrors";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { FinderRegisterSchema } from "../../schemas/Finder";
 
 const FinderSignUp = () => {
   const [formErrors, setFormErrors] = useState<Record<string, string>>({});
+  const [formDefaultValues, setFormDefaultValues] = useState<FieldValues>({});
 
   const [acceptTermsPolicy, setAcceptTermsPolicy] = useState<
     Record<string, boolean>
   >({ terms: false, policy: false });
   const [openSection, setOpenSection] = useState<number>(1);
 
+  const simpleErroes = useMemo(() => {
+    const serr = simplifyZodErrors(formErrors) || {};
+
+    const errFields = Object.keys(serr).join(", ");
+
+    if (errFields) {
+      toast.error(
+        `আপনার ${errFields} ফিল্ডে সমস্যা আছে। দয়া করে সেগুলো ঠিক করুন।`,
+        {
+          duration: 7000,
+          position: "top-center",
+        }
+      );
+    }
+
+    return serr;
+  }, [formErrors]);
+
   const handleSubmit = (values: FieldValues) => {
     setOpenSection(1);
     setAcceptTermsPolicy({ terms: false, policy: false });
+    setFormDefaultValues(values);
     console.log(values);
   };
 
@@ -37,7 +61,12 @@ const FinderSignUp = () => {
         shortDes="Find blood as a finder or donor — become a donor to help save lives."
       />
 
-      <IDForm setFormErrors={setFormErrors} onSubmit={handleSubmit}>
+      <IDForm
+        setFormErrors={setFormErrors}
+        onSubmit={handleSubmit}
+        defaultValues={formDefaultValues}
+        resolver={zodResolver(FinderRegisterSchema)}
+      >
         {openSection === 1 && (
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -53,6 +82,7 @@ const FinderSignUp = () => {
               type="text"
               prefix={<UserOutlined />}
               required={true}
+              err={simpleErroes["name"]}
             />
 
             <IDInput
@@ -60,6 +90,7 @@ const FinderSignUp = () => {
               name="email"
               type="email"
               required={true}
+              err={simpleErroes["email"]}
               prefix={<MailOutlined />}
             />
           </motion.div>
@@ -78,6 +109,7 @@ const FinderSignUp = () => {
               label="Password"
               name="password"
               required={true}
+              err={simpleErroes["password"]}
               prefix={<LockOutlined />}
             />
 
@@ -85,6 +117,7 @@ const FinderSignUp = () => {
               label="Confirm Password"
               name="confirmPassword"
               required={true}
+              err={simpleErroes["confirmPassword"]}
               prefix={<LockOutlined />}
             />
           </motion.div>
@@ -105,6 +138,7 @@ const FinderSignUp = () => {
               type="text"
               required={true}
               prefix={<PhoneOutlined />}
+              err={simpleErroes["phoneNumber"]}
             />
 
             <IDSelect
@@ -113,6 +147,7 @@ const FinderSignUp = () => {
               required={true}
               options={UPOZILAS_PABNA_OPTIONS}
               placeholder="Select your upozila"
+              err={simpleErroes["upozila"]}
             />
 
             <AcceptPolicyTerms

@@ -1,8 +1,7 @@
 import z from "zod";
-import { BLOOD_GROUPS } from "../constants/bloodGroup";
 import { UPOZILAS_PABNA } from "../constants/upozila";
 
-export const DonorRegisterSchema = z
+export const FinderRegisterSchema = z
   .object({
     name: z
       .string()
@@ -40,8 +39,6 @@ export const DonorRegisterSchema = z
     confirmPassword: z
       .string()
       .min(1, { message: "Confirm password is required" }),
-
-    bloodGroup: z.enum(BLOOD_GROUPS),
 
     upozila: z.enum(UPOZILAS_PABNA),
   })

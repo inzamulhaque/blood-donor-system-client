@@ -28,6 +28,7 @@ const { Text } = Typography;
 
 const DonorSignUp = () => {
   const [formErrors, setFormErrors] = useState<Record<string, string>>({});
+  const [formDefaultValues, setFormDefaultValues] = useState<FieldValues>({});
 
   const [acceptTermsPolicy, setAcceptTermsPolicy] = useState<
     Record<string, boolean>
@@ -55,6 +56,7 @@ const DonorSignUp = () => {
   const handleSubmit = (values: FieldValues) => {
     setOpenSection(1);
     setAcceptTermsPolicy({ terms: false, policy: false });
+    setFormDefaultValues(values);
     console.log({ values });
   };
   return (
@@ -68,6 +70,7 @@ const DonorSignUp = () => {
         onSubmit={handleSubmit}
         resolver={zodResolver(DonorRegisterSchema)}
         setFormErrors={setFormErrors}
+        defaultValues={formDefaultValues}
       >
         {openSection === 1 && (
           <motion.div
