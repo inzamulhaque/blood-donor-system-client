@@ -12,14 +12,38 @@ import IDForm from "../../components/shared/form/IDForm";
 import IDInput from "../../components/shared/form/IDInput";
 import IDPassword from "../../components/shared/form/IDPassword";
 import FormHeader from "../../components/auth/FormHeader";
-import { useState } from "react";
+import { useMemo, useState } from "react";
+import simplifyZodErrors from "../../utils/SimplifyZodErrors";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { LoginSchema } from "../../schemas/Auth";
+import { toast } from "sonner";
 
 const { Text } = Typography;
 
 const SignIn = () => {
   const [formErrors, setFormErrors] = useState<Record<string, string>>({});
+  const [formDefaultValues, setFormDefaultValues] = useState<FieldValues>({});
+
+  const simpleErroes = useMemo(() => {
+    const serr = simplifyZodErrors(formErrors) || {};
+
+    const errFields = Object.keys(serr).join(", ");
+
+    if (errFields) {
+      toast.error(
+        `আপনার ${errFields} ফিল্ডে সমস্যা আছে। দয়া করে সেগুলো ঠিক করুন।`,
+        {
+          duration: 7000,
+          position: "top-center",
+        }
+      );
+    }
+
+    return serr;
+  }, [formErrors]);
 
   const handleSubmit = (values: FieldValues) => {
+    setFormDefaultValues(values);
     console.log(values);
   };
 
@@ -65,13 +89,19 @@ const SignIn = () => {
               shortDes="Your presence can make a difference today."
             />
 
-            <IDForm setFormErrors={setFormErrors} onSubmit={handleSubmit}>
+            <IDForm
+              setFormErrors={setFormErrors}
+              onSubmit={handleSubmit}
+              resolver={zodResolver(LoginSchema)}
+              defaultValues={formDefaultValues}
+            >
               <IDInput
                 label="Email"
                 name="email"
                 type="email"
                 prefix={<MailOutlined />}
                 required={true}
+                err={simpleErroes["email"]}
               />
 
               <IDPassword
@@ -79,6 +109,7 @@ const SignIn = () => {
                 name="password"
                 prefix={<LockOutlined />}
                 required={true}
+                err={simpleErroes["password"]}
               />
 
               <div
