@@ -12,7 +12,7 @@ export const ContactSchema = z.object({
 
   subject: z.string().min(1, "Subject is required"),
 
-  phoneNumber: z
+  phone: z
     .string()
     .regex(/^01[3-9]\d{8}$/, "Please enter a valid Bangladeshi phone number")
     .optional(),
