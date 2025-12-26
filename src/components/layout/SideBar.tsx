@@ -1,4 +1,5 @@
 import {
+  LockOutlined,
   LogoutOutlined,
   MenuFoldOutlined,
   MenuUnfoldOutlined,
@@ -7,11 +8,17 @@ import { Button, Flex, Layout, Menu } from "antd";
 import { Header } from "antd/es/layout/layout";
 import { useState } from "react";
 import generateSidebarMenu from "../../utils/generateSidebarMenu";
-import { ADMIN_ROUTES } from "../../constants/RoleBaseRoutes";
+import {
+  ADMIN_ROUTES,
+  DONOR_ROUTES,
+  FINDER_ROUTES,
+  SUPER_ADMIN_ROUTES,
+} from "../../constants/RoleBaseRoutes";
+import { Link } from "react-router-dom";
 
 const { Sider } = Layout;
 
-const menuItems = generateSidebarMenu(ADMIN_ROUTES);
+const menuItems = generateSidebarMenu(FINDER_ROUTES);
 
 const SideBar = () => {
   const [collapsed, setCollapsed] = useState<boolean>(false);
@@ -48,7 +55,16 @@ const SideBar = () => {
             theme="dark"
             mode="inline"
             defaultSelectedKeys={["Dashboard"]}
-            items={menuItems}
+            items={[
+              ...menuItems,
+              {
+                key: "Change Password",
+                label: (
+                  <Link to="/dashboard/change-password">Change Password</Link>
+                ),
+                icon: <LockOutlined />,
+              },
+            ]}
             style={{ flex: 1 }}
           />
 

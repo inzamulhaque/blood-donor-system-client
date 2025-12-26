@@ -1,6 +1,9 @@
 import {
-  DashboardOutlined,
+  AppstoreAddOutlined,
+  ArrowsAltOutlined,
+  SearchOutlined,
   TeamOutlined,
+  UnorderedListOutlined,
   UserAddOutlined,
   UserSwitchOutlined,
 } from "@ant-design/icons";
@@ -18,15 +21,7 @@ export type TRoleBaseRoute = {
 
 export const ADMIN_ROUTES: TRoleBaseRoute[] = [
   {
-    index: true,
-    link: "/dashboard",
-    name: "Dashboard",
-    icon: <DashboardOutlined />,
-    element: <Dashboard />,
-  },
-
-  {
-    path: "/users",
+    path: "users",
     link: "/dashboard/users",
     name: "Users",
     icon: <TeamOutlined />,
@@ -34,7 +29,7 @@ export const ADMIN_ROUTES: TRoleBaseRoute[] = [
   },
 
   {
-    path: "/donors",
+    path: "donors",
     link: "/dashboard/donors",
     name: "Donors",
     icon: <UserSwitchOutlined />,
@@ -42,7 +37,7 @@ export const ADMIN_ROUTES: TRoleBaseRoute[] = [
   },
 
   {
-    path: "/add-donor",
+    path: "add-donor",
     link: "/dashboard/add-donor",
     name: "Add Donor",
     icon: <UserAddOutlined />,
@@ -50,7 +45,7 @@ export const ADMIN_ROUTES: TRoleBaseRoute[] = [
   },
 
   {
-    path: "/block-user/:trackingNumber",
+    path: "block-user/:trackingNumber",
     link: "/dashboard/block-user/:trackingNumber",
     element: <Dashboard />,
   },
@@ -59,10 +54,54 @@ export const ADMIN_ROUTES: TRoleBaseRoute[] = [
 export const SUPER_ADMIN_ROUTES: TRoleBaseRoute[] = [
   ...ADMIN_ROUTES,
   {
-    path: "/make-admin",
+    path: "make-admin",
     link: "/dashboard/make-admin",
     name: "Make Admin",
     icon: <UserAddOutlined />,
+    element: <Dashboard />,
+  },
+];
+
+export const DONOR_ROUTES: TRoleBaseRoute[] = [
+  {
+    path: "my-donation-list",
+    link: "/dashboard/my-donation-list",
+    name: "My Donation List",
+    icon: <UnorderedListOutlined />,
+    element: <Dashboard />,
+  },
+
+  {
+    path: "add-new-donation",
+    link: "/dashboard/add-new-donation",
+    name: "Add New Donation",
+    icon: <AppstoreAddOutlined />,
+    element: <Dashboard />,
+  },
+
+  {
+    path: "find-donor",
+    link: "/dashboard/find-donor",
+    name: "Find Donor",
+    icon: <SearchOutlined />,
+    element: <Dashboard />,
+  },
+];
+
+export const FINDER_ROUTES: TRoleBaseRoute[] = [
+  {
+    path: "find-donor",
+    link: "/dashboard/find-donor",
+    name: "Find Donor",
+    icon: <SearchOutlined />,
+    element: <Dashboard />,
+  },
+
+  {
+    path: "finder-to-donor",
+    link: "/dashboard/finder-to-donor",
+    name: "Became A Donor",
+    icon: <ArrowsAltOutlined />,
     element: <Dashboard />,
   },
 ];

@@ -11,6 +11,14 @@ import TermsOfService from "../pages/TermsOfService";
 import SignIn from "../pages/AuthPagaes/SignIn";
 import SignUp from "../pages/AuthPagaes/SignUp";
 import WithDashboardLayout from "../components/layout/WithDashboardLayout";
+import generateRouterRoutes from "../utils/generateRouterRoutes";
+import {
+  ADMIN_ROUTES,
+  DONOR_ROUTES,
+  FINDER_ROUTES,
+  SUPER_ADMIN_ROUTES,
+} from "../constants/RoleBaseRoutes";
+import Dashboard from "../components/dashboard/Dashboard";
 
 const router = createBrowserRouter([
   {
@@ -43,6 +51,27 @@ const router = createBrowserRouter([
         element: <TermsOfService />,
       },
     ],
+  },
+
+  {
+    path: "/dashboard",
+    element: <WithDashboardLayout />,
+
+    children: generateRouterRoutes([
+      {
+        index: true,
+        element: <Dashboard />,
+      },
+      ...SUPER_ADMIN_ROUTES,
+      ...ADMIN_ROUTES,
+      ...DONOR_ROUTES,
+      ...FINDER_ROUTES,
+
+      {
+        path: "change-password",
+        element: <Dashboard />,
+      },
+    ]),
   },
 
   {
