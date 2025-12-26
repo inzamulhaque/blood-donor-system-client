@@ -2,33 +2,16 @@ import {
   LogoutOutlined,
   MenuFoldOutlined,
   MenuUnfoldOutlined,
-  UploadOutlined,
-  UserOutlined,
-  VideoCameraOutlined,
 } from "@ant-design/icons";
 import { Button, Flex, Layout, Menu } from "antd";
 import { Header } from "antd/es/layout/layout";
 import { useState } from "react";
+import generateSidebarMenu from "../../utils/generateSidebarMenu";
+import { ADMIN_ROUTES } from "../../constants/RoleBaseRoutes";
 
 const { Sider } = Layout;
 
-const menuItems = [
-  {
-    key: "1",
-    icon: <UserOutlined />,
-    label: "nav 1",
-  },
-  {
-    key: "2",
-    icon: <VideoCameraOutlined />,
-    label: "nav 2",
-  },
-  {
-    key: "3",
-    icon: <UploadOutlined />,
-    label: "nav 3",
-  },
-];
+const menuItems = generateSidebarMenu(ADMIN_ROUTES);
 
 const SideBar = () => {
   const [collapsed, setCollapsed] = useState<boolean>(false);
@@ -64,7 +47,7 @@ const SideBar = () => {
           <Menu
             theme="dark"
             mode="inline"
-            defaultSelectedKeys={["1"]}
+            defaultSelectedKeys={["Dashboard"]}
             items={menuItems}
             style={{ flex: 1 }}
           />
