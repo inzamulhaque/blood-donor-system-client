@@ -10,6 +10,7 @@ import PrivacyPolicy from "../pages/PrivacyPolicy";
 import TermsOfService from "../pages/TermsOfService";
 import SignIn from "../pages/AuthPagaes/SignIn";
 import SignUp from "../pages/AuthPagaes/SignUp";
+import WithDashboardLayout from "../components/layout/WithDashboardLayout";
 
 const router = createBrowserRouter([
   {
@@ -42,6 +43,11 @@ const router = createBrowserRouter([
         element: <TermsOfService />,
       },
     ],
+  },
+
+  {
+    path: "/dashboard",
+    element: <WithDashboardLayout />,
   },
 
   {
