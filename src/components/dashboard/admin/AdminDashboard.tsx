@@ -1,9 +1,12 @@
-import { Col, Flex, Row } from "antd";
+import { Col, Divider, Flex, Row } from "antd";
 
 const AdminDashboard = () => {
   return (
     <>
       <div style={{ padding: "20px" }}>
+        <h1 style={{ marginBottom: "20px" }}>Admin Dashboard</h1>
+        <Divider />
+
         <Row gutter={[20, 20]}>
           <Col xs={24} md={12}>
             <div
@@ -16,7 +19,7 @@ const AdminDashboard = () => {
               }}
             >
               <Flex justify="space-between" align="center">
-                <h3>Donor</h3>
+                <h3>Total Donor</h3>
                 <h3>30</h3>
               </Flex>
             </div>
@@ -33,9 +36,233 @@ const AdminDashboard = () => {
               }}
             >
               <Flex justify="space-between" align="center">
-                <h3>Donor</h3>
+                <h3>Total Finder</h3>
                 <h3>30</h3>
               </Flex>
+            </div>
+          </Col>
+        </Row>
+
+        <Divider />
+
+        <Row gutter={[20, 20]}>
+          <Col xs={12} md={6}>
+            <div
+              style={{
+                background: "#1E3A8A",
+                color: "white",
+                padding: "20px",
+                width: "100%",
+                borderRadius: "10px",
+              }}
+            >
+              <Flex justify="space-between" align="center">
+                <h3>Total</h3>
+                <h3>30</h3>
+              </Flex>
+
+              <Divider />
+
+              <h2
+                style={{
+                  textAlign: "center",
+                  fontSize: "25px",
+                }}
+              >
+                A+
+              </h2>
+            </div>
+          </Col>
+
+          <Col xs={12} md={6}>
+            <div
+              style={{
+                background: "#6D28D9",
+                color: "white",
+                padding: "20px",
+                width: "100%",
+                borderRadius: "10px",
+              }}
+            >
+              <Flex justify="space-between" align="center">
+                <h3>Total</h3>
+                <h3>30</h3>
+              </Flex>
+              <Divider />
+
+              <h2
+                style={{
+                  textAlign: "center",
+                  fontSize: "25px",
+                }}
+              >
+                A-
+              </h2>
+            </div>
+          </Col>
+
+          <Col xs={12} md={6}>
+            <div
+              style={{
+                background: "#047857",
+                color: "white",
+                padding: "20px",
+                width: "100%",
+                borderRadius: "10px",
+              }}
+            >
+              <Flex justify="space-between" align="center">
+                <h3>Total</h3>
+                <h3>30</h3>
+              </Flex>
+
+              <Divider />
+
+              <h2
+                style={{
+                  textAlign: "center",
+                  fontSize: "25px",
+                }}
+              >
+                B+
+              </h2>
+            </div>
+          </Col>
+
+          <Col xs={12} md={6}>
+            <div
+              style={{
+                background: "#0F766E",
+                color: "white",
+                padding: "20px",
+                width: "100%",
+                borderRadius: "10px",
+              }}
+            >
+              <Flex justify="space-between" align="center">
+                <h3>Total</h3>
+                <h3>30</h3>
+              </Flex>
+              <Divider />
+
+              <h2
+                style={{
+                  textAlign: "center",
+                  fontSize: "25px",
+                }}
+              >
+                B-
+              </h2>
+            </div>
+          </Col>
+
+          <Col xs={12} md={6}>
+            <div
+              style={{
+                background: "#991B1B",
+                color: "white",
+                padding: "20px",
+                width: "100%",
+                borderRadius: "10px",
+              }}
+            >
+              <Flex justify="space-between" align="center">
+                <h3>Total</h3>
+                <h3>30</h3>
+              </Flex>
+
+              <Divider />
+
+              <h2
+                style={{
+                  textAlign: "center",
+                  fontSize: "25px",
+                }}
+              >
+                AB+
+              </h2>
+            </div>
+          </Col>
+
+          <Col xs={12} md={6}>
+            <div
+              style={{
+                background: "#1F2937",
+                color: "white",
+                padding: "20px",
+                width: "100%",
+                borderRadius: "10px",
+              }}
+            >
+              <Flex justify="space-between" align="center">
+                <h3>Total</h3>
+                <h3>30</h3>
+              </Flex>
+              <Divider />
+
+              <h2
+                style={{
+                  textAlign: "center",
+                  fontSize: "25px",
+                }}
+              >
+                AB-
+              </h2>
+            </div>
+          </Col>
+
+          <Col xs={12} md={6}>
+            <div
+              style={{
+                background: "#C2410C",
+                color: "white",
+                padding: "20px",
+                width: "100%",
+                borderRadius: "10px",
+              }}
+            >
+              <Flex justify="space-between" align="center">
+                <h3>Total</h3>
+                <h3>30</h3>
+              </Flex>
+
+              <Divider />
+
+              <h2
+                style={{
+                  textAlign: "center",
+                  fontSize: "25px",
+                }}
+              >
+                O+
+              </h2>
+            </div>
+          </Col>
+
+          <Col xs={12} md={6}>
+            <div
+              style={{
+                background: "#312E81",
+                color: "white",
+                padding: "20px",
+                width: "100%",
+                borderRadius: "10px",
+              }}
+            >
+              <Flex justify="space-between" align="center">
+                <h3>Total</h3>
+                <h3>30</h3>
+              </Flex>
+              <Divider />
+
+              <h2
+                style={{
+                  textAlign: "center",
+                  fontSize: "25px",
+                }}
+              >
+                O-
+              </h2>
             </div>
           </Col>
         </Row>

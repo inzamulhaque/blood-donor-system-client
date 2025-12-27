@@ -18,6 +18,10 @@ const WithDashboardLayout = () => {
               paddingRight: "20px",
               boxShadow: "0 2px 8px #f0f1f2",
               textAlign: "right",
+              position: "sticky",
+              right: 0,
+              top: 0,
+              zIndex: 999,
             }}
           >
             <img

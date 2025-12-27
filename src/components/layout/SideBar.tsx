@@ -5,9 +5,9 @@ import {
   MenuFoldOutlined,
   MenuUnfoldOutlined,
 } from "@ant-design/icons";
-import { Button, Flex, Layout, Menu } from "antd";
+import { Button, Flex, Grid, Layout, Menu } from "antd";
 import { Header } from "antd/es/layout/layout";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import generateSidebarMenu from "../../utils/generateSidebarMenu";
 import {
   ADMIN_ROUTES,
@@ -33,8 +33,14 @@ const menuItems = [
   },
 ];
 
+const { useBreakpoint } = Grid;
+
 const SideBar = () => {
-  const [collapsed, setCollapsed] = useState<boolean>(false);
+  const screens = useBreakpoint();
+
+  const [isCollapsed, setIsCollapsed] = useState<boolean | null>(null);
+
+  const collapsed = isCollapsed !== null ? isCollapsed : !screens.md;
 
   return (
     <>
@@ -53,7 +59,7 @@ const SideBar = () => {
           <Button
             type="text"
             icon={collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
-            onClick={() => setCollapsed(!collapsed)}
+            onClick={() => setIsCollapsed(!collapsed)}
             style={{
               fontSize: 16,
               width: 64,
