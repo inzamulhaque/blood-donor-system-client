@@ -1,4 +1,5 @@
 import {
+  DashboardOutlined,
   LockOutlined,
   LogoutOutlined,
   MenuFoldOutlined,
@@ -18,7 +19,19 @@ import { Link } from "react-router-dom";
 
 const { Sider } = Layout;
 
-const menuItems = generateSidebarMenu(FINDER_ROUTES);
+const menuItems = [
+  {
+    key: "Dashboard",
+    label: <Link to="/dashboard">Dashboard</Link>,
+    icon: <DashboardOutlined />,
+  },
+  ...generateSidebarMenu(ADMIN_ROUTES),
+  {
+    key: "Change Password",
+    label: <Link to="/dashboard/change-password">Change Password</Link>,
+    icon: <LockOutlined />,
+  },
+];
 
 const SideBar = () => {
   const [collapsed, setCollapsed] = useState<boolean>(false);
@@ -55,16 +68,7 @@ const SideBar = () => {
             theme="dark"
             mode="inline"
             defaultSelectedKeys={["Dashboard"]}
-            items={[
-              ...menuItems,
-              {
-                key: "Change Password",
-                label: (
-                  <Link to="/dashboard/change-password">Change Password</Link>
-                ),
-                icon: <LockOutlined />,
-              },
-            ]}
+            items={menuItems}
             style={{ flex: 1 }}
           />
 
