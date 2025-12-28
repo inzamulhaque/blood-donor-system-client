@@ -21,7 +21,7 @@ const WithDashboardLayout = () => {
               position: "sticky",
               right: 0,
               top: 0,
-              zIndex: 999,
+              zIndex: 1,
             }}
           >
             <img

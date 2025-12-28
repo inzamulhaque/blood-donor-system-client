@@ -9,6 +9,7 @@ import {
 } from "@ant-design/icons";
 import type { ReactNode } from "react";
 import Dashboard from "../components/dashboard/Dashboard";
+import UserData from "../pages/Admin/UserData";
 
 export type TRoleBaseRoute = {
   path?: string;
@@ -25,7 +26,7 @@ export const ADMIN_ROUTES: TRoleBaseRoute[] = [
     link: "/dashboard/users",
     name: "Users",
     icon: <TeamOutlined />,
-    element: <Dashboard />,
+    element: <UserData />,
   },
 
   {
