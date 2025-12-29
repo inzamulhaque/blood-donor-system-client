@@ -15,19 +15,19 @@ import {
   FINDER_ROUTES,
   SUPER_ADMIN_ROUTES,
 } from "../../constants/RoleBaseRoutes";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 const { Sider } = Layout;
 
 const menuItems = [
   {
-    key: "Dashboard",
+    key: "dashboard",
     label: <Link to="/dashboard">Dashboard</Link>,
     icon: <DashboardOutlined />,
   },
   ...generateSidebarMenu(ADMIN_ROUTES),
   {
-    key: "Change Password",
+    key: "change-password",
     label: <Link to="/dashboard/change-password">Change Password</Link>,
     icon: <LockOutlined />,
   },
@@ -36,6 +36,10 @@ const menuItems = [
 const { useBreakpoint } = Grid;
 
 const SideBar = () => {
+  const location = useLocation();
+
+  const path = location.pathname.split("/").pop();
+
   const screens = useBreakpoint();
 
   const [isCollapsed, setIsCollapsed] = useState<boolean | null>(null);
@@ -74,7 +78,7 @@ const SideBar = () => {
           <Menu
             theme="dark"
             mode="inline"
-            defaultSelectedKeys={["Dashboard"]}
+            defaultSelectedKeys={[path as string]}
             items={menuItems}
             style={{ flex: 1 }}
           />
