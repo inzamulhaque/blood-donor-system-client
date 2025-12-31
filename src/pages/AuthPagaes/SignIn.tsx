@@ -17,12 +17,20 @@ import simplifyZodErrors from "../../utils/SimplifyZodErrors";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { LoginSchema } from "../../schemas/Auth";
 import { toast } from "sonner";
+import { useSigninMutation } from "../../redux/features/auth/authApi";
+import Loader from "../../components/shared/Loader";
+import verifyToken from "../../utils/verifyToken";
+import { useNavigate } from "react-router-dom";
 
 const { Text } = Typography;
 
 const SignIn = () => {
   const [formErrors, setFormErrors] = useState<Record<string, string>>({});
   const [formDefaultValues, setFormDefaultValues] = useState<FieldValues>({});
+
+  const [signin, { isLoading }] = useSigninMutation();
+
+  const navigate = useNavigate();
 
   const simpleErroes = useMemo(() => {
     const serr = simplifyZodErrors(formErrors) || {};
@@ -42,10 +50,30 @@ const SignIn = () => {
     return serr;
   }, [formErrors]);
 
-  const handleSubmit = (values: FieldValues) => {
-    setFormDefaultValues(values);
-    console.log(values);
+  const handleSubmit = async (values: FieldValues) => {
+    try {
+      setFormDefaultValues(values);
+
+      const res = await signin(values).unwrap();
+
+      const userData = verifyToken(res.data.token);
+
+      if (userData?.role) {
+        toast.success("Signed in successfully!", {
+          duration: 5000,
+          position: "top-right",
+        });
+
+        navigate(`/${userData.role as string}/dashboard`);
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
+
+  if (isLoading) {
+    return <Loader />;
+  }
 
   return (
     <>

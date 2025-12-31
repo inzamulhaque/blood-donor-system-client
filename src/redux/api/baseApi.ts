@@ -4,7 +4,7 @@ import { createApi } from "@reduxjs/toolkit/query/react";
 export const baseApi = createApi({
   reducerPath: "baseApi",
   baseQuery: fetchBaseQuery({
-    baseUrl: "http://blood-donor-system-server.vercel.app/api/v1",
+    baseUrl: "https://blood-donor-system-server.vercel.app/api/v1",
   }),
   endpoints: () => ({}),
 });
