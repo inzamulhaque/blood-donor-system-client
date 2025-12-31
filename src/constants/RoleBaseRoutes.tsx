@@ -1,6 +1,7 @@
 import {
   AppstoreAddOutlined,
   ArrowsAltOutlined,
+  DashboardOutlined,
   SearchOutlined,
   TeamOutlined,
   UnorderedListOutlined,
@@ -8,8 +9,9 @@ import {
   UserSwitchOutlined,
 } from "@ant-design/icons";
 import type { ReactNode } from "react";
-import Dashboard from "../components/dashboard/Dashboard";
 import UserData from "../pages/Admin/UserData";
+import AdminDashboard from "../components/dashboard/admin/AdminDashboard";
+import Dashboard from "../components/dashboard/Dashboard";
 
 export type TRoleBaseRoute = {
   path?: string;
@@ -22,32 +24,40 @@ export type TRoleBaseRoute = {
 
 export const ADMIN_ROUTES: TRoleBaseRoute[] = [
   {
-    path: "users",
-    link: "/dashboard/users",
+    index: true,
+    link: "/admin/dashboard",
+    name: "Dashboard",
+    icon: <DashboardOutlined />,
+    element: <AdminDashboard />,
+  },
+
+  {
+    path: "admin/users",
+    link: "/admin/dashboard/users",
     name: "Users",
     icon: <TeamOutlined />,
     element: <UserData />,
   },
 
   {
-    path: "donors",
-    link: "/dashboard/donors",
+    path: "admin/donors",
+    link: "/admin/dashboard/donors",
     name: "Donors",
     icon: <UserSwitchOutlined />,
     element: <Dashboard />,
   },
 
   {
-    path: "add-donor",
-    link: "/dashboard/add-donor",
+    path: "admin/add-donor",
+    link: "/admin/dashboard/add-donor",
     name: "Add Donor",
     icon: <UserAddOutlined />,
     element: <Dashboard />,
   },
 
   {
-    path: "block-user/:trackingNumber",
-    link: "/dashboard/block-user/:trackingNumber",
+    path: "admin/block-user/:trackingNumber",
+    link: "/admin/dashboard/block-user/:trackingNumber",
     element: <Dashboard />,
   },
 ];
@@ -55,8 +65,8 @@ export const ADMIN_ROUTES: TRoleBaseRoute[] = [
 export const SUPER_ADMIN_ROUTES: TRoleBaseRoute[] = [
   ...ADMIN_ROUTES,
   {
-    path: "make-admin",
-    link: "/dashboard/make-admin",
+    path: "super-admin/make-admin",
+    link: "/super-admin/dashboard/make-admin",
     name: "Make Admin",
     icon: <UserAddOutlined />,
     element: <Dashboard />,

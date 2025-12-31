@@ -20,11 +20,6 @@ import { Link, useLocation } from "react-router-dom";
 const { Sider } = Layout;
 
 const menuItems = [
-  {
-    key: "dashboard",
-    label: <Link to="/dashboard">Dashboard</Link>,
-    icon: <DashboardOutlined />,
-  },
   ...generateSidebarMenu(ADMIN_ROUTES),
   {
     key: "change-password",

@@ -56,18 +56,30 @@ const SignIn = () => {
 
       const res = await signin(values).unwrap();
 
-      const userData = verifyToken(res.data.token);
+      if (res?.success) {
+        const userData = verifyToken(res.data.token);
 
-      if (userData?.role) {
-        toast.success("Signed in successfully!", {
+        if (userData?.role) {
+          toast.success("Signed in successfully!", {
+            duration: 5000,
+            position: "top-right",
+          });
+
+          navigate(`/${userData.role as string}/dashboard`);
+        }
+      } else {
+        toast.error(res?.data?.message, {
           duration: 5000,
           position: "top-right",
         });
-
-        navigate(`/${userData.role as string}/dashboard`);
       }
     } catch (error) {
-      console.log(error);
+      if (error?.data?.message) {
+        toast.error(error?.data?.message, {
+          duration: 5000,
+          position: "top-right",
+        });
+      }
     }
   };
 
