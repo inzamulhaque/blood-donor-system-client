@@ -21,10 +21,13 @@ import { useSigninMutation } from "../../redux/features/auth/authApi";
 import Loader from "../../components/shared/Loader";
 import verifyToken from "../../utils/verifyToken";
 import { useNavigate } from "react-router-dom";
+import { useAppDispatch } from "../../redux/hooks";
+import { setUser, type TUser } from "../../redux/features/auth/authSlice";
 
 const { Text } = Typography;
 
 const SignIn = () => {
+  const dispatch = useAppDispatch();
   const [formErrors, setFormErrors] = useState<Record<string, string>>({});
   const [formDefaultValues, setFormDefaultValues] = useState<FieldValues>({});
 
@@ -57,13 +60,15 @@ const SignIn = () => {
       const res = await signin(values).unwrap();
 
       if (res?.success) {
-        const userData = verifyToken(res.data.token);
+        const userData = verifyToken(res.data.token) as TUser;
 
         if (userData?.role) {
           toast.success("Signed in successfully!", {
             duration: 5000,
             position: "top-right",
           });
+
+          dispatch(setUser({ user: userData, token: res.data.token }));
 
           navigate(`/${userData.role as string}/dashboard`);
         }
@@ -73,7 +78,7 @@ const SignIn = () => {
           position: "top-right",
         });
       }
-    } catch (error) {
+    } catch (error: any) {
       if (error?.data?.message) {
         toast.error(error?.data?.message, {
           duration: 5000,
