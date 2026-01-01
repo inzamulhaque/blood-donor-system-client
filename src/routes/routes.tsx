@@ -19,6 +19,7 @@ import {
   SUPER_ADMIN_ROUTES,
 } from "../constants/RoleBaseRoutes";
 import Dashboard from "../components/dashboard/Dashboard";
+import AdminDashboard from "../components/dashboard/admin/AdminDashboard";
 
 const router = createBrowserRouter([
   {
@@ -54,18 +55,16 @@ const router = createBrowserRouter([
   },
 
   {
-    path: "/dashboard",
+    path: "/admin/dashboard",
     element: <WithDashboardLayout />,
 
     children: generateRouterRoutes([
       {
         index: true,
-        element: <Dashboard />,
+        element: <AdminDashboard />,
       },
-      ...SUPER_ADMIN_ROUTES,
+
       ...ADMIN_ROUTES,
-      ...DONOR_ROUTES,
-      ...FINDER_ROUTES,
 
       {
         path: "change-password",
