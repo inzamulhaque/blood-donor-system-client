@@ -6,6 +6,14 @@
   height: calc(75vh - 60px);
 }
 
+.coverageAreaSection {
+  background-image: url("../../assets/homeImages/coverageAreaBG.png");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
+  height: calc(75vh - 60px);
+}
+
 .whoWeAreTitle {
   text-align: center;
   font-weight: 900;
@@ -25,6 +33,11 @@
 
 @media (max-width: 768px) {
   .heroSection {
+    height: 100%;
+    padding: 20px;
+  }
+
+  .coverageAreaSection {
     height: 100%;
     padding: 20px;
   }

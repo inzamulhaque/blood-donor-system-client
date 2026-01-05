@@ -4,6 +4,7 @@ import WhoWeAre from "../components/home/WhoWeAre";
 import MissionAndVission from "../components/home/MissionAndVission";
 import QuestionAnswer from "../components/home/QuestionAnswer";
 import WhyDonateBlood from "../components/home/WhyDonateBlood";
+import CoverageArea from "../components/home/CoverageArea";
 
 const Home = () => {
   return (
@@ -18,6 +19,7 @@ const Home = () => {
         <HeroSection />
         <WhoWeAre />
         <WhyDonateBlood />
+        <CoverageArea />
         <MissionAndVission />
         <QuestionAnswer />
       </motion.div>
