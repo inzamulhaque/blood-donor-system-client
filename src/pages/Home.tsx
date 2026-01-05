@@ -3,6 +3,7 @@ import HeroSection from "../components/home/HeroSection";
 import WhoWeAre from "../components/home/WhoWeAre";
 import MissionAndVission from "../components/home/MissionAndVission";
 import QuestionAnswer from "../components/home/QuestionAnswer";
+import WhyDonateBlood from "../components/home/WhyDonateBlood";
 
 const Home = () => {
   return (
@@ -16,6 +17,7 @@ const Home = () => {
       >
         <HeroSection />
         <WhoWeAre />
+        <WhyDonateBlood />
         <MissionAndVission />
         <QuestionAnswer />
       </motion.div>
