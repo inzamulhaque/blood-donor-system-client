@@ -11,7 +11,7 @@ export const BLOOD_GROUPS = [
 
 export type TBloodGroup = (typeof BLOOD_GROUPS)[number];
 
-export const BLOOD_GROUPS_OPTIONS = BLOOD_GROUPS.map((upozila) => ({
-  value: upozila,
-  label: upozila,
+export const BLOOD_GROUPS_OPTIONS = BLOOD_GROUPS.map((bloodGroup) => ({
+  value: bloodGroup,
+  label: bloodGroup,
 }));

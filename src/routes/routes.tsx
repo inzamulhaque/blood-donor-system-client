@@ -62,19 +62,16 @@ const router = createBrowserRouter([
       </ProtectedRoute>
     ),
 
-    children: generateRouterRoutes([
-      ...ADMIN_ROUTES,
-
-      {
-        path: "change-password",
-        element: <Dashboard />,
-      },
-    ]),
+    children: generateRouterRoutes([...ADMIN_ROUTES]),
   },
 
   {
-    path: "/dashboard",
-    element: <WithDashboardLayout />,
+    path: "/dashboard/change-password",
+    element: (
+      <>
+        <h1>change password</h1>
+      </>
+    ),
   },
 
   {

@@ -6,12 +6,12 @@ import {
   TeamOutlined,
   UnorderedListOutlined,
   UserAddOutlined,
-  UserSwitchOutlined,
 } from "@ant-design/icons";
 import type { ReactNode } from "react";
 import UserData from "../pages/Admin/UserData";
 import AdminDashboard from "../components/dashboard/admin/AdminDashboard";
 import Dashboard from "../components/dashboard/Dashboard";
+import FindDonor from "../components/dashboard/admin/FindDonor";
 
 export type TRoleBaseRoute = {
   path?: string;
@@ -32,7 +32,7 @@ export const ADMIN_ROUTES: TRoleBaseRoute[] = [
   },
 
   {
-    path: "admin/dashboard/users",
+    path: "users",
     link: "/admin/dashboard/users",
     name: "Users",
     icon: <TeamOutlined />,
@@ -40,15 +40,15 @@ export const ADMIN_ROUTES: TRoleBaseRoute[] = [
   },
 
   {
-    path: "admin/dashboard/donors",
+    path: "donors",
     link: "/admin/dashboard/donors",
-    name: "Donors",
-    icon: <UserSwitchOutlined />,
-    element: <Dashboard />,
+    name: "Find Donors",
+    icon: <SearchOutlined />,
+    element: <FindDonor />,
   },
 
   {
-    path: "admin/dashboard/add-donor",
+    path: "add-donor",
     link: "/admin/dashboard/add-donor",
     name: "Add Donor",
     icon: <UserAddOutlined />,
@@ -56,7 +56,7 @@ export const ADMIN_ROUTES: TRoleBaseRoute[] = [
   },
 
   {
-    path: "admin/dashboard/block-user/:trackingNumber",
+    path: "block-user/:trackingNumber",
     link: "/admin/dashboard/block-user/:trackingNumber",
     element: <Dashboard />,
   },
@@ -65,7 +65,7 @@ export const ADMIN_ROUTES: TRoleBaseRoute[] = [
 export const SUPER_ADMIN_ROUTES: TRoleBaseRoute[] = [
   ...ADMIN_ROUTES,
   {
-    path: "super-admin/dashboard/make-admin",
+    path: "/make-admin",
     link: "/super-admin/dashboard/make-admin",
     name: "Make Admin",
     icon: <UserAddOutlined />,
