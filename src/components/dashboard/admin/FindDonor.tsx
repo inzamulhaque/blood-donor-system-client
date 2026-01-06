@@ -6,15 +6,28 @@ import type { FieldValues } from "react-hook-form";
 import { useState } from "react";
 import { BLOOD_GROUPS_OPTIONS } from "../../../constants/bloodGroup";
 import { SearchOutlined } from "@ant-design/icons";
+import { useFindDonorQuery } from "../../../redux/features/admin/adminApi";
 
 const FindDonor = () => {
   const [formErrors, setFormErrors] = useState<Record<string, string>>({});
 
-  const [beforeSearch, setBeforeSearch] = useState<boolean>(true);
+  const [params, setParams] = useState<Record<string, string>>({});
+
+  const { data, isLoading } = useFindDonorQuery(params);
+
+  console.log(data);
 
   const handleSearch = (values: FieldValues) => {
+    let filterValues = {};
+
     console.log(values);
-    setBeforeSearch(false);
+
+    if (values) {
+      filterValues = Object.fromEntries(
+        Object.entries(values).filter(([, value]) => value !== "")
+      );
+    }
+    setParams(filterValues);
   };
   return (
     <>
@@ -77,13 +90,7 @@ const FindDonor = () => {
 
         <Divider />
 
-        {beforeSearch && (
-          <h3 style={{ textAlign: "center", opacity: 0.3 }}>
-            Search For Donor
-          </h3>
-        )}
-
-        {!beforeSearch && (
+        {isLoading && (
           <div style={{ textAlign: "center" }}>
             <Spin size="large" />
           </div>
