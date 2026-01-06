@@ -29,7 +29,6 @@ const { Text } = Typography;
 const SignIn = () => {
   const dispatch = useAppDispatch();
   const [formErrors, setFormErrors] = useState<Record<string, string>>({});
-  const [formDefaultValues, setFormDefaultValues] = useState<FieldValues>({});
 
   const [signin, { isLoading }] = useSigninMutation();
 
@@ -55,8 +54,6 @@ const SignIn = () => {
 
   const handleSubmit = async (values: FieldValues) => {
     try {
-      setFormDefaultValues(values);
-
       const res = await signin(values).unwrap();
 
       if (res?.success) {
@@ -138,7 +135,6 @@ const SignIn = () => {
               setFormErrors={setFormErrors}
               onSubmit={handleSubmit}
               resolver={zodResolver(LoginSchema)}
-              defaultValues={formDefaultValues}
             >
               <IDInput
                 label="Email"

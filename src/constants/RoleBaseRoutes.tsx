@@ -32,7 +32,7 @@ export const ADMIN_ROUTES: TRoleBaseRoute[] = [
   },
 
   {
-    path: "admin/users",
+    path: "admin/dashboard/users",
     link: "/admin/dashboard/users",
     name: "Users",
     icon: <TeamOutlined />,
@@ -40,7 +40,7 @@ export const ADMIN_ROUTES: TRoleBaseRoute[] = [
   },
 
   {
-    path: "admin/donors",
+    path: "admin/dashboard/donors",
     link: "/admin/dashboard/donors",
     name: "Donors",
     icon: <UserSwitchOutlined />,
@@ -48,7 +48,7 @@ export const ADMIN_ROUTES: TRoleBaseRoute[] = [
   },
 
   {
-    path: "admin/add-donor",
+    path: "admin/dashboard/add-donor",
     link: "/admin/dashboard/add-donor",
     name: "Add Donor",
     icon: <UserAddOutlined />,
@@ -56,7 +56,7 @@ export const ADMIN_ROUTES: TRoleBaseRoute[] = [
   },
 
   {
-    path: "admin/block-user/:trackingNumber",
+    path: "admin/dashboard/block-user/:trackingNumber",
     link: "/admin/dashboard/block-user/:trackingNumber",
     element: <Dashboard />,
   },
@@ -65,7 +65,7 @@ export const ADMIN_ROUTES: TRoleBaseRoute[] = [
 export const SUPER_ADMIN_ROUTES: TRoleBaseRoute[] = [
   ...ADMIN_ROUTES,
   {
-    path: "super-admin/make-admin",
+    path: "super-admin/dashboard/make-admin",
     link: "/super-admin/dashboard/make-admin",
     name: "Make Admin",
     icon: <UserAddOutlined />,

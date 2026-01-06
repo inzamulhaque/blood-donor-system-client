@@ -7,7 +7,7 @@ import {
 } from "@ant-design/icons";
 import { Button, Flex, Grid, Layout, Menu } from "antd";
 import { Header } from "antd/es/layout/layout";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import generateSidebarMenu from "../../utils/generateSidebarMenu";
 import {
   ADMIN_ROUTES,
@@ -15,7 +15,10 @@ import {
   FINDER_ROUTES,
   SUPER_ADMIN_ROUTES,
 } from "../../constants/RoleBaseRoutes";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { useAppDispatch } from "../../redux/hooks";
+import { logout } from "../../redux/features/auth/authSlice";
+import { toast } from "sonner";
 
 const { Sider } = Layout;
 
@@ -32,6 +35,7 @@ const { useBreakpoint } = Grid;
 
 const SideBar = () => {
   const location = useLocation();
+  const navigate = useNavigate();
 
   const path = location.pathname.split("/").pop();
 
@@ -40,6 +44,18 @@ const SideBar = () => {
   const [isCollapsed, setIsCollapsed] = useState<boolean | null>(null);
 
   const collapsed = isCollapsed !== null ? isCollapsed : !screens.md;
+
+  const dispatch = useAppDispatch();
+
+  const haldeSignOut = () => {
+    dispatch(logout());
+    navigate("/signin");
+
+    toast.success("You have been securely logged out of your account!", {
+      duration: 5000,
+      position: "top-right",
+    });
+  };
 
   return (
     <>
@@ -86,7 +102,11 @@ const SideBar = () => {
               {
                 key: "logout",
                 icon: <LogoutOutlined style={{ color: "red" }} />,
-                label: <span style={{ color: "red" }}>LogOut</span>,
+                label: (
+                  <span style={{ color: "red" }} onClick={haldeSignOut}>
+                    LogOut
+                  </span>
+                ),
               },
             ]}
           />

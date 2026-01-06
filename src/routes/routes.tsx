@@ -19,7 +19,6 @@ import {
   SUPER_ADMIN_ROUTES,
 } from "../constants/RoleBaseRoutes";
 import Dashboard from "../components/dashboard/Dashboard";
-import AdminDashboard from "../components/dashboard/admin/AdminDashboard";
 import ProtectedRoute from "../components/layout/ProtectedRoute";
 
 const router = createBrowserRouter([
@@ -64,11 +63,6 @@ const router = createBrowserRouter([
     ),
 
     children: generateRouterRoutes([
-      {
-        index: true,
-        element: <AdminDashboard />,
-      },
-
       ...ADMIN_ROUTES,
 
       {
