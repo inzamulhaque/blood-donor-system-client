@@ -122,8 +122,6 @@ const FindDonor = () => {
 
   const { data, isLoading } = useFindDonorQuery({ ...params, page, limit });
 
-  console.log(data);
-
   const handleSearch = (values: FieldValues) => {
     let filterValues = {};
 
@@ -132,6 +130,7 @@ const FindDonor = () => {
         Object.entries(values).filter(([, value]) => value !== "")
       );
     }
+
     setParams({ ...filterValues });
   };
   return (
@@ -164,6 +163,73 @@ const FindDonor = () => {
                 options={[{ value: "", label: "All" }, ...BLOOD_GROUPS_OPTIONS]}
               />
             </Col>
+
+            <Col xs={24} sm={12} md={12} lg={8}>
+              <IDSelect
+                label="Availability"
+                name="availability"
+                required={false}
+                placeholder="Select Availability"
+                options={[
+                  { value: "", label: "All" },
+
+                  {
+                    value: true as unknown as string,
+                    label: "Available",
+                  },
+
+                  {
+                    value: false as unknown as string,
+                    label: "Not Available",
+                  },
+                ]}
+              />
+            </Col>
+
+            <Col xs={24} sm={12} md={12} lg={8}>
+              <IDSelect
+                label="Delete Status"
+                name="isDeleted"
+                required={false}
+                placeholder="Select Delete Status"
+                options={[
+                  { value: "", label: "All" },
+
+                  {
+                    value: true as unknown as string,
+                    label: "Deleted",
+                  },
+
+                  {
+                    value: false as unknown as string,
+                    label: "Not Deleted",
+                  },
+                ]}
+              />
+            </Col>
+
+            <Col xs={24} sm={12} md={12} lg={8}>
+              <IDSelect
+                label="Account Visibility"
+                name="accountVisibility"
+                required={false}
+                placeholder="Select Account Visibility"
+                options={[
+                  { value: "", label: "All" },
+
+                  {
+                    value: "public",
+                    label: "Public",
+                  },
+
+                  {
+                    value: "private",
+                    label: "Private",
+                  },
+                ]}
+              />
+            </Col>
+
             <Col xs={24} sm={24} md={24} lg={8}>
               <div
                 style={{
