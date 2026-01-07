@@ -8,10 +8,11 @@ import {
   UserAddOutlined,
 } from "@ant-design/icons";
 import type { ReactNode } from "react";
-import UserData from "../pages/Admin/UserData";
-import AdminDashboard from "../components/dashboard/admin/AdminDashboard";
+
+import AdminDashboard from "../pages/Admin/AdminDashboard";
 import Dashboard from "../components/dashboard/Dashboard";
-import FindDonor from "../components/dashboard/admin/FindDonor";
+import FindDonor from "../pages/Admin/FindDonor";
+import UserData from "../pages/Admin/UserData";
 
 export type TRoleBaseRoute = {
   path?: string;

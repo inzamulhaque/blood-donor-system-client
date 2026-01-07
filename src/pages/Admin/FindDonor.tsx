@@ -1,12 +1,116 @@
-import { Button, Col, Divider, Row, Spin } from "antd";
-import IDSelect from "../../shared/form/IDSelect";
-import { UPOZILAS_PABNA_OPTIONS } from "../../../constants/upozila";
-import IDForm from "../../shared/form/IDForm";
+import {
+  Button,
+  Col,
+  Divider,
+  Pagination,
+  Row,
+  Spin,
+  Switch,
+  Table,
+  Tag,
+  type TableProps,
+} from "antd";
+import IDSelect from "../../components/shared/form/IDSelect";
+import {
+  UPOZILAS_PABNA_OPTIONS,
+  type TUpozilaPabna,
+} from "../../constants/upozila";
+import IDForm from "../../components/shared/form/IDForm";
 import type { FieldValues } from "react-hook-form";
 import { useState } from "react";
-import { BLOOD_GROUPS_OPTIONS } from "../../../constants/bloodGroup";
+import {
+  BLOOD_GROUPS_OPTIONS,
+  type TBloodGroup,
+} from "../../constants/bloodGroup";
 import { SearchOutlined } from "@ant-design/icons";
-import { useFindDonorQuery } from "../../../redux/features/admin/adminApi";
+import { useFindDonorQuery } from "../../redux/features/admin/adminApi";
+
+type TDonor = {
+  name: string;
+  email: string;
+  phoneNumber: string;
+  availability: boolean;
+  bloodGroup: TBloodGroup;
+  upozila: TUpozilaPabna;
+  accountVisibility: "public" | "private";
+  isDeleted: boolean;
+};
+
+const columns: TableProps<TDonor>["columns"] = [
+  {
+    title: "SL",
+    key: "sl",
+    render: (_text, _record, index) => index + 1,
+  },
+
+  {
+    title: "Name",
+    dataIndex: "name",
+    key: "name",
+  },
+
+  {
+    title: "Email",
+    dataIndex: "email",
+    key: "email",
+  },
+
+  {
+    title: "Upozila",
+    dataIndex: "upozila",
+    key: "upozila",
+  },
+
+  {
+    title: "Blood Group",
+    dataIndex: "bloodGroup",
+    key: "bloodGroup",
+  },
+
+  {
+    title: "Phone Number",
+    dataIndex: "phoneNumber",
+    key: "phoneNumber",
+    render: (item) => {
+      return (
+        <>
+          <a href={`tel:${item}`}>{item}</a>
+        </>
+      );
+    },
+  },
+
+  {
+    title: "Availability",
+    dataIndex: "availability",
+    key: "availability",
+    render: (available: boolean) => (
+      <Switch
+        checked={available}
+        checkedChildren="Available"
+        unCheckedChildren="Unavailable"
+        disabled
+      />
+    ),
+  },
+
+  {
+    title: "Account Visibility",
+    dataIndex: "accountVisibility",
+    key: "accountVisibility",
+  },
+
+  {
+    title: "Deleted",
+    dataIndex: "isDeleted",
+    key: "isDeleted",
+    render: (isDeleted: boolean) => (
+      <Tag color={isDeleted ? "red" : "green"}>
+        {isDeleted ? "Deleted" : "Not Deleted"}
+      </Tag>
+    ),
+  },
+];
 
 const FindDonor = () => {
   const [formErrors, setFormErrors] = useState<Record<string, string>>({});
@@ -19,8 +123,6 @@ const FindDonor = () => {
 
   const handleSearch = (values: FieldValues) => {
     let filterValues = {};
-
-    console.log(values);
 
     if (values) {
       filterValues = Object.fromEntries(
@@ -100,6 +202,34 @@ const FindDonor = () => {
           <h3 style={{ textAlign: "center", opacity: 0.3, color: "red" }}>
             Something Went Wrong
           </h3>
+        )}
+
+        {!isLoading && data && data?.data?.length !== 0 && (
+          <>
+            <Table<TDonor>
+              columns={columns}
+              dataSource={data.data}
+              pagination={false}
+              scroll={{ x: "max-content" }}
+            />
+          </>
+        )}
+
+        {!isLoading && data && data?.data?.length === 0 && (
+          <>
+            <h3 style={{ textAlign: "center", opacity: 0.3, color: "red" }}>
+              No Donor Available In This Moment
+            </h3>
+          </>
+        )}
+
+        {!isLoading && data && data?.meta && data?.meta?.totalPage > 1 && (
+          <Pagination
+            align="end"
+            defaultCurrent={data?.meta?.page}
+            pageSize={data?.meta?.limit}
+            total={data?.meta?.total}
+          />
         )}
       </div>
     </>

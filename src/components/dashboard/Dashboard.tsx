@@ -1,4 +1,4 @@
-import AdminDashboard from "./admin/AdminDashboard";
+import AdminDashboard from "../../pages/Admin/AdminDashboard";
 
 const Dashboard = () => {
   return (
