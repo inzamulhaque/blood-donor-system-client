@@ -113,11 +113,14 @@ const columns: TableProps<TDonor>["columns"] = [
 ];
 
 const FindDonor = () => {
+  const [page, setPage] = useState<number>(1);
+  const [limit, setLimit] = useState<number>(5);
+
   const [formErrors, setFormErrors] = useState<Record<string, string>>({});
 
-  const [params, setParams] = useState<Record<string, string>>({});
+  const [params, setParams] = useState<Record<string, string | number>>();
 
-  const { data, isLoading } = useFindDonorQuery(params);
+  const { data, isLoading } = useFindDonorQuery({ ...params, page, limit });
 
   console.log(data);
 
@@ -129,7 +132,7 @@ const FindDonor = () => {
         Object.entries(values).filter(([, value]) => value !== "")
       );
     }
-    setParams(filterValues);
+    setParams({ ...filterValues });
   };
   return (
     <>
@@ -229,6 +232,13 @@ const FindDonor = () => {
             defaultCurrent={data?.meta?.page}
             pageSize={data?.meta?.limit}
             total={data?.meta?.total}
+            onChange={(page, pageSize) => {
+              setPage(page);
+              setLimit(pageSize);
+            }}
+            style={{
+              marginTop: "10px",
+            }}
           />
         )}
       </div>
