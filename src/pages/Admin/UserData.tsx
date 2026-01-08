@@ -21,7 +21,6 @@ import { useState } from "react";
 import { useAllUserQuery } from "../../redux/features/admin/adminApi";
 import IDForm from "../../components/shared/form/IDForm";
 import type { FieldValues } from "react-hook-form";
-import IDSelect from "../../components/shared/form/IDSelect";
 import IDInput from "../../components/shared/form/IDInput";
 
 const columns: TableColumnsType<TUser> = [
@@ -44,6 +43,13 @@ const columns: TableColumnsType<TUser> = [
     key: "email",
     align: "center",
     dataIndex: "email",
+  },
+
+  {
+    title: "Tracking Number",
+    key: "trackingNumber",
+    align: "center",
+    dataIndex: "trackingNumber",
   },
 
   {
@@ -105,34 +111,12 @@ const columns: TableColumnsType<TUser> = [
       console.log(item);
       return (
         <>
-          <Button>
+          <Button type="primary">
             View Details <RightCircleOutlined />
           </Button>
         </>
       );
     },
-  },
-];
-
-const searchOptions = [
-  {
-    value: "name",
-    label: "Name",
-  },
-
-  {
-    value: "email",
-    label: "Email",
-  },
-
-  {
-    value: "trackingNumber",
-    label: "Tracking Number",
-  },
-
-  {
-    value: "role",
-    label: "Role",
   },
 ];
 
@@ -147,9 +131,33 @@ const UserData = () => {
   const { data, isLoading } = useAllUserQuery({ ...params, page, limit });
 
   const handleSearch = (values: FieldValues) => {
-    setParams({
-      [values.fieldName]: [values.searchValue] as unknown as string,
-    });
+    const isEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(values.searchValue);
+
+    const isNumber = /^\d+$/.test(values.searchValue);
+
+    if (isEmail) {
+      setParams({
+        email: [values.searchValue] as unknown as string,
+      });
+    } else if (isNumber) {
+      setParams({
+        trackingNumber: [values.searchValue] as unknown as string,
+      });
+    } else {
+      setParams({
+        searchTerm: [values.searchValue] as unknown as string,
+      });
+    }
+
+    // if (values.fieldName === "email" || values.fieldName === "trackingNumber") {
+    //   setParams({
+    //     [values.fieldName]: [values.searchValue] as unknown as string,
+    //   });
+    // } else {
+    //   setParams({
+    //     searchTerm: [values.searchValue] as unknown as string,
+    //   });
+    // }
   };
 
   return (
@@ -160,17 +168,7 @@ const UserData = () => {
 
         <IDForm onSubmit={handleSearch} setFormErrors={setFormErrors}>
           <Row gutter={[20, 20]}>
-            <Col xs={24} sm={12} md={12} lg={8}>
-              <IDSelect
-                label="Field Name"
-                name="fieldName"
-                required={true}
-                placeholder="Select Field Name"
-                options={searchOptions}
-              />
-            </Col>
-
-            <Col xs={24} sm={12} md={12} lg={8}>
+            <Col xs={24} sm={18} md={18} lg={16}>
               <IDInput
                 label="Search Value"
                 name="searchValue"
