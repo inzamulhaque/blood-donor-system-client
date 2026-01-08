@@ -9,7 +9,15 @@ const adminApi = baseApi.injectEndpoints({
         params,
       }),
     }),
+
+    allUser: builder.query({
+      query: (params) => ({
+        url: "/admins/all-users",
+        method: "GET",
+        params,
+      }),
+    }),
   }),
 });
 
-export const { useFindDonorQuery } = adminApi;
+export const { useFindDonorQuery, useAllUserQuery } = adminApi;

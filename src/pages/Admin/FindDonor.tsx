@@ -11,35 +11,20 @@ import {
   type TableProps,
 } from "antd";
 import IDSelect from "../../components/shared/form/IDSelect";
-import {
-  UPOZILAS_PABNA_OPTIONS,
-  type TUpozilaPabna,
-} from "../../constants/upozila";
+import { UPOZILAS_PABNA_OPTIONS } from "../../constants/upozila";
 import IDForm from "../../components/shared/form/IDForm";
 import type { FieldValues } from "react-hook-form";
 import { useState } from "react";
-import {
-  BLOOD_GROUPS_OPTIONS,
-  type TBloodGroup,
-} from "../../constants/bloodGroup";
+import { BLOOD_GROUPS_OPTIONS } from "../../constants/bloodGroup";
 import { SearchOutlined } from "@ant-design/icons";
 import { useFindDonorQuery } from "../../redux/features/admin/adminApi";
-
-type TDonor = {
-  name: string;
-  email: string;
-  phoneNumber: string;
-  availability: boolean;
-  bloodGroup: TBloodGroup;
-  upozila: TUpozilaPabna;
-  accountVisibility: "public" | "private";
-  isDeleted: boolean;
-};
+import type { TDonor } from "../../type";
 
 const columns: TableProps<TDonor>["columns"] = [
   {
     title: "SL",
     key: "sl",
+    align: "center",
     render: (_text, _record, index) => index + 1,
   },
 
@@ -47,30 +32,35 @@ const columns: TableProps<TDonor>["columns"] = [
     title: "Name",
     dataIndex: "name",
     key: "name",
+    align: "center",
   },
 
   {
     title: "Email",
     dataIndex: "email",
     key: "email",
+    align: "center",
   },
 
   {
     title: "Upozila",
     dataIndex: "upozila",
     key: "upozila",
+    align: "center",
   },
 
   {
     title: "Blood Group",
     dataIndex: "bloodGroup",
     key: "bloodGroup",
+    align: "center",
   },
 
   {
     title: "Phone Number",
     dataIndex: "phoneNumber",
     key: "phoneNumber",
+    align: "center",
     render: (item) => {
       return (
         <>
@@ -84,6 +74,7 @@ const columns: TableProps<TDonor>["columns"] = [
     title: "Availability",
     dataIndex: "availability",
     key: "availability",
+    align: "center",
     render: (available: boolean) => (
       <Switch
         checked={available}
@@ -98,12 +89,14 @@ const columns: TableProps<TDonor>["columns"] = [
     title: "Account Visibility",
     dataIndex: "accountVisibility",
     key: "accountVisibility",
+    align: "center",
   },
 
   {
     title: "Deleted",
     dataIndex: "isDeleted",
     key: "isDeleted",
+    align: "center",
     render: (isDeleted: boolean) => (
       <Tag color={isDeleted ? "red" : "green"}>
         {isDeleted ? "Deleted" : "Not Deleted"}
@@ -114,11 +107,11 @@ const columns: TableProps<TDonor>["columns"] = [
 
 const FindDonor = () => {
   const [page, setPage] = useState<number>(1);
-  const [limit, setLimit] = useState<number>(5);
+  const [limit, setLimit] = useState<number>(10);
 
   const [formErrors, setFormErrors] = useState<Record<string, string>>({});
 
-  const [params, setParams] = useState<Record<string, string | number>>();
+  const [params, setParams] = useState<Record<string, string>>();
 
   const { data, isLoading } = useFindDonorQuery({ ...params, page, limit });
 
@@ -140,13 +133,16 @@ const FindDonor = () => {
           padding: "10px 20px",
         }}
       >
+        <h1 style={{ marginBottom: "20px" }}>Search Donors</h1>
+        <Divider />
+
         <IDForm onSubmit={handleSearch} setFormErrors={setFormErrors}>
           <Row gutter={[20, 20]}>
             <Col xs={24} sm={12} md={12} lg={8}>
               <IDSelect
                 label="UPOZILA"
                 name="upozila"
-                required={true}
+                required={false}
                 placeholder="Select Upozila"
                 options={[
                   { value: "", label: "All" },
@@ -158,7 +154,7 @@ const FindDonor = () => {
               <IDSelect
                 label="BLOOD GROUP"
                 name="bloodGroup"
-                required={true}
+                required={false}
                 placeholder="Select Blood Group"
                 options={[{ value: "", label: "All" }, ...BLOOD_GROUPS_OPTIONS]}
               />

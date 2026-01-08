@@ -20,6 +20,7 @@ import {
 } from "../constants/RoleBaseRoutes";
 import Dashboard from "../components/dashboard/Dashboard";
 import ProtectedRoute from "../components/layout/ProtectedRoute";
+import { Roles } from "../constants/userConstant";
 
 const router = createBrowserRouter([
   {
@@ -57,7 +58,7 @@ const router = createBrowserRouter([
   {
     path: "/admin/dashboard",
     element: (
-      <ProtectedRoute role="admin">
+      <ProtectedRoute role={Roles.ADMIN}>
         <WithDashboardLayout />
       </ProtectedRoute>
     ),
