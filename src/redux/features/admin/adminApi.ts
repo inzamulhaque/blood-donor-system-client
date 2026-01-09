@@ -16,6 +16,8 @@ const adminApi = baseApi.injectEndpoints({
         method: "GET",
         params,
       }),
+
+      providesTags: ["admin", "user"],
     }),
 
     userDetailsByTN: builder.query({
@@ -23,9 +25,24 @@ const adminApi = baseApi.injectEndpoints({
         url: `/users/user/${params}`,
         method: "GET",
       }),
+
+      providesTags: ["admin", "user"],
+    }),
+
+    userBlockByTN: builder.mutation({
+      query: (params) => ({
+        url: `/admins/block-user/${params}`,
+        method: "PATCH",
+      }),
+
+      invalidatesTags: ["admin", "user"],
     }),
   }),
 });
 
-export const { useFindDonorQuery, useAllUserQuery, useUserDetailsByTNQuery } =
-  adminApi;
+export const {
+  useFindDonorQuery,
+  useAllUserQuery,
+  useUserDetailsByTNQuery,
+  useUserBlockByTNMutation,
+} = adminApi;
