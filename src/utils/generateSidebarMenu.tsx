@@ -1,5 +1,5 @@
 import type React from "react";
-import type { TRoleBaseRoute } from "../constants/RoleBaseRoutes";
+import type { TRoleBaseRoute } from "../routes/RoleBaseRoutes";
 import { Link } from "react-router-dom";
 
 const generateSidebarMenu = (items: TRoleBaseRoute[]) => {

@@ -1,4 +1,4 @@
-import type { TRoleBaseRoute } from "../constants/RoleBaseRoutes";
+import type { TRoleBaseRoute } from "../routes/RoleBaseRoutes";
 
 const generateRouterRoutes = (routes: TRoleBaseRoute[]) => {
   return routes

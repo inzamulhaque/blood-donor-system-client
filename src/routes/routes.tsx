@@ -17,7 +17,7 @@ import {
   DONOR_ROUTES,
   FINDER_ROUTES,
   SUPER_ADMIN_ROUTES,
-} from "../constants/RoleBaseRoutes";
+} from "./RoleBaseRoutes";
 import Dashboard from "../components/dashboard/Dashboard";
 import ProtectedRoute from "../components/layout/ProtectedRoute";
 import { Roles } from "../constants/userConstant";

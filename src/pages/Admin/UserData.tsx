@@ -22,6 +22,7 @@ import { useAllUserQuery } from "../../redux/features/admin/adminApi";
 import IDForm from "../../components/shared/form/IDForm";
 import type { FieldValues } from "react-hook-form";
 import IDInput from "../../components/shared/form/IDInput";
+import { Link } from "react-router-dom";
 
 const columns: TableColumnsType<TUser> = [
   {
@@ -111,9 +112,11 @@ const columns: TableColumnsType<TUser> = [
       console.log(item);
       return (
         <>
-          <Button type="primary">
-            View Details <RightCircleOutlined />
-          </Button>
+          <Link to={`/admin/dashboard/users/${item.trackingNumber}`}>
+            <Button type="primary" disabled={item.role === "super-admin"}>
+              View Details <RightCircleOutlined />
+            </Button>
+          </Link>
         </>
       );
     },
@@ -148,16 +151,6 @@ const UserData = () => {
         searchTerm: [values.searchValue] as unknown as string,
       });
     }
-
-    // if (values.fieldName === "email" || values.fieldName === "trackingNumber") {
-    //   setParams({
-    //     [values.fieldName]: [values.searchValue] as unknown as string,
-    //   });
-    // } else {
-    //   setParams({
-    //     searchTerm: [values.searchValue] as unknown as string,
-    //   });
-    // }
   };
 
   return (

@@ -14,7 +14,7 @@ import {
   DONOR_ROUTES,
   FINDER_ROUTES,
   SUPER_ADMIN_ROUTES,
-} from "../../constants/RoleBaseRoutes";
+} from "../../routes/RoleBaseRoutes";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useAppDispatch } from "../../redux/hooks";
 import { logout } from "../../redux/features/auth/authSlice";
