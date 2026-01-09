@@ -31,7 +31,17 @@ const adminApi = baseApi.injectEndpoints({
 
     userBlockByTN: builder.mutation({
       query: (params) => ({
-        url: `/admins/block-user/${params}`,
+        url: `/admins/block-user/${params.tn}`,
+        method: "PATCH",
+        body: { reason: params.reason },
+      }),
+
+      invalidatesTags: ["admin", "user"],
+    }),
+
+    userUnblockByTN: builder.mutation({
+      query: (params) => ({
+        url: `/admins/unblock-user/${params}`,
         method: "PATCH",
       }),
 
@@ -45,4 +55,5 @@ export const {
   useAllUserQuery,
   useUserDetailsByTNQuery,
   useUserBlockByTNMutation,
+  useUserUnblockByTNMutation,
 } = adminApi;

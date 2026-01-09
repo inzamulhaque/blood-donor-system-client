@@ -77,7 +77,7 @@ const columns: TableColumnsType<TUser> = [
   },
 
   {
-    title: "Block Option",
+    title: "Block Status",
 
     key: "blockStatus",
     align: "center",
@@ -86,7 +86,7 @@ const columns: TableColumnsType<TUser> = [
 
       if (!canBlock) {
         return (
-          <Tag color={"red"} style={{ fontWeight: 500, color: "red" }}>
+          <Tag color={"blue"} style={{ fontWeight: 500, color: "red" }}>
             <StopOutlined /> Insufficient Permission
           </Tag>
         );
@@ -95,9 +95,13 @@ const columns: TableColumnsType<TUser> = [
       return (
         <>
           {item?.blockStatus?.isBlocked ? (
-            <Button type="primary">Unblock</Button>
+            <Tag color="red" style={{ fontWeight: 500, color: "red" }}>
+              Suspended by Admin
+            </Tag>
           ) : (
-            <Button danger>Block User</Button>
+            <Tag color="green" style={{ fontWeight: 500, color: "blue" }}>
+              Eligible for Participation
+            </Tag>
           )}
         </>
       );

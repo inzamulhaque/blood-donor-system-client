@@ -2,18 +2,38 @@ import { useParams } from "react-router-dom";
 import {
   useUserBlockByTNMutation,
   useUserDetailsByTNQuery,
+  useUserUnblockByTNMutation,
 } from "../../redux/features/admin/adminApi";
 import Loader from "../../components/shared/Loader";
-import { Badge, Button, Card, Descriptions, Space, Tag } from "antd";
+import {
+  Badge,
+  Button,
+  Card,
+  Descriptions,
+  Input,
+  Modal,
+  Space,
+  Tag,
+} from "antd";
 import { Grid } from "antd";
+import { useState } from "react";
+import TextArea from "antd/es/input/TextArea";
+import { toast } from "sonner";
 
 const { useBreakpoint } = Grid;
 
 const UserDetails = () => {
+  const [isBlockModalOpen, setIsBlockModalOpen] = useState<boolean>(false);
+  const [isUnBlockModalOpen, setIsUnBlockModalOpen] = useState<boolean>(false);
+  const [reason, setReason] = useState<string | null>(null);
+
   const { trackingNumber } = useParams();
   const { data, isLoading } = useUserDetailsByTNQuery(trackingNumber);
+
   const [userBlockByTN, { isLoading: blockIsLoading }] =
     useUserBlockByTNMutation();
+  const [userUnblockByTN, { isLoading: unblockIsLoading }] =
+    useUserUnblockByTNMutation();
 
   const screens = useBreakpoint();
   const columns = screens.md ? 2 : 1;
@@ -21,9 +41,48 @@ const UserDetails = () => {
   const role = data?.data?.role;
   const isBlocked = data?.data?.blockStatus?.isBlocked;
 
-  console.log(data);
+  const handleBlock = async () => {
+    if (!reason) {
+      toast.error("Please provide a reason for blocking this user!", {
+        duration: 7000,
+        position: "top-center",
+      });
+    }
 
-  if (isLoading || blockIsLoading) {
+    if (reason) {
+      setIsBlockModalOpen(false);
+      setReason(null);
+
+      const res = await userBlockByTN({
+        tn: data?.data?.trackingNumber,
+        reason,
+      }).unwrap();
+
+      if (res?.success) {
+        toast.success(res?.message, {
+          duration: 7000,
+          position: "top-center",
+        });
+      }
+    }
+  };
+
+  const handleUnBlock = async () => {
+    const res = await userUnblockByTN(data?.data?.trackingNumber).unwrap();
+
+    setIsUnBlockModalOpen(false);
+
+    console.log(res);
+
+    if (res?.success) {
+      toast.success(res?.message, {
+        duration: 7000,
+        position: "top-center",
+      });
+    }
+  };
+
+  if (isLoading || blockIsLoading || unblockIsLoading) {
     return <Loader />;
   }
 
@@ -43,7 +102,7 @@ const UserDetails = () => {
                         type="primary"
                         danger
                         onClick={() => {
-                          userBlockByTN(data?.data?.trackingNumber);
+                          setIsBlockModalOpen(true);
                         }}
                       >
                         Block User
@@ -52,13 +111,9 @@ const UserDetails = () => {
 
                     {isBlocked && (
                       <Button
-                        type="default"
-                        onClick={() => {
-                          console.log(
-                            "Unblock user",
-                            data?.data?.trackingNumber
-                          );
-                        }}
+                        type="primary"
+                        color="primary"
+                        onClick={() => setIsUnBlockModalOpen(true)}
                       >
                         Unblock User
                       </Button>
@@ -146,6 +201,39 @@ const UserDetails = () => {
           </Descriptions>
         </Card>
       </div>
+
+      <Modal
+        title="Block User"
+        closable={{ "aria-label": "Custom Close Button" }}
+        okText="Block Now"
+        open={isBlockModalOpen}
+        onOk={handleBlock}
+        onCancel={() => setIsBlockModalOpen(false)}
+      >
+        <Input value={data?.data?.trackingNumber} readOnly={true} />
+
+        <TextArea
+          rows={4}
+          placeholder="Please provide a reason for blocking this user (e.g., policy violation, suspicious activity, misuse of the platform)."
+          maxLength={150}
+          showCount
+          onChange={(e) => setReason(e.target.value)}
+          style={{
+            margin: "10px 0",
+          }}
+        />
+      </Modal>
+
+      <Modal
+        title="Unblock User"
+        closable={{ "aria-label": "Custom Close Button" }}
+        okText="Unblock Now"
+        open={isUnBlockModalOpen}
+        onOk={handleUnBlock}
+        onCancel={() => setIsUnBlockModalOpen(false)}
+      >
+        <Input value={data?.data?.trackingNumber} readOnly={true} />
+      </Modal>
     </>
   );
 };
