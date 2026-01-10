@@ -68,18 +68,21 @@ const SignIn = () => {
           dispatch(setUser({ user: userData, token: res.data.token }));
 
           navigate(`/${userData.role as string}/dashboard`);
+        } else {
+          toast.error(res?.data?.message, {
+            duration: 5000,
+            position: "top-right",
+          });
         }
-      } else {
-        toast.error(res?.data?.message, {
-          duration: 5000,
-          position: "top-right",
-        });
       }
     } catch (error: any) {
-      if (error?.data?.message) {
-        toast.error(error?.data?.message, {
-          duration: 5000,
-          position: "top-right",
+      const errs: Record<string, unknown>[] = error?.data?.errorSources;
+      if (Array.isArray(errs)) {
+        errs.forEach((err) => {
+          toast.error(err.message as string, {
+            duration: 5000,
+            position: "top-right",
+          });
         });
       }
     }
