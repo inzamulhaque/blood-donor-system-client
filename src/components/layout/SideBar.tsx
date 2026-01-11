@@ -68,7 +68,7 @@ const SideBar = () => {
           position: "sticky",
           left: 0,
           top: 0,
-          zIndex: 2,
+          zIndex: 10,
         }}
       >
         <Header style={{ padding: 0 }}>
@@ -101,7 +101,11 @@ const SideBar = () => {
             items={[
               {
                 key: "logout",
-                icon: <LogoutOutlined style={{ color: "red" }} />,
+                icon: (
+                  <span style={{ color: "red" }} onClick={haldeSignOut}>
+                    <LogoutOutlined style={{ color: "red" }} />
+                  </span>
+                ),
                 label: (
                   <span style={{ color: "red" }} onClick={haldeSignOut}>
                     LogOut

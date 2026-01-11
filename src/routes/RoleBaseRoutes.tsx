@@ -14,6 +14,7 @@ import Dashboard from "../components/dashboard/Dashboard";
 import FindDonor from "../pages/Admin/FindDonor";
 import UserData from "../pages/Admin/UserData";
 import UserDetails from "../pages/Admin/UserDetails";
+import AddDonor from "../pages/Admin/AddDonor";
 
 export type TRoleBaseRoute = {
   path?: string;
@@ -59,7 +60,7 @@ export const ADMIN_ROUTES: TRoleBaseRoute[] = [
     link: "/admin/dashboard/add-donor",
     name: "Add Donor",
     icon: <UserAddOutlined />,
-    element: <Dashboard />,
+    element: <AddDonor />,
   },
 
   {

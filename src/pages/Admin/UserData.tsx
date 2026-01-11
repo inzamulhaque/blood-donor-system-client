@@ -113,7 +113,6 @@ const columns: TableColumnsType<TUser> = [
     key: "action",
     align: "center",
     render: (item) => {
-      console.log(item);
       return (
         <>
           <Link to={`/admin/dashboard/users/${item.trackingNumber}`}>

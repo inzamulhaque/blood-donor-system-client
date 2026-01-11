@@ -61,7 +61,7 @@ const UserDetails = () => {
       if (res?.success) {
         toast.success(res?.message, {
           duration: 7000,
-          position: "top-center",
+          position: "top-right",
         });
       }
     }
@@ -77,7 +77,7 @@ const UserDetails = () => {
     if (res?.success) {
       toast.success(res?.message, {
         duration: 7000,
-        position: "top-center",
+        position: "top-right",
       });
     }
   };
@@ -210,7 +210,7 @@ const UserDetails = () => {
         onOk={handleBlock}
         onCancel={() => setIsBlockModalOpen(false)}
       >
-        <Input value={data?.data?.trackingNumber} readOnly={true} />
+        <Input value={data?.data?.trackingNumber} readOnly={true} disabled />
 
         <TextArea
           rows={4}
@@ -232,7 +232,7 @@ const UserDetails = () => {
         onOk={handleUnBlock}
         onCancel={() => setIsUnBlockModalOpen(false)}
       >
-        <Input value={data?.data?.trackingNumber} readOnly={true} />
+        <Input value={data?.data?.trackingNumber} readOnly={true} disabled />
       </Modal>
     </>
   );

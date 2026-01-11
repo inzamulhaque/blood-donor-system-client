@@ -1,7 +1,7 @@
 import { Form, Select } from "antd";
 import { Controller } from "react-hook-form";
 
-type TPHSelectProps = {
+type TSelectProps = {
   label: string;
   name: string;
   options: { value: string; label: string; disabled?: boolean }[] | undefined;
@@ -21,11 +21,12 @@ const IDSelect = ({
   required,
   mode,
   err,
-}: TPHSelectProps) => {
+}: TSelectProps) => {
   return (
     <>
       <Controller
         name={name}
+        rules={required ? { required: `${name} is required` } : undefined}
         render={({ field }) => (
           <Form.Item label={label} required={required}>
             <Select
