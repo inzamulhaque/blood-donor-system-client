@@ -2,6 +2,7 @@ import {
   AppstoreAddOutlined,
   ArrowsAltOutlined,
   DashboardOutlined,
+  LockOutlined,
   SearchOutlined,
   TeamOutlined,
   UnorderedListOutlined,
@@ -15,6 +16,7 @@ import FindDonor from "../pages/Admin/FindDonor";
 import UserData from "../pages/Admin/UserData";
 import UserDetails from "../pages/Admin/UserDetails";
 import AddDonor from "../pages/Admin/AddDonor";
+import ChangePassword from "../pages/AuthPagaes/ChangePassword";
 
 export type TRoleBaseRoute = {
   path?: string;
@@ -61,6 +63,14 @@ export const ADMIN_ROUTES: TRoleBaseRoute[] = [
     name: "Add Donor",
     icon: <UserAddOutlined />,
     element: <AddDonor />,
+  },
+
+  {
+    path: "change-password",
+    link: "/admin/dashboard/change-password",
+    name: "Change Password",
+    icon: <LockOutlined />,
+    element: <ChangePassword />,
   },
 
   {

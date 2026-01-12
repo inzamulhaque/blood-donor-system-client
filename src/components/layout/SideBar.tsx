@@ -1,6 +1,4 @@
 import {
-  DashboardOutlined,
-  LockOutlined,
   LogoutOutlined,
   MenuFoldOutlined,
   MenuUnfoldOutlined,
@@ -15,21 +13,14 @@ import {
   FINDER_ROUTES,
   SUPER_ADMIN_ROUTES,
 } from "../../routes/RoleBaseRoutes";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useAppDispatch } from "../../redux/hooks";
 import { logout } from "../../redux/features/auth/authSlice";
 import { toast } from "sonner";
 
 const { Sider } = Layout;
 
-const menuItems = [
-  ...generateSidebarMenu(ADMIN_ROUTES),
-  {
-    key: "change-password",
-    label: <Link to="/dashboard/change-password">Change Password</Link>,
-    icon: <LockOutlined />,
-  },
-];
+const menuItems = generateSidebarMenu(ADMIN_ROUTES);
 
 const { useBreakpoint } = Grid;
 

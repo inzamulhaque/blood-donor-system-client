@@ -21,6 +21,17 @@
   padding: 20px;
 }
 
+.changePasswordForm {
+  max-width: 400px;
+  width: 100%;
+  margin: auto;
+  padding: 20px;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  background-color: #ffffff;
+  box-shadow: rgba(0, 0, 0, 0.05);
+}
+
 @media (max-width: 768px) {
   .backHomeBtn {
     top: 10px;

@@ -67,18 +67,10 @@ const router = createBrowserRouter([
   },
 
   {
-    path: "/dashboard/change-password",
-    element: (
-      <>
-        <h1>change password</h1>
-      </>
-    ),
-  },
-
-  {
     path: "/signin",
     element: <SignIn />,
   },
+
   {
     path: "/signup",
     element: <SignUp />,
