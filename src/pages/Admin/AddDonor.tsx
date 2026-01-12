@@ -1,5 +1,5 @@
 import { Button, Col, Divider, Row } from "antd";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import type { FieldValues } from "react-hook-form";
 import IDForm from "../../components/shared/form/IDForm";
 import IDInput from "../../components/shared/form/IDInput";
@@ -15,10 +15,19 @@ import { BLOOD_GROUPS_OPTIONS } from "../../constants/bloodGroup";
 import { UPOZILAS_PABNA_OPTIONS } from "../../constants/upozila";
 import { useCurrentUser } from "../../redux/features/auth/authSlice";
 import { useAppSelector } from "../../redux/hooks";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { DonorSchema } from "../../schemas/Donor";
+import simplifyZodErrors from "../../utils/SimplifyZodErrors";
 
 const AddDonor = () => {
   const [formErrors, setFormErrors] = useState<Record<string, string>>({});
-  const { trackingNumber } = useAppSelector(useCurrentUser);
+  const { trackingNumber } = useAppSelector(useCurrentUser) || {};
+
+  const simpleErroes = useMemo(() => {
+    const serr = simplifyZodErrors(formErrors) || {};
+
+    return serr;
+  }, [formErrors]);
 
   const handleAddDonor = (values: FieldValues) => {
     console.log(values);
@@ -38,6 +47,7 @@ const AddDonor = () => {
           onSubmit={handleAddDonor}
           setFormErrors={setFormErrors}
           defaultValues={{ addedBy: trackingNumber }}
+          resolver={zodResolver(DonorSchema)}
         >
           <Row gutter={[20, 20]}>
             <Col xs={24} sm={24} md={12} lg={12}>
@@ -46,6 +56,7 @@ const AddDonor = () => {
                 name="name"
                 type="text"
                 required={true}
+                err={simpleErroes["name"]}
                 prefix={<UserOutlined />}
               />
             </Col>
@@ -54,8 +65,9 @@ const AddDonor = () => {
               <IDInput
                 label="Donor Email"
                 name="email"
-                type="email"
+                type="text"
                 required={false}
+                err={simpleErroes["email"]}
                 prefix={<MailOutlined />}
               />
             </Col>
@@ -66,6 +78,7 @@ const AddDonor = () => {
                 name="phoneNumber"
                 type="text"
                 required={true}
+                err={simpleErroes["phoneNumber"]}
                 prefix={<PhoneOutlined />}
               />
             </Col>
@@ -75,6 +88,7 @@ const AddDonor = () => {
                 label="Blood Group"
                 name="bloodGroup"
                 required={true}
+                err={simpleErroes["bloodGroup"]}
                 options={BLOOD_GROUPS_OPTIONS}
                 placeholder="Select Donor Blood Group"
               />
@@ -85,6 +99,7 @@ const AddDonor = () => {
                 label="Upozila"
                 name="upozila"
                 required={true}
+                err={simpleErroes["upozila"]}
                 options={UPOZILAS_PABNA_OPTIONS}
                 placeholder="Select Donor Upozila"
               />
@@ -94,7 +109,8 @@ const AddDonor = () => {
               <IDInput
                 label="Added By"
                 name="addedBy"
-                type="text"
+                type="number"
+                err={simpleErroes["addedBy"]}
                 required={true}
                 prefix={<NumberOutlined />}
                 disabled={true}

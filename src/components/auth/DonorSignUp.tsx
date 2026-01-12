@@ -19,7 +19,7 @@ import AcceptPolicyTerms from "./AcceptPolicyTerms";
 import NextOrSignupBtn from "./NextOrSignupBtn";
 import FormHeader from "./FormHeader";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { DonorRegisterSchema } from "../../schemas/Donor";
+import { DonorUserRegisterSchema } from "../../schemas/Donor";
 import type { FieldValues } from "react-hook-form";
 import simplifyZodErrors from "../../utils/SimplifyZodErrors";
 import { toast } from "sonner";
@@ -68,7 +68,7 @@ const DonorSignUp = () => {
 
       <IDForm
         onSubmit={handleSubmit}
-        resolver={zodResolver(DonorRegisterSchema)}
+        resolver={zodResolver(DonorUserRegisterSchema)}
         setFormErrors={setFormErrors}
         defaultValues={formDefaultValues}
       >

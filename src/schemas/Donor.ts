@@ -2,7 +2,7 @@ import z from "zod";
 import { BLOOD_GROUPS } from "../constants/bloodGroup";
 import { UPOZILAS_PABNA } from "../constants/upozila";
 
-export const DonorRegisterSchema = z
+export const DonorUserRegisterSchema = z
   .object({
     name: z
       .string()
@@ -49,3 +49,28 @@ export const DonorRegisterSchema = z
     path: ["confirmPassword"],
     message: "Passwords do not match",
   });
+
+export const DonorSchema = z.object({
+  name: z
+    .string("Donor name is required")
+    .trim()
+    .min(2, "Name must be at least 2 characters long"),
+
+  email: z
+    .string()
+    .min(1, { message: "Email is required" })
+    .refine((value) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value), {
+      message: "Invalid email address",
+    })
+    .optional(),
+
+  phoneNumber: z
+    .string("Phone number is required")
+    .regex(/^[0-9]{11}$/, "Phone number must be 11 digits"),
+
+  bloodGroup: z.enum(BLOOD_GROUPS),
+
+  upozila: z.enum(UPOZILAS_PABNA),
+
+  addedBy: z.number(),
+});

@@ -39,7 +39,7 @@ const IDForm = ({
   const methods = useForm(formConfig);
 
   useEffect(() => {
-    setFormErrors(methods.formState.errors);
+    setFormErrors(methods?.formState?.errors);
   }, [methods.formState.errors]);
 
   const submit: SubmitHandler<FieldValues> = (data) => {
