@@ -3,6 +3,7 @@ import {
   ArrowsAltOutlined,
   DashboardOutlined,
   LockOutlined,
+  ProfileOutlined,
   SearchOutlined,
   TeamOutlined,
   UnorderedListOutlined,
@@ -34,6 +35,14 @@ export const ADMIN_ROUTES: TRoleBaseRoute[] = [
     name: "Dashboard",
     icon: <DashboardOutlined />,
     element: <AdminDashboard />,
+  },
+
+  {
+    path: "profile",
+    link: "/admin/dashboard/profile",
+    name: "Profile",
+    icon: <ProfileOutlined />,
+    element: <UserData />,
   },
 
   {

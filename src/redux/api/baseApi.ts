@@ -34,14 +34,14 @@ const baseQueryWithRefreshToken: BaseQueryFn<
   if (result?.error?.status === 404) {
     toast.error(result?.error?.data?.message, {
       duration: 7000,
-      position: "top-center",
+      position: "top-right",
     });
   }
 
   if (result?.error?.status === 403) {
     toast.error(result?.error?.data?.message, {
       duration: 7000,
-      position: "top-center",
+      position: "top-right",
     });
   }
 
@@ -62,7 +62,7 @@ const baseQueryWithRefreshToken: BaseQueryFn<
       api.dispatch(
         setUser({
           user,
-          token: data?.data?.accessToken,
+          token: data?.data?.token,
         })
       );
 

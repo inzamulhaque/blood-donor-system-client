@@ -9,7 +9,15 @@ const authApi = baseApi.injectEndpoints({
         body: signinCredential,
       }),
     }),
+
+    changePassword: builder.mutation({
+      query: (payload) => ({
+        url: "/auth/change-password",
+        method: "PATCH",
+        body: payload,
+      }),
+    }),
   }),
 });
 
-export const { useSigninMutation } = authApi;
+export const { useSigninMutation, useChangePasswordMutation } = authApi;

@@ -8,8 +8,14 @@ import simplifyZodErrors from "../../utils/SimplifyZodErrors";
 import { LockOutlined } from "@ant-design/icons";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { ChangePasswordSchema } from "../../schemas/Auth";
+import { toast } from "sonner";
+
+import Loader from "../../components/shared/Loader";
+import { useChangePasswordMutation } from "../../redux/features/auth/authApi";
+
 const ChangePassword = () => {
   const [formErrors, setFormErrors] = useState<Record<string, string>>({});
+  const [changePassword, { isLoading }] = useChangePasswordMutation();
 
   const simpleErroes = useMemo(() => {
     const serr = simplifyZodErrors(formErrors) || {};
@@ -18,8 +24,32 @@ const ChangePassword = () => {
   }, [formErrors]);
 
   const handlePasswordChange = async (values: FieldValues) => {
-    console.log(values);
+    try {
+      const res = await changePassword(values).unwrap();
+
+      if (res?.success) {
+        toast.success(res.message, {
+          duration: 7000,
+          position: "top-right",
+        });
+      }
+    } catch (error) {
+      const errs: Record<string, unknown>[] = error?.data?.errorSources;
+
+      if (Array.isArray(errs)) {
+        errs.forEach((err) => {
+          toast.error(err.message as string, {
+            duration: 5000,
+            position: "top-right",
+          });
+        });
+      }
+    }
   };
+
+  if (isLoading) {
+    return <Loader />;
+  }
 
   return (
     <>
