@@ -72,8 +72,6 @@ const UserDetails = () => {
 
     setIsUnBlockModalOpen(false);
 
-    console.log(res);
-
     if (res?.success) {
       toast.success(res?.message, {
         duration: 7000,
@@ -91,7 +89,6 @@ const UserDetails = () => {
       <div style={{ padding: "10px 20px" }}>
         <Card
           title="User Details"
-          bordered={false}
           style={{ maxWidth: 900 }}
           actions={
             role === "donor" || role === "finder"

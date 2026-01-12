@@ -8,6 +8,8 @@ const adminApi = baseApi.injectEndpoints({
         method: "GET",
         params,
       }),
+
+      providesTags: ["admin", "donor"],
     }),
 
     allUser: builder.query({
@@ -47,6 +49,16 @@ const adminApi = baseApi.injectEndpoints({
 
       invalidatesTags: ["admin", "user"],
     }),
+
+    addNewDonor: builder.mutation({
+      query: (body) => ({
+        url: "/donors/add-donor",
+        method: "POST",
+        body,
+      }),
+
+      invalidatesTags: ["admin", "donor"],
+    }),
   }),
 });
 
@@ -56,4 +68,5 @@ export const {
   useUserDetailsByTNQuery,
   useUserBlockByTNMutation,
   useUserUnblockByTNMutation,
+  useAddNewDonorMutation,
 } = adminApi;

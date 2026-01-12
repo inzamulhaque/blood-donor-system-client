@@ -1,4 +1,15 @@
-import { Button, Col, Divider, Row } from "antd";
+import {
+  Badge,
+  Button,
+  Card,
+  Col,
+  Descriptions,
+  Divider,
+  Grid,
+  Row,
+  Spin,
+  Tag,
+} from "antd";
 import { useMemo, useState } from "react";
 import type { FieldValues } from "react-hook-form";
 import IDForm from "../../components/shared/form/IDForm";
@@ -18,10 +29,20 @@ import { useAppSelector } from "../../redux/hooks";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { DonorSchema } from "../../schemas/Donor";
 import simplifyZodErrors from "../../utils/SimplifyZodErrors";
+import { useAddNewDonorMutation } from "../../redux/features/admin/adminApi";
+import { toast } from "sonner";
+
+const { useBreakpoint } = Grid;
 
 const AddDonor = () => {
+  const [donor, setDonor] = useState<Record<string, unknown> | null>(null);
   const [formErrors, setFormErrors] = useState<Record<string, string>>({});
   const { trackingNumber } = useAppSelector(useCurrentUser) || {};
+
+  const [addDonor, { isLoading }] = useAddNewDonorMutation();
+
+  const screens = useBreakpoint();
+  const columns = screens.md ? 2 : 1;
 
   const simpleErroes = useMemo(() => {
     const serr = simplifyZodErrors(formErrors) || {};
@@ -29,8 +50,31 @@ const AddDonor = () => {
     return serr;
   }, [formErrors]);
 
-  const handleAddDonor = (values: FieldValues) => {
-    console.log(values);
+  const handleAddDonor = async (values: FieldValues) => {
+    try {
+      console.log(values);
+
+      const res = await addDonor(values).unwrap();
+
+      if (res?.success) {
+        setDonor(res?.data);
+        toast.error(res?.message as string, {
+          duration: 5000,
+          position: "top-right",
+        });
+      }
+    } catch (error: any) {
+      const errs: Record<string, unknown>[] = error?.data?.errorSources;
+
+      if (Array.isArray(errs)) {
+        errs.forEach((err) => {
+          toast.error(err.message as string, {
+            duration: 5000,
+            position: "top-right",
+          });
+        });
+      }
+    }
   };
 
   return (
@@ -130,6 +174,72 @@ const AddDonor = () => {
             </Col>
           </Row>
         </IDForm>
+
+        <Divider />
+
+        {isLoading && (
+          <div style={{ textAlign: "center" }}>
+            <Spin size="large" />
+          </div>
+        )}
+
+        {!isLoading && donor && (
+          <>
+            <Card title="Donor Details" style={{ maxWidth: 900 }}>
+              <Descriptions bordered size="middle" column={columns}>
+                <Descriptions.Item label="Name">
+                  {donor?.name}
+                </Descriptions.Item>
+
+                <Descriptions.Item label="Email">
+                  {donor?.email}
+                </Descriptions.Item>
+
+                <Descriptions.Item label="Phone Number">
+                  {donor?.phoneNumber}
+                </Descriptions.Item>
+
+                <Descriptions.Item label="Blood Group">
+                  <Tag color="volcano">{donor?.bloodGroup}</Tag>
+                </Descriptions.Item>
+
+                <Descriptions.Item label="Upozila">
+                  {donor?.upozila}
+                </Descriptions.Item>
+
+                <Descriptions.Item label="Added By (Admin TN)">
+                  <Tag color="blue">{donor?.addedBy}</Tag>
+                </Descriptions.Item>
+
+                <Descriptions.Item label="Account Visibility">
+                  <Tag
+                    color={
+                      donor?.accountVisibility === "public" ? "green" : "orange"
+                    }
+                  >
+                    {donor?.accountVisibility.toUpperCase()}
+                  </Tag>
+                </Descriptions.Item>
+
+                <Descriptions.Item label="Availability">
+                  {donor?.availability ? (
+                    <Badge status="success" text="Available" />
+                  ) : (
+                    <Badge status="error" text="Unavailable" />
+                  )}
+                </Descriptions.Item>
+
+                <Descriptions.Item label="Deleted">
+                  {donor?.isDeleted ? (
+                    <Tag color="red">Yes</Tag>
+                  ) : (
+                    <Tag color="green">No</Tag>
+                  )}
+                </Descriptions.Item>
+              </Descriptions>
+            </Card>
+          </>
+        )}
       </div>
     </>
   );
