@@ -18,6 +18,7 @@ import UserData from "../pages/Admin/UserData";
 import UserDetails from "../pages/Admin/UserDetails";
 import AddDonor from "../pages/Admin/AddDonor";
 import ChangePassword from "../pages/AuthPagaes/ChangePassword";
+import Profile from "../components/dashboard/Profile";
 
 export type TRoleBaseRoute = {
   path?: string;
@@ -42,7 +43,7 @@ export const ADMIN_ROUTES: TRoleBaseRoute[] = [
     link: "/admin/dashboard/profile",
     name: "Profile",
     icon: <ProfileOutlined />,
-    element: <UserData />,
+    element: <Profile />,
   },
 
   {
