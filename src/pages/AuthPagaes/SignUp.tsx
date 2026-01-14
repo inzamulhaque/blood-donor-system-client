@@ -12,6 +12,7 @@ type TRole = "donor" | "finder";
 const { Text } = Typography;
 const SignUp = () => {
   const [selectedRole, setSelectedRole] = useState<TRole>("donor");
+
   return (
     <>
       <motion.div
