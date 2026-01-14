@@ -1,5 +1,8 @@
 import { Button, Col, Divider, Row } from "antd";
-import { useGetMeQuery } from "../../redux/features/user/userApi";
+import {
+  useGetMeQuery,
+  useUpdateMyInfoMutation,
+} from "../../redux/features/user/userApi";
 import Loader from "../shared/Loader";
 import IDForm from "../shared/form/IDForm";
 import { useMemo, useState } from "react";
@@ -15,9 +18,16 @@ import simplifyZodErrors from "../../utils/SimplifyZodErrors";
 import IDSelect from "../shared/form/IDSelect";
 import { BLOOD_GROUPS_OPTIONS } from "../../constants/bloodGroup";
 import { UPOZILAS_PABNA_OPTIONS } from "../../constants/upozila";
+import { toast } from "sonner";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const EditProfile = () => {
+  const location = useLocation();
+  const navigate = useNavigate();
+
   const { data, isLoading } = useGetMeQuery({});
+  const [updateMyInfo, { isLoading: updateLoading }] =
+    useUpdateMyInfoMutation();
   const user = data?.data;
 
   const [formErrors, setFormErrors] = useState<Record<string, string>>({});
@@ -28,12 +38,36 @@ const EditProfile = () => {
     return serr;
   }, [formErrors]);
 
-  if (isLoading) {
+  if (isLoading || updateLoading) {
     return <Loader />;
   }
 
-  const handleEditProfile = (values: FieldValues) => {
-    console.log(values);
+  const handleEditProfile = async (values: FieldValues) => {
+    const redirectTo = location?.pathname?.split("/").slice(0, -1).join("/");
+
+    try {
+      const res = await updateMyInfo(values).unwrap();
+
+      if (res?.success) {
+        toast.success(res?.message, {
+          duration: 5000,
+          position: "top-right",
+        });
+
+        navigate(redirectTo);
+      }
+    } catch (error) {
+      const errs: Record<string, unknown>[] = error?.data?.errorSources;
+
+      if (Array.isArray(errs)) {
+        errs.forEach((err) => {
+          toast.error(err.message as string, {
+            duration: 5000,
+            position: "top-right",
+          });
+        });
+      }
+    }
   };
 
   return (

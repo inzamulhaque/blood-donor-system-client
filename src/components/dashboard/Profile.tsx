@@ -18,13 +18,17 @@ const Profile = () => {
     <>
       <Card
         title="User Profile"
-        actions={[
-          <Link to={location.pathname + "/edit"}>
-            <Button type="primary" color="primary" size="large">
-              Edit Profile
-            </Button>
-          </Link>,
-        ]}
+        actions={
+          user?.role !== "super-admin"
+            ? [
+                <Link to={location.pathname + "/edit"}>
+                  <Button type="primary" color="primary" size="large">
+                    Edit Profile
+                  </Button>
+                </Link>,
+              ]
+            : []
+        }
       >
         <Descriptions column={1} bordered size="middle">
           <Descriptions.Item label="Name">{user?.name}</Descriptions.Item>
