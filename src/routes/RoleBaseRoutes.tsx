@@ -1,6 +1,7 @@
 import {
   AppstoreAddOutlined,
   ArrowsAltOutlined,
+  CalendarOutlined,
   DashboardOutlined,
   LockOutlined,
   ProfileOutlined,
@@ -18,8 +19,9 @@ import UserData from "../pages/Admin/UserData";
 import UserDetails from "../pages/Admin/UserDetails";
 import AddDonor from "../pages/Admin/AddDonor";
 import ChangePassword from "../pages/AuthPagaes/ChangePassword";
-import Profile from "../components/dashboard/Profile";
-import EditProfile from "../components/dashboard/EditProfile";
+import Profile from "../components/dashboard/CommonPage/Profile";
+import EditProfile from "../components/dashboard/CommonPage/EditProfile";
+import DonateDates from "../components/dashboard/CommonPage/DonateDates";
 
 export type TRoleBaseRoute = {
   path?: string;
@@ -79,6 +81,14 @@ export const ADMIN_ROUTES: TRoleBaseRoute[] = [
     name: "Add Donor",
     icon: <UserAddOutlined />,
     element: <AddDonor />,
+  },
+
+  {
+    path: "donate-dates",
+    link: "/admin/dashboard/donate-dates",
+    name: "Donate Dates",
+    icon: <CalendarOutlined />,
+    element: <DonateDates />,
   },
 
   {

@@ -1,8 +1,9 @@
 import { Button, Card, Descriptions, Tag } from "antd";
-import { useGetMeQuery } from "../../redux/features/user/userApi";
-import Loader from "../shared/Loader";
+
 import dayjs from "dayjs";
 import { Link, useLocation } from "react-router-dom";
+import { useGetMeQuery } from "../../../redux/features/user/userApi";
+import Loader from "../../shared/Loader";
 
 const Profile = () => {
   const location = useLocation();

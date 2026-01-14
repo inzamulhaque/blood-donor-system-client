@@ -1,25 +1,28 @@
 import { Button, Col, Divider, Row } from "antd";
-import {
-  useGetMeQuery,
-  useUpdateMyInfoMutation,
-} from "../../redux/features/user/userApi";
-import Loader from "../shared/Loader";
-import IDForm from "../shared/form/IDForm";
+
 import { useMemo, useState } from "react";
 import type { FieldValues } from "react-hook-form";
-import IDInput from "../shared/form/IDInput";
+
 import {
   NumberOutlined,
   PhoneOutlined,
   SaveOutlined,
   UserOutlined,
 } from "@ant-design/icons";
-import simplifyZodErrors from "../../utils/SimplifyZodErrors";
-import IDSelect from "../shared/form/IDSelect";
-import { BLOOD_GROUPS_OPTIONS } from "../../constants/bloodGroup";
-import { UPOZILAS_PABNA_OPTIONS } from "../../constants/upozila";
+
 import { toast } from "sonner";
 import { useLocation, useNavigate } from "react-router-dom";
+import {
+  useGetMeQuery,
+  useUpdateMyInfoMutation,
+} from "../../../redux/features/user/userApi";
+import simplifyZodErrors from "../../../utils/SimplifyZodErrors";
+import Loader from "../../shared/Loader";
+import IDForm from "../../shared/form/IDForm";
+import IDInput from "../../shared/form/IDInput";
+import IDSelect from "../../shared/form/IDSelect";
+import { BLOOD_GROUPS_OPTIONS } from "../../../constants/bloodGroup";
+import { UPOZILAS_PABNA_OPTIONS } from "../../../constants/upozila";
 
 const EditProfile = () => {
   const location = useLocation();
