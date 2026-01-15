@@ -1,13 +1,31 @@
-import { Button, Card, Col, Divider, Flex, Row, Tag, Typography } from "antd";
+import {
+  Button,
+  Card,
+  Col,
+  Divider,
+  Flex,
+  Modal,
+  Row,
+  Tag,
+  Typography,
+} from "antd";
 import "./DonateDates.css";
-import { CalendarOutlined } from "@ant-design/icons";
+import { CalendarOutlined, FileAddOutlined } from "@ant-design/icons";
 import { useGetMyDonateDatesQuery } from "../../../redux/features/donors/donorsApi";
 import Loader from "../../shared/Loader";
 import dayjs from "dayjs";
+import { useState } from "react";
+import IDForm from "../../shared/form/IDForm";
+import IDDate from "../../shared/form/IDDate";
+import IDTextArea from "../../shared/form/IDTextArea";
 
 const { Text, Title } = Typography;
 
 const DonateDates = () => {
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+
+  const [formErrors, setFormErrors] = useState<Record<string, string>>({});
+
   const { data, isLoading } = useGetMyDonateDatesQuery({});
 
   if (isLoading) {
@@ -15,6 +33,14 @@ const DonateDates = () => {
   }
 
   const dates = data?.data || [];
+
+  const handleCancel = () => {
+    setIsModalOpen(false);
+  };
+
+  const handleAddDonateDate = () => {
+    setIsModalOpen(false);
+  };
 
   return (
     <>
@@ -26,7 +52,12 @@ const DonateDates = () => {
         <div className="donationHeader">
           <h1>Donation List</h1>
 
-          <Button type="primary" color="primary" size="large">
+          <Button
+            type="primary"
+            color="primary"
+            size="large"
+            onClick={() => setIsModalOpen(true)}
+          >
             Add Donate Date
           </Button>
         </div>
@@ -78,6 +109,39 @@ const DonateDates = () => {
           ))}
         </Row>
       </div>
+
+      <Modal
+        title="Add Donate Date"
+        closable={{ "aria-label": "Custom Close Button" }}
+        open={isModalOpen}
+        footer={null}
+      >
+        <IDForm onSubmit={handleAddDonateDate} setFormErrors={setFormErrors}>
+          <IDDate
+            label="Donate Date"
+            name="date"
+            required={true}
+            prefix={<CalendarOutlined />}
+          />
+
+          <IDTextArea
+            label="Note"
+            name="note"
+            maxLength={150}
+            required={false}
+          />
+
+          <Button
+            type="primary"
+            color="primary"
+            size="large"
+            htmlType="submit"
+            block
+          >
+            <FileAddOutlined /> Add Date
+          </Button>
+        </IDForm>
+      </Modal>
     </>
   );
 };

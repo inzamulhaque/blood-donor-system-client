@@ -7,6 +7,7 @@ type TTextAreaProps = {
   disabled?: boolean;
   required?: boolean;
   err?: string;
+  maxLength?: number;
 };
 
 const IDTextArea = ({
@@ -15,6 +16,7 @@ const IDTextArea = ({
   disabled,
   required,
   err,
+  maxLength,
 }: TTextAreaProps) => {
   return (
     <>
@@ -29,6 +31,8 @@ const IDTextArea = ({
               placeholder={label}
               disabled={disabled}
               className="IDInput"
+              maxLength={maxLength}
+              showCount={true}
             />
             {err && <p style={{ color: "red", marginTop: 4 }}>{err}</p>}
           </Form.Item>
