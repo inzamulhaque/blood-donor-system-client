@@ -11,13 +11,22 @@ import {
 } from "antd";
 import "./DonateDates.css";
 import { CalendarOutlined, FileAddOutlined } from "@ant-design/icons";
-import { useGetMyDonateDatesQuery } from "../../../redux/features/donors/donorsApi";
+import {
+  useAddDonateDateMutation,
+  useGetMyDonateDatesQuery,
+} from "../../../redux/features/donors/donorsApi";
 import Loader from "../../shared/Loader";
 import dayjs from "dayjs";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import IDForm from "../../shared/form/IDForm";
 import IDDate from "../../shared/form/IDDate";
 import IDTextArea from "../../shared/form/IDTextArea";
+import type { FieldValues } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { DonateDateSchema } from "../../../schemas/Donor";
+import simplifyZodErrors from "../../../utils/SimplifyZodErrors";
+import { toast } from "sonner";
+import { string } from "zod";
 
 const { Text, Title } = Typography;
 
@@ -27,19 +36,48 @@ const DonateDates = () => {
   const [formErrors, setFormErrors] = useState<Record<string, string>>({});
 
   const { data, isLoading } = useGetMyDonateDatesQuery({});
+  const [addDonateDate, { isLoading: isAdding }] = useAddDonateDateMutation();
 
-  if (isLoading) {
+  const simpleErroes = useMemo(() => {
+    const serr = simplifyZodErrors(formErrors) || {};
+
+    return serr;
+  }, [formErrors]);
+
+  if (isLoading || isAdding) {
     return <Loader />;
   }
 
   const dates = data?.data || [];
 
-  const handleCancel = () => {
+  const handleAddDonateDate = async (values: FieldValues) => {
     setIsModalOpen(false);
-  };
+    const formattedDate = string(dayjs(values.date).format("DD-MM-YYYY"));
 
-  const handleAddDonateDate = () => {
-    setIsModalOpen(false);
+    try {
+      const res = await addDonateDate({
+        date: formattedDate,
+        ...values,
+      }).unwrap();
+
+      if (res?.success) {
+        toast.success(res?.message, {
+          duration: 5000,
+          position: "top-right",
+        });
+      }
+    } catch (error) {
+      const errs: Record<string, unknown>[] = error?.data?.errorSources;
+
+      if (Array.isArray(errs)) {
+        errs.forEach((err) => {
+          toast.error(err.message as string, {
+            duration: 5000,
+            position: "top-right",
+          });
+        });
+      }
+    }
   };
 
   return (
@@ -116,11 +154,16 @@ const DonateDates = () => {
         open={isModalOpen}
         footer={null}
       >
-        <IDForm onSubmit={handleAddDonateDate} setFormErrors={setFormErrors}>
+        <IDForm
+          onSubmit={handleAddDonateDate}
+          setFormErrors={setFormErrors}
+          resolver={zodResolver(DonateDateSchema)}
+        >
           <IDDate
             label="Donate Date"
             name="date"
             required={true}
+            err={simpleErroes["date"]}
             prefix={<CalendarOutlined />}
           />
 
@@ -128,6 +171,7 @@ const DonateDates = () => {
             label="Note"
             name="note"
             maxLength={150}
+            err={simpleErroes["note"]}
             required={false}
           />
 

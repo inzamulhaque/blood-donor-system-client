@@ -1,6 +1,7 @@
 import z from "zod";
 import { BLOOD_GROUPS } from "../constants/bloodGroup";
 import { UPOZILAS_PABNA } from "../constants/upozila";
+import dayjs, { Dayjs } from "dayjs";
 
 export const DonorUserRegisterSchema = z
   .object({
@@ -73,4 +74,15 @@ export const DonorSchema = z.object({
   upozila: z.enum(UPOZILAS_PABNA),
 
   addedBy: z.number(),
+});
+
+export const DonateDateSchema = z.object({
+  date: z.custom<Dayjs>((value) => dayjs.isDayjs(value), {
+    message: "Invalid date",
+  }),
+
+  note: z
+    .string()
+    .max(150, { message: "Note must be at most 150 characters long" })
+    .optional(),
 });
