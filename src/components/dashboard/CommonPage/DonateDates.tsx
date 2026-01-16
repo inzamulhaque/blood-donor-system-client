@@ -16,7 +16,7 @@ import {
   useGetMyDonateDatesQuery,
 } from "../../../redux/features/donors/donorsApi";
 import Loader from "../../shared/Loader";
-import dayjs from "dayjs";
+import dayjs, { Dayjs } from "dayjs";
 import { useMemo, useState } from "react";
 import IDForm from "../../shared/form/IDForm";
 import IDDate from "../../shared/form/IDDate";
@@ -26,7 +26,6 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { DonateDateSchema } from "../../../schemas/Donor";
 import simplifyZodErrors from "../../../utils/SimplifyZodErrors";
 import { toast } from "sonner";
-import { string } from "zod";
 
 const { Text, Title } = Typography;
 
@@ -52,7 +51,9 @@ const DonateDates = () => {
 
   const handleAddDonateDate = async (values: FieldValues) => {
     setIsModalOpen(false);
-    const formattedDate = string(dayjs(values.date).format("DD-MM-YYYY"));
+    const donateDate = dayjs(values.date).toDate();
+
+    const formattedDate = dayjs(donateDate).format("DD-MM-YYYY");
 
     try {
       const res = await addDonateDate({
@@ -78,6 +79,14 @@ const DonateDates = () => {
         });
       }
     }
+  };
+
+  const disableAdvanceDates = (current: Dayjs) => {
+    return current.isAfter(dayjs().endOf("day"));
+  };
+
+  const handleCancel = () => {
+    setIsModalOpen(false);
   };
 
   return (
@@ -151,6 +160,7 @@ const DonateDates = () => {
       <Modal
         title="Add Donate Date"
         closable={{ "aria-label": "Custom Close Button" }}
+        onCancel={handleCancel}
         open={isModalOpen}
         footer={null}
       >
@@ -164,6 +174,7 @@ const DonateDates = () => {
             name="date"
             required={true}
             err={simpleErroes["date"]}
+            disabledDate={disableAdvanceDates}
             prefix={<CalendarOutlined />}
           />
 

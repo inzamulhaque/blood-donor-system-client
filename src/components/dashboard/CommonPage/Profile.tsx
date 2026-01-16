@@ -44,6 +44,18 @@ const Profile = () => {
             <Tag color="blue">{user?.role}</Tag>
           </Descriptions.Item>
 
+          {(user?.role === "donor" || user?.role === "admin") && (
+            <Descriptions.Item label="Donor Availability">
+              <Tag
+                color={
+                  user?.accountVisibility === "public" ? "green" : "orange"
+                }
+              >
+                {user?.availability ? "Available" : "Unavailable"}
+              </Tag>
+            </Descriptions.Item>
+          )}
+
           {user?.accountVisibility && (
             <Descriptions.Item label="Account Visibility">
               <Tag
@@ -100,14 +112,13 @@ const Profile = () => {
             </Descriptions.Item>
           )}
 
-          {user?.role === "donor" ||
-            (user?.role === "admin" && (
-              <Descriptions.Item label="Last Donate Date">
-                {user?.lastDonateDate
-                  ? dayjs(user.lastDonateDate).format("DD MMM YYYY")
-                  : "N/A"}
-              </Descriptions.Item>
-            ))}
+          {(user?.role === "donor" || user?.role === "admin") && (
+            <Descriptions.Item label="Last Donate Date">
+              {user?.lastDonateDate
+                ? dayjs(user.lastDonateDate).format("DD MMM YYYY")
+                : "N/A"}
+            </Descriptions.Item>
+          )}
         </Descriptions>
       </Card>
     </>

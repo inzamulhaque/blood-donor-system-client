@@ -2,6 +2,7 @@ import { DatePicker, Form } from "antd";
 import { Controller } from "react-hook-form";
 import "./form.css";
 import type React from "react";
+import type { Dayjs } from "dayjs";
 
 type TInputProps = {
   name: string;
@@ -10,6 +11,7 @@ type TInputProps = {
   required?: boolean;
   prefix?: React.ReactNode;
   err?: string;
+  disabledDate?: (currentDate: Dayjs) => boolean;
 };
 
 const IDDate = ({
@@ -19,7 +21,10 @@ const IDDate = ({
   required,
   prefix,
   err,
+  disabledDate,
 }: TInputProps) => {
+  console.log({ disabledDate });
+
   return (
     <>
       <Controller
@@ -33,6 +38,7 @@ const IDDate = ({
               placeholder={label}
               disabled={disabled}
               className="IDInput"
+              disabledDate={disabledDate}
               required={required}
               prefix={prefix}
             />
