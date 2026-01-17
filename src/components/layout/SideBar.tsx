@@ -17,6 +17,8 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { useAppDispatch } from "../../redux/hooks";
 import { logout } from "../../redux/features/auth/authSlice";
 import { toast } from "sonner";
+import { useSignOutMutation } from "../../redux/features/auth/authApi";
+import Loader from "../shared/Loader";
 
 const { Sider } = Layout;
 
@@ -34,19 +36,42 @@ const SideBar = () => {
 
   const [isCollapsed, setIsCollapsed] = useState<boolean | null>(null);
 
+  const [signOut, { isLoading }] = useSignOutMutation();
+
   const collapsed = isCollapsed !== null ? isCollapsed : !screens.md;
 
   const dispatch = useAppDispatch();
 
-  const haldeSignOut = () => {
-    dispatch(logout());
-    navigate("/signin");
+  const haldeSignOut = async () => {
+    try {
+      dispatch(logout());
+      navigate("/signin");
 
-    toast.success("You have been securely logged out of your account!", {
-      duration: 5000,
-      position: "top-right",
-    });
+      const res = await signOut({}).unwrap();
+
+      console.log(res);
+
+      toast.success(res?.message, {
+        duration: 5000,
+        position: "top-right",
+      });
+    } catch (error) {
+      const errs: Record<string, unknown>[] = error?.data?.errorSources;
+
+      if (Array.isArray(errs)) {
+        errs.forEach((err) => {
+          toast.error(err.message as string, {
+            duration: 5000,
+            position: "top-right",
+          });
+        });
+      }
+    }
   };
+
+  if (isLoading) {
+    return <Loader />;
+  }
 
   return (
     <>

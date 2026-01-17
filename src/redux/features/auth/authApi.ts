@@ -8,6 +8,7 @@ const authApi = baseApi.injectEndpoints({
         method: "POST",
         body: signinCredential,
       }),
+      invalidatesTags: ["user"],
     }),
 
     changePassword: builder.mutation({
@@ -17,7 +18,19 @@ const authApi = baseApi.injectEndpoints({
         body: payload,
       }),
     }),
+
+    signOut: builder.mutation({
+      query: () => ({
+        url: "/auth/signout",
+        method: "POST",
+      }),
+      invalidatesTags: ["user"],
+    }),
   }),
 });
 
-export const { useSigninMutation, useChangePasswordMutation } = authApi;
+export const {
+  useSigninMutation,
+  useChangePasswordMutation,
+  useSignOutMutation,
+} = authApi;
