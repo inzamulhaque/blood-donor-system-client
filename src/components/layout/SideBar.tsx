@@ -22,8 +22,6 @@ import Loader from "../shared/Loader";
 
 const { Sider } = Layout;
 
-const menuItems = generateSidebarMenu(ADMIN_ROUTES);
-
 const { useBreakpoint } = Grid;
 
 const SideBar = () => {
@@ -37,10 +35,11 @@ const SideBar = () => {
   const [isCollapsed, setIsCollapsed] = useState<boolean | null>(null);
 
   const [signOut, { isLoading }] = useSignOutMutation();
+  const dispatch = useAppDispatch();
+
+  const menuItems = generateSidebarMenu(ADMIN_ROUTES);
 
   const collapsed = isCollapsed !== null ? isCollapsed : !screens.md;
-
-  const dispatch = useAppDispatch();
 
   const haldeSignOut = async () => {
     try {

@@ -1,6 +1,21 @@
 import { Col, Divider, Flex, Row } from "antd";
+import {
+  useGetDonorAndFinderCountQuery,
+  useGetDonorByBloodGroupQuery,
+} from "../../redux/features/admin/adminApi";
+import Loader from "../../components/shared/Loader";
 
 const AdminDashboard = () => {
+  const { data: donorAndFinderCount, isLoading } =
+    useGetDonorAndFinderCountQuery({});
+  const { data: donorByBloodGroup } = useGetDonorByBloodGroupQuery({});
+
+  if (isLoading) {
+    return <Loader />;
+  }
+
+  console.log({ donorAndFinderCount, donorByBloodGroup });
+
   return (
     <>
       <div style={{ padding: "20px" }}>
@@ -20,7 +35,7 @@ const AdminDashboard = () => {
             >
               <Flex justify="space-between" align="center">
                 <h3>Total Donor</h3>
-                <h3>30</h3>
+                <h3>{donorAndFinderCount?.data?.totalDonor || 0}</h3>
               </Flex>
             </div>
           </Col>
@@ -37,7 +52,7 @@ const AdminDashboard = () => {
             >
               <Flex justify="space-between" align="center">
                 <h3>Total Finder</h3>
-                <h3>30</h3>
+                <h3>{donorAndFinderCount?.data?.totalFinder || 0}</h3>
               </Flex>
             </div>
           </Col>
@@ -58,7 +73,7 @@ const AdminDashboard = () => {
             >
               <Flex justify="space-between" align="center">
                 <h3>Total</h3>
-                <h3>30</h3>
+                <h3>{donorByBloodGroup?.data["A+"] || 0}</h3>
               </Flex>
 
               <Divider />
@@ -86,7 +101,7 @@ const AdminDashboard = () => {
             >
               <Flex justify="space-between" align="center">
                 <h3>Total</h3>
-                <h3>30</h3>
+                <h3>{donorByBloodGroup?.data["A-"] || 0}</h3>
               </Flex>
               <Divider />
 
@@ -113,7 +128,7 @@ const AdminDashboard = () => {
             >
               <Flex justify="space-between" align="center">
                 <h3>Total</h3>
-                <h3>30</h3>
+                <h3>{donorByBloodGroup?.data["B+"] || 0}</h3>
               </Flex>
 
               <Divider />
@@ -141,7 +156,7 @@ const AdminDashboard = () => {
             >
               <Flex justify="space-between" align="center">
                 <h3>Total</h3>
-                <h3>30</h3>
+                <h3>{donorByBloodGroup?.data["B-"] || 0}</h3>
               </Flex>
               <Divider />
 
@@ -168,7 +183,7 @@ const AdminDashboard = () => {
             >
               <Flex justify="space-between" align="center">
                 <h3>Total</h3>
-                <h3>30</h3>
+                <h3>{donorByBloodGroup?.data["AB+"] || 0}</h3>
               </Flex>
 
               <Divider />
@@ -196,7 +211,7 @@ const AdminDashboard = () => {
             >
               <Flex justify="space-between" align="center">
                 <h3>Total</h3>
-                <h3>30</h3>
+                <h3>{donorByBloodGroup?.data["AB-"] || 0}</h3>
               </Flex>
               <Divider />
 
@@ -223,7 +238,7 @@ const AdminDashboard = () => {
             >
               <Flex justify="space-between" align="center">
                 <h3>Total</h3>
-                <h3>30</h3>
+                <h3>{donorByBloodGroup?.data["O+"] || 0}</h3>
               </Flex>
 
               <Divider />
@@ -251,7 +266,7 @@ const AdminDashboard = () => {
             >
               <Flex justify="space-between" align="center">
                 <h3>Total</h3>
-                <h3>30</h3>
+                <h3>{donorByBloodGroup?.data["O-"] || 0}</h3>
               </Flex>
               <Divider />
 

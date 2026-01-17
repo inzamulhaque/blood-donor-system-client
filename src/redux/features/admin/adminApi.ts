@@ -59,6 +59,20 @@ const adminApi = baseApi.injectEndpoints({
 
       invalidatesTags: ["admin", "donor"],
     }),
+
+    getDonorAndFinderCount: builder.query({
+      query: () => ({
+        url: "/admins/donor-and-finder-count",
+        method: "GET",
+      }),
+    }),
+
+    getDonorByBloodGroup: builder.query({
+      query: () => ({
+        url: "/admins/donor-count-by-blood-group",
+        method: "GET",
+      }),
+    }),
   }),
 });
 
@@ -69,4 +83,6 @@ export const {
   useUserBlockByTNMutation,
   useUserUnblockByTNMutation,
   useAddNewDonorMutation,
+  useGetDonorAndFinderCountQuery,
+  useGetDonorByBloodGroupQuery,
 } = adminApi;
