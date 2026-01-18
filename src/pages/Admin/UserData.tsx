@@ -23,108 +23,8 @@ import IDForm from "../../components/shared/form/IDForm";
 import type { FieldValues } from "react-hook-form";
 import IDInput from "../../components/shared/form/IDInput";
 import { Link } from "react-router-dom";
-
-const columns: TableColumnsType<TUser> = [
-  {
-    title: "SL",
-    key: "sl",
-    align: "center",
-    render: (_text, _record, index) => index + 1,
-  },
-
-  {
-    title: "Name",
-    key: "name",
-    align: "center",
-    dataIndex: "name",
-  },
-
-  {
-    title: "Email",
-    key: "email",
-    align: "center",
-    dataIndex: "email",
-  },
-
-  {
-    title: "Tracking Number",
-    key: "trackingNumber",
-    align: "center",
-    dataIndex: "trackingNumber",
-  },
-
-  {
-    title: "Status",
-    dataIndex: "accountStatus",
-    key: "status",
-    align: "center",
-
-    render: (status: "active" | "inactive") => (
-      <Switch
-        checked={status === "active"}
-        checkedChildren="Active"
-        unCheckedChildren="Inactive"
-        disabled
-      />
-    ),
-  },
-
-  {
-    title: "Role",
-    key: "role",
-    align: "center",
-    dataIndex: "role",
-  },
-
-  {
-    title: "Block Status",
-
-    key: "blockStatus",
-    align: "center",
-    render: (item) => {
-      const canBlock = item?.role === "donor" || item?.role === "finder";
-
-      if (!canBlock) {
-        return (
-          <Tag color={"blue"} style={{ fontWeight: 500, color: "red" }}>
-            <StopOutlined /> Insufficient Permission
-          </Tag>
-        );
-      }
-
-      return (
-        <>
-          {item?.blockStatus?.isBlocked ? (
-            <Tag color="red" style={{ fontWeight: 500, color: "red" }}>
-              Suspended by Admin
-            </Tag>
-          ) : (
-            <Tag color="green" style={{ fontWeight: 500, color: "blue" }}>
-              Eligible for Participation
-            </Tag>
-          )}
-        </>
-      );
-    },
-  },
-
-  {
-    title: "Action",
-    key: "action",
-    align: "center",
-    render: (item) => {
-      return (
-        <>
-          <Link to={`/admin/dashboard/users/${item.trackingNumber}`}>
-            <Button type="primary" disabled={item.role === "super-admin"}>
-              View Details <RightCircleOutlined />
-            </Button>
-          </Link>
-        </>
-      );
-    },
-  },
-];
+import { useAppSelector } from "../../redux/hooks";
+import { useCurrentUser } from "../../redux/features/auth/authSlice";
 
 const UserData = () => {
   const [page, setPage] = useState<number>(1);
@@ -133,6 +33,8 @@ const UserData = () => {
   const [formErrors, setFormErrors] = useState<Record<string, string>>({});
 
   const [params, setParams] = useState<Record<string, string>>();
+
+  const user = useAppSelector(useCurrentUser);
 
   const { data, isLoading } = useAllUserQuery({ ...params, page, limit });
 
@@ -155,6 +57,115 @@ const UserData = () => {
       });
     }
   };
+
+  const columns: TableColumnsType<TUser> = [
+    {
+      title: "SL",
+      key: "sl",
+      align: "center",
+      render: (_text, _record, index) => index + 1,
+    },
+
+    {
+      title: "Name",
+      key: "name",
+      align: "center",
+      dataIndex: "name",
+    },
+
+    {
+      title: "Email",
+      key: "email",
+      align: "center",
+      dataIndex: "email",
+    },
+
+    {
+      title: "Tracking Number",
+      key: "trackingNumber",
+      align: "center",
+      dataIndex: "trackingNumber",
+    },
+
+    {
+      title: "Status",
+      dataIndex: "accountStatus",
+      key: "status",
+      align: "center",
+
+      render: (status: "active" | "inactive") => (
+        <Switch
+          checked={status === "active"}
+          checkedChildren="Active"
+          unCheckedChildren="Inactive"
+          disabled
+        />
+      ),
+    },
+
+    {
+      title: "Role",
+      key: "role",
+      align: "center",
+      dataIndex: "role",
+    },
+
+    {
+      title: "Block Status",
+      key: "blockStatus",
+      align: "center",
+      render: (item) => {
+        const canBlock = item?.role === "donor" || item?.role === "finder";
+
+        if (!canBlock && user?.role !== "super-admin") {
+          return (
+            <Tag color={"blue"} style={{ fontWeight: 500, color: "red" }}>
+              <StopOutlined /> Insufficient Permission
+            </Tag>
+          );
+        }
+
+        if (user?.role === "super-admin" && item?.role === "super-admin") {
+          return (
+            <Tag color={"blue"} style={{ fontWeight: 500, color: "red" }}>
+              <StopOutlined /> Insufficient Permission
+            </Tag>
+          );
+        }
+
+        return (
+          <>
+            {item?.blockStatus?.isBlocked ? (
+              <Tag color="red" style={{ fontWeight: 500, color: "red" }}>
+                Suspended by Admin
+              </Tag>
+            ) : (
+              <Tag color="green" style={{ fontWeight: 500, color: "blue" }}>
+                Eligible for Participation
+              </Tag>
+            )}
+          </>
+        );
+      },
+    },
+
+    {
+      title: "Action",
+      key: "action",
+      align: "center",
+      render: (item) => {
+        return (
+          <>
+            <Link to={`/admin/dashboard/users/${item.trackingNumber}`}>
+              <Button type="primary" disabled={item.role === "super-admin"}>
+                View Details <RightCircleOutlined />
+              </Button>
+            </Link>
+          </>
+        );
+      },
+    },
+  ];
 
   return (
     <>

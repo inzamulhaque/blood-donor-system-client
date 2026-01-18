@@ -37,7 +37,7 @@ const SideBar = () => {
   const [signOut, { isLoading }] = useSignOutMutation();
   const dispatch = useAppDispatch();
 
-  const menuItems = generateSidebarMenu(ADMIN_ROUTES);
+  const menuItems = generateSidebarMenu(SUPER_ADMIN_ROUTES);
 
   const collapsed = isCollapsed !== null ? isCollapsed : !screens.md;
 

@@ -14,8 +14,6 @@ const AdminDashboard = () => {
     return <Loader />;
   }
 
-  console.log({ donorAndFinderCount, donorByBloodGroup });
-
   return (
     <>
       <div style={{ padding: "20px" }}>

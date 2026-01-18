@@ -63,7 +63,18 @@ const router = createBrowserRouter([
       </ProtectedRoute>
     ),
 
-    children: generateRouterRoutes([...ADMIN_ROUTES]),
+    children: generateRouterRoutes(ADMIN_ROUTES),
+  },
+
+  {
+    path: "/super-admin/dashboard",
+    element: (
+      <ProtectedRoute role={Roles.SUPER_ADMIN}>
+        <WithDashboardLayout />
+      </ProtectedRoute>
+    ),
+
+    children: generateRouterRoutes(SUPER_ADMIN_ROUTES),
   },
 
   {

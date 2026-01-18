@@ -107,9 +107,58 @@ export const ADMIN_ROUTES: TRoleBaseRoute[] = [
 ];
 
 export const SUPER_ADMIN_ROUTES: TRoleBaseRoute[] = [
-  ...ADMIN_ROUTES,
   {
-    path: "/make-admin",
+    index: true,
+    link: "/super-admin/dashboard",
+    name: "Dashboard",
+    icon: <DashboardOutlined />,
+    element: <AdminDashboard />,
+  },
+
+  {
+    path: "profile",
+    link: "/super-admin/dashboard/profile",
+    name: "Profile",
+    icon: <ProfileOutlined />,
+    element: <Profile />,
+  },
+
+  {
+    path: "profile/edit",
+    element: <EditProfile />,
+  },
+
+  {
+    path: "users",
+    link: "/super-admin/dashboard/users",
+    name: "Users",
+    icon: <TeamOutlined />,
+    element: <UserData />,
+  },
+
+  {
+    path: "users/:trackingNumber",
+    element: <UserDetails />,
+  },
+
+  {
+    path: "donors",
+    link: "/super-admin/dashboard/donors",
+    name: "Find Donors",
+    icon: <SearchOutlined />,
+    element: <FindDonor />,
+  },
+
+  {
+    path: "add-donor",
+    link: "/super-admin/dashboard/add-donor",
+    name: "Add Donor",
+    icon: <UserAddOutlined />,
+    element: <AddDonor />,
+  },
+
+  {
+    path: "make-admin",
     link: "/super-admin/dashboard/make-admin",
     name: "Make Admin",
     icon: <UserAddOutlined />,
