@@ -14,8 +14,8 @@ import {
   SUPER_ADMIN_ROUTES,
 } from "../../routes/RoleBaseRoutes";
 import { useLocation, useNavigate } from "react-router-dom";
-import { useAppDispatch } from "../../redux/hooks";
-import { logout } from "../../redux/features/auth/authSlice";
+import { useAppDispatch, useAppSelector } from "../../redux/hooks";
+import { logout, useCurrentUser } from "../../redux/features/auth/authSlice";
 import { toast } from "sonner";
 import { useSignOutMutation } from "../../redux/features/auth/authApi";
 import Loader from "../shared/Loader";
@@ -36,8 +36,30 @@ const SideBar = () => {
 
   const [signOut, { isLoading }] = useSignOutMutation();
   const dispatch = useAppDispatch();
+  const user = useAppSelector(useCurrentUser);
 
-  const menuItems = generateSidebarMenu(SUPER_ADMIN_ROUTES);
+  let menuItems;
+
+  switch (user?.role) {
+    case "super-admin":
+      menuItems = generateSidebarMenu(SUPER_ADMIN_ROUTES);
+      break;
+
+    case "admin":
+      menuItems = generateSidebarMenu(ADMIN_ROUTES);
+      break;
+
+    case "donor":
+      menuItems = generateSidebarMenu(DONOR_ROUTES);
+      break;
+
+    case "finder":
+      menuItems = generateSidebarMenu(FINDER_ROUTES);
+      break;
+
+    default:
+      break;
+  }
 
   const collapsed = isCollapsed !== null ? isCollapsed : !screens.md;
 
