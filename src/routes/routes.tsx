@@ -18,9 +18,9 @@ import {
   FINDER_ROUTES,
   SUPER_ADMIN_ROUTES,
 } from "./RoleBaseRoutes";
-import Dashboard from "../components/dashboard/Dashboard";
 import ProtectedRoute from "../components/layout/ProtectedRoute";
 import { Roles } from "../constants/userConstant";
+import PublicRoute from "../components/layout/PublicRoute";
 
 const router = createBrowserRouter([
   {
@@ -79,12 +79,20 @@ const router = createBrowserRouter([
 
   {
     path: "/signin",
-    element: <SignIn />,
+    element: (
+      <PublicRoute>
+        <SignIn />
+      </PublicRoute>
+    ),
   },
 
   {
     path: "/signup",
-    element: <SignUp />,
+    element: (
+      <PublicRoute>
+        <SignUp />
+      </PublicRoute>
+    ),
   },
 
   {
