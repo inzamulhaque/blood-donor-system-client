@@ -22,11 +22,13 @@ import { useAllUserQuery } from "../../redux/features/admin/adminApi";
 import IDForm from "../../components/shared/form/IDForm";
 import type { FieldValues } from "react-hook-form";
 import IDInput from "../../components/shared/form/IDInput";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { useAppSelector } from "../../redux/hooks";
 import { useCurrentUser } from "../../redux/features/auth/authSlice";
 
 const UserData = () => {
+  const location = useLocation();
+
   const [page, setPage] = useState<number>(1);
   const [limit, setLimit] = useState<number>(10);
 
@@ -156,7 +158,7 @@ const UserData = () => {
       render: (item) => {
         return (
           <>
-            <Link to={`/admin/dashboard/users/${item.trackingNumber}`}>
+            <Link to={`${location?.pathname}/${item.trackingNumber}`}>
               <Button type="primary" disabled={item.role === "super-admin"}>
                 View Details <RightCircleOutlined />
               </Button>

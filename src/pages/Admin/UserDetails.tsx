@@ -19,6 +19,8 @@ import { Grid } from "antd";
 import { useState } from "react";
 import TextArea from "antd/es/input/TextArea";
 import { toast } from "sonner";
+import { useAppSelector } from "../../redux/hooks";
+import { useCurrentUser } from "../../redux/features/auth/authSlice";
 
 const { useBreakpoint } = Grid;
 
@@ -34,6 +36,7 @@ const UserDetails = () => {
     useUserBlockByTNMutation();
   const [userUnblockByTN, { isLoading: unblockIsLoading }] =
     useUserUnblockByTNMutation();
+  const user = useAppSelector(useCurrentUser);
 
   const screens = useBreakpoint();
   const columns = screens.md ? 2 : 1;
@@ -91,7 +94,7 @@ const UserDetails = () => {
           title="User Details"
           style={{ maxWidth: 900 }}
           actions={
-            role === "donor" || role === "finder"
+            user?.role === "admin" && (role === "donor" || role === "finder")
               ? [
                   <Space key="actions">
                     {!isBlocked && (
@@ -117,7 +120,33 @@ const UserDetails = () => {
                     )}
                   </Space>,
                 ]
-              : undefined
+              : user?.role === "super-admin" && role !== "super-admin"
+                ? [
+                    <Space key="actions">
+                      {!isBlocked && (
+                        <Button
+                          type="primary"
+                          danger
+                          onClick={() => {
+                            setIsBlockModalOpen(true);
+                          }}
+                        >
+                          Block User
+                        </Button>
+                      )}
+
+                      {isBlocked && (
+                        <Button
+                          type="primary"
+                          color="primary"
+                          onClick={() => setIsUnBlockModalOpen(true)}
+                        >
+                          Unblock User
+                        </Button>
+                      )}
+                    </Space>,
+                  ]
+                : undefined
           }
         >
           <Descriptions bordered size="middle" column={columns}>
