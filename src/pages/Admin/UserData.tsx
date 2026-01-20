@@ -177,7 +177,7 @@ const UserData = () => {
 
         <IDForm onSubmit={handleSearch} setFormErrors={setFormErrors}>
           <Row gutter={[20, 20]}>
-            <Col xs={24} sm={18} md={18} lg={16}>
+            <Col xs={24} sm={18} md={16} lg={16}>
               <IDInput
                 label="Search Value"
                 name="searchValue"
@@ -187,7 +187,7 @@ const UserData = () => {
               />
             </Col>
 
-            <Col xs={24} sm={24} md={24} lg={8}>
+            <Col xs={24} sm={24} md={8} lg={8}>
               <div
                 style={{
                   display: "flex",

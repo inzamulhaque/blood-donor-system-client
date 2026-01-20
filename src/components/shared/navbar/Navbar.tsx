@@ -2,11 +2,15 @@ import { Flex } from "antd";
 import "./Navbar.css";
 import Logo from "../../../assets/al-dima-logo.png";
 import { Link, NavLink } from "react-router-dom";
-import { MenuOutlined } from "@ant-design/icons";
+import { InfoCircleOutlined, MenuOutlined } from "@ant-design/icons";
 import { useState } from "react";
+import { useAppSelector } from "../../../redux/hooks";
+import { useCurrentUser } from "../../../redux/features/auth/authSlice";
 
 const Navbar = () => {
   const [open, setOpen] = useState(false);
+  const user = useAppSelector(useCurrentUser);
+
   return (
     <>
       <nav>
@@ -22,7 +26,6 @@ const Navbar = () => {
             margin: "0 auto",
           }}
         >
-          {/* website logo */}
           <Flex
             align="center"
             justify="start"
@@ -35,7 +38,6 @@ const Navbar = () => {
             </Link>
           </Flex>
 
-          {/* main menu */}
           <Flex justify="space-around" gap={5} className="lgMenu">
             <NavLink
               to={"/"}
@@ -71,21 +73,28 @@ const Navbar = () => {
             </NavLink>
           </Flex>
 
-          {/* auth buttons */}
           <Flex justify="space-between" className="lgAuthBtns" gap={30}>
-            <Link to={"/signup"}>
-              <button className="navBtn navBtn-signup">SignUp</button>
-            </Link>
-            <Link to={"/signin"}>
-              <button className="navBtn navBtn-signin">SignIn</button>
-            </Link>
+            {user?.role ? (
+              <Link to={`/${user.role}/dashboard`}>
+                <button className="navBtn navBtn-signin">
+                  <InfoCircleOutlined /> My Account
+                </button>
+              </Link>
+            ) : (
+              <>
+                <Link to={"/signup"}>
+                  <button className="navBtn navBtn-signup">SignUp</button>
+                </Link>
+                <Link to={"/signin"}>
+                  <button className="navBtn navBtn-signin">SignIn</button>
+                </Link>
+              </>
+            )}
           </Flex>
 
-          {/* menu icon for toggle small screen menu */}
           <MenuOutlined className="menuIcon" onClick={() => setOpen(!open)} />
         </Flex>
 
-        {/* small screen menu */}
         <div className={`smMenu ${open ? "smMenuOpen" : ""}`}>
           <NavLink
             to="/"
@@ -124,12 +133,26 @@ const Navbar = () => {
             Contact
           </NavLink>
 
-          <Link to="/signup" onClick={() => setOpen(false)}>
-            <button className="navBtn navBtn-signup smMenuBtn">SignUp</button>
-          </Link>
-          <Link to="/signin" onClick={() => setOpen(false)}>
-            <button className="navBtn navBtn-signin smMenuBtn">SignIn</button>
-          </Link>
+          {user?.role ? (
+            <Link to={`/${user.role}/dashboard`} onClick={() => setOpen(false)}>
+              <button className="navBtn navBtn-signin smMenuBtn">
+                My Account
+              </button>
+            </Link>
+          ) : (
+            <>
+              <Link to="/signup" onClick={() => setOpen(false)}>
+                <button className="navBtn navBtn-signup smMenuBtn">
+                  SignUp
+                </button>
+              </Link>
+              <Link to="/signin" onClick={() => setOpen(false)}>
+                <button className="navBtn navBtn-signin smMenuBtn">
+                  SignIn
+                </button>
+              </Link>
+            </>
+          )}
         </div>
       </nav>
     </>

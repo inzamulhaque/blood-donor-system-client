@@ -22,6 +22,7 @@ import ChangePassword from "../pages/AuthPagaes/ChangePassword";
 import Profile from "../components/dashboard/CommonPage/Profile";
 import EditProfile from "../components/dashboard/CommonPage/EditProfile";
 import DonateDates from "../components/dashboard/CommonPage/DonateDates";
+import MakeAdmin from "../pages/SuperAdmin/MakeAdmin";
 
 export type TRoleBaseRoute = {
   path?: string;
@@ -162,7 +163,7 @@ export const SUPER_ADMIN_ROUTES: TRoleBaseRoute[] = [
     link: "/super-admin/dashboard/make-admin",
     name: "Make Admin",
     icon: <UserAddOutlined />,
-    element: <Dashboard />,
+    element: <MakeAdmin />,
   },
 ];
 
