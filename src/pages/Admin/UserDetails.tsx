@@ -1,5 +1,7 @@
 import { useParams } from "react-router-dom";
 import {
+  useBlockAdminByTNMutation,
+  useUnblockAdminByTNMutation,
   useUserBlockByTNMutation,
   useUserDetailsByTNQuery,
   useUserUnblockByTNMutation,
@@ -34,8 +36,12 @@ const UserDetails = () => {
 
   const [userBlockByTN, { isLoading: blockIsLoading }] =
     useUserBlockByTNMutation();
+  const [adminBlockByTN, { isLoading: adminBlockIsLoading }] =
+    useBlockAdminByTNMutation();
   const [userUnblockByTN, { isLoading: unblockIsLoading }] =
     useUserUnblockByTNMutation();
+  const [adminUnblockByTN, { isLoading: adminUnblockIsLoading }] =
+    useUnblockAdminByTNMutation();
   const user = useAppSelector(useCurrentUser);
 
   const screens = useBreakpoint();
@@ -56,10 +62,52 @@ const UserDetails = () => {
       setIsBlockModalOpen(false);
       setReason(null);
 
-      const res = await userBlockByTN({
-        tn: data?.data?.trackingNumber,
-        reason,
-      }).unwrap();
+      if (data?.data?.role === "donor" || data?.data?.role === "finder") {
+        const res = await userBlockByTN({
+          tn: data?.data?.trackingNumber,
+          reason,
+        }).unwrap();
+
+        if (res?.success) {
+          toast.success(res?.message, {
+            duration: 7000,
+            position: "top-right",
+          });
+        }
+      }
+
+      if (user?.role === "super-admin" && data?.data?.role === "admin") {
+        const res = await adminBlockByTN({
+          tn: data?.data?.trackingNumber,
+          reason,
+        }).unwrap();
+
+        if (res?.success) {
+          toast.success(res?.message, {
+            duration: 7000,
+            position: "top-right",
+          });
+        }
+      }
+    }
+  };
+
+  const handleUnBlock = async () => {
+    setIsUnBlockModalOpen(false);
+
+    if (data?.data?.role === "donor" || data?.data?.role === "finder") {
+      const res = await userUnblockByTN(data?.data?.trackingNumber).unwrap();
+
+      if (res?.success) {
+        toast.success(res?.message, {
+          duration: 7000,
+          position: "top-right",
+        });
+      }
+    }
+
+    if (user?.role === "super-admin" && data?.data?.role === "admin") {
+      const res = await adminUnblockByTN(data?.data?.trackingNumber).unwrap();
 
       if (res?.success) {
         toast.success(res?.message, {
@@ -70,20 +118,13 @@ const UserDetails = () => {
     }
   };
 
-  const handleUnBlock = async () => {
-    const res = await userUnblockByTN(data?.data?.trackingNumber).unwrap();
-
-    setIsUnBlockModalOpen(false);
-
-    if (res?.success) {
-      toast.success(res?.message, {
-        duration: 7000,
-        position: "top-right",
-      });
-    }
-  };
-
-  if (isLoading || blockIsLoading || unblockIsLoading) {
+  if (
+    isLoading ||
+    blockIsLoading ||
+    unblockIsLoading ||
+    adminBlockIsLoading ||
+    adminUnblockIsLoading
+  ) {
     return <Loader />;
   }
 

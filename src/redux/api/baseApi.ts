@@ -51,7 +51,7 @@ const baseQueryWithRefreshToken: BaseQueryFn<
       {
         method: "POST",
         credentials: "include",
-      }
+      },
     );
 
     const data = await res.json();
@@ -63,7 +63,7 @@ const baseQueryWithRefreshToken: BaseQueryFn<
         setUser({
           user,
           token: data?.data?.token,
-        })
+        }),
       );
 
       result = await baseQuery(args, api, extraOptions);
@@ -78,6 +78,6 @@ const baseQueryWithRefreshToken: BaseQueryFn<
 export const baseApi = createApi({
   reducerPath: "baseApi",
   baseQuery: baseQueryWithRefreshToken,
-  tagTypes: ["admin", "user", "donor"],
+  tagTypes: ["admin", "user", "donor", "finder"],
   endpoints: () => ({}),
 });

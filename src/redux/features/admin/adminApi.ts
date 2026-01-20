@@ -9,7 +9,7 @@ const adminApi = baseApi.injectEndpoints({
         params,
       }),
 
-      providesTags: ["admin", "donor"],
+      providesTags: ["donor"],
     }),
 
     allUser: builder.query({
@@ -19,7 +19,7 @@ const adminApi = baseApi.injectEndpoints({
         params,
       }),
 
-      providesTags: ["admin", "user"],
+      providesTags: ["user"],
     }),
 
     userDetailsByTN: builder.query({
@@ -27,8 +27,6 @@ const adminApi = baseApi.injectEndpoints({
         url: `/users/user/${params}`,
         method: "GET",
       }),
-
-      providesTags: ["admin", "user"],
     }),
 
     userBlockByTN: builder.mutation({
@@ -57,7 +55,7 @@ const adminApi = baseApi.injectEndpoints({
         body,
       }),
 
-      invalidatesTags: ["admin", "donor"],
+      invalidatesTags: ["donor"],
     }),
 
     getDonorAndFinderCount: builder.query({
@@ -65,6 +63,8 @@ const adminApi = baseApi.injectEndpoints({
         url: "/admins/donor-and-finder-count",
         method: "GET",
       }),
+
+      providesTags: ["donor", "finder"],
     }),
 
     getDonorByBloodGroup: builder.query({
@@ -72,6 +72,8 @@ const adminApi = baseApi.injectEndpoints({
         url: "/admins/donor-count-by-blood-group",
         method: "GET",
       }),
+
+      providesTags: ["donor"],
     }),
 
     getAdminCount: builder.query({
@@ -79,6 +81,27 @@ const adminApi = baseApi.injectEndpoints({
         url: "/admins/admin-count",
         method: "GET",
       }),
+
+      providesTags: ["admin", "user"],
+    }),
+
+    blockAdminByTN: builder.mutation({
+      query: (params) => ({
+        url: `/admins/block-admin/${params.tn}`,
+        method: "PATCH",
+        body: { reason: params.reason },
+      }),
+
+      invalidatesTags: ["admin", "user"],
+    }),
+
+    unblockAdminByTN: builder.mutation({
+      query: (params) => ({
+        url: `/admins/unblock-admin/${params}`,
+        method: "PATCH",
+      }),
+
+      invalidatesTags: ["admin", "user"],
     }),
   }),
 });
@@ -93,4 +116,6 @@ export const {
   useGetDonorAndFinderCountQuery,
   useGetDonorByBloodGroupQuery,
   useGetAdminCountQuery,
+  useBlockAdminByTNMutation,
+  useUnblockAdminByTNMutation,
 } = adminApi;
