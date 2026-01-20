@@ -73,6 +73,13 @@ const adminApi = baseApi.injectEndpoints({
         method: "GET",
       }),
     }),
+
+    getAdminCount: builder.query({
+      query: () => ({
+        url: "/admins/admin-count",
+        method: "GET",
+      }),
+    }),
   }),
 });
 
@@ -85,4 +92,5 @@ export const {
   useAddNewDonorMutation,
   useGetDonorAndFinderCountQuery,
   useGetDonorByBloodGroupQuery,
+  useGetAdminCountQuery,
 } = adminApi;

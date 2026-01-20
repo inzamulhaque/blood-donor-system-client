@@ -1,14 +1,20 @@
 import { Col, Divider, Flex, Row } from "antd";
 import {
+  useGetAdminCountQuery,
   useGetDonorAndFinderCountQuery,
   useGetDonorByBloodGroupQuery,
 } from "../../redux/features/admin/adminApi";
 import Loader from "../../components/shared/Loader";
+import { useAppSelector } from "../../redux/hooks";
+import { useCurrentUser } from "../../redux/features/auth/authSlice";
 
 const AdminDashboard = () => {
   const { data: donorAndFinderCount, isLoading } =
     useGetDonorAndFinderCountQuery({});
   const { data: donorByBloodGroup } = useGetDonorByBloodGroupQuery({});
+  const { data: adminCount } = useGetAdminCountQuery({});
+
+  const user = useAppSelector(useCurrentUser);
 
   if (isLoading) {
     return <Loader />;
@@ -21,7 +27,26 @@ const AdminDashboard = () => {
         <Divider />
 
         <Row gutter={[20, 20]}>
-          <Col xs={24} md={12}>
+          {user?.role === "super-admin" && (
+            <Col xs={24} md={user?.role === "super-admin" ? 8 : 12}>
+              <div
+                style={{
+                  background: "royalblue",
+                  color: "white",
+                  padding: "50px 20px",
+                  width: "100%",
+                  borderRadius: "10px",
+                }}
+              >
+                <Flex justify="space-between" align="center">
+                  <h3>Total Admin</h3>
+                  <h3>{adminCount?.data?.totalAdmin || 0}</h3>
+                </Flex>
+              </div>
+            </Col>
+          )}
+
+          <Col xs={24} md={user?.role === "super-admin" ? 8 : 12}>
             <div
               style={{
                 background: "red",
@@ -38,7 +63,7 @@ const AdminDashboard = () => {
             </div>
           </Col>
 
-          <Col xs={24} md={12}>
+          <Col xs={24} md={user?.role === "super-admin" ? 8 : 12}>
             <div
               style={{
                 background: "yellow",

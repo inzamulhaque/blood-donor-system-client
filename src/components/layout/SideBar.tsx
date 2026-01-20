@@ -70,8 +70,6 @@ const SideBar = () => {
 
       const res = await signOut({}).unwrap();
 
-      console.log(res);
-
       toast.success(res?.message, {
         duration: 5000,
         position: "top-right",
