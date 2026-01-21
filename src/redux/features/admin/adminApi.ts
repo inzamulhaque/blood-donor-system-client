@@ -103,6 +103,16 @@ const adminApi = baseApi.injectEndpoints({
 
       invalidatesTags: ["admin", "user"],
     }),
+
+    getSingleDonor: builder.query({
+      query: (params) => ({
+        url: "/admins/get-single-donor",
+        method: "GET",
+        params,
+      }),
+
+      providesTags: ["admin", "user"],
+    }),
   }),
 });
 
@@ -118,4 +128,5 @@ export const {
   useGetAdminCountQuery,
   useBlockAdminByTNMutation,
   useUnblockAdminByTNMutation,
+  useGetSingleDonorQuery,
 } = adminApi;

@@ -133,7 +133,6 @@ const UserDetails = () => {
       <div style={{ padding: "10px 20px" }}>
         <Card
           title="User Details"
-          style={{ maxWidth: 900 }}
           actions={
             user?.role === "admin" && (role === "donor" || role === "finder")
               ? [

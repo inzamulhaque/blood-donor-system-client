@@ -1,4 +1,15 @@
-import { Button, Col, Divider, Row } from "antd";
+import {
+  Badge,
+  Button,
+  Card,
+  Col,
+  Descriptions,
+  Divider,
+  Grid,
+  Row,
+  Spin,
+  Tag,
+} from "antd";
 import { useMemo, useState } from "react";
 import IDForm from "../../components/shared/form/IDForm";
 import type { FieldValues } from "react-hook-form";
@@ -6,9 +17,22 @@ import IDInput from "../../components/shared/form/IDInput";
 import { SearchOutlined } from "@ant-design/icons";
 import simplifyZodErrors from "../../utils/SimplifyZodErrors";
 import { toast } from "sonner";
+import { useGetSingleDonorQuery } from "../../redux/features/admin/adminApi";
+
+const { useBreakpoint } = Grid;
 
 const MakeAdmin = () => {
   const [formErrors, setFormErrors] = useState<Record<string, string>>({});
+  const [params, setParams] = useState<Record<string, string>>({});
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+  const [shouldFetch, setShouldFetch] = useState<boolean>(false);
+
+  const { data, isLoading } = useGetSingleDonorQuery(params, {
+    skip: !shouldFetch,
+  });
+
+  const screens = useBreakpoint();
+  const columns = screens.md ? 2 : 1;
 
   const simpleErroes = useMemo(() => {
     const serr = simplifyZodErrors(formErrors) || {};
@@ -40,7 +64,8 @@ const MakeAdmin = () => {
       });
     }
 
-    console.log(query);
+    setParams(query);
+    setShouldFetch(true);
   };
 
   return (
@@ -87,6 +112,113 @@ const MakeAdmin = () => {
             </Col>
           </Row>
         </IDForm>
+
+        <Divider />
+
+        {isLoading && (
+          <div style={{ textAlign: "center" }}>
+            <Spin size="large" />
+          </div>
+        )}
+
+        {data?.data && (
+          <>
+            <Card
+              title="User Details"
+              actions={[
+                data?.data?.role === "donor" ? (
+                  <Button
+                    type="primary"
+                    color="primary"
+                    size="large"
+                    onClick={() => setIsModalOpen(true)}
+                  >
+                    Make Admin
+                  </Button>
+                ) : undefined,
+              ]}
+            >
+              <Descriptions bordered size="middle" column={columns}>
+                <Descriptions.Item label="Name" span={1}>
+                  {data?.data?.name}
+                </Descriptions.Item>
+
+                <Descriptions.Item label="Email" span={1}>
+                  {data?.data?.email}
+                </Descriptions.Item>
+
+                <Descriptions.Item label="Tracking Number" span={1}>
+                  <Tag color="blue">{data?.data?.trackingNumber}</Tag>
+                </Descriptions.Item>
+
+                <Descriptions.Item label="Account Status" span={1}>
+                  <Badge
+                    status={
+                      data?.data?.accountStatus === "active"
+                        ? "success"
+                        : "error"
+                    }
+                    text={data?.data?.accountStatus}
+                  />
+                </Descriptions.Item>
+
+                {data?.data?.blockStatus && (
+                  <Descriptions.Item label="Blocked">
+                    {data?.data?.blockStatus?.isBlocked ? (
+                      <Tag color="red">Blocked</Tag>
+                    ) : (
+                      <Tag color="green">Not Blocked</Tag>
+                    )}
+                  </Descriptions.Item>
+                )}
+
+                <Descriptions.Item label="Upozila" span={1}>
+                  {data?.data?.upozila}
+                </Descriptions.Item>
+
+                {data?.data?.bloodGroup && (
+                  <Descriptions.Item label="Blood Group" span={1}>
+                    <Tag color="volcano">{data?.data?.bloodGroup}</Tag>
+                  </Descriptions.Item>
+                )}
+
+                <Descriptions.Item label="Phone Number" span={1}>
+                  {data?.data?.phoneNumber}
+                </Descriptions.Item>
+
+                {data?.data?.accountVisibility && (
+                  <Descriptions.Item label="Account Visibility" span={1}>
+                    <Tag
+                      color={
+                        data?.data?.accountVisibility === "public"
+                          ? "green"
+                          : "orange"
+                      }
+                    >
+                      {data?.data?.accountVisibility.toUpperCase()}
+                    </Tag>
+                  </Descriptions.Item>
+                )}
+
+                <Descriptions.Item label="Availability" span={1}>
+                  {data?.data?.availability ? (
+                    <Tag color="green">Available</Tag>
+                  ) : (
+                    <Tag color="red">Unavailable</Tag>
+                  )}
+                </Descriptions.Item>
+
+                <Descriptions.Item label="Deleted" span={1}>
+                  {data?.data?.isDeleted ? (
+                    <Tag color="red">Yes</Tag>
+                  ) : (
+                    <Tag color="green">No</Tag>
+                  )}
+                </Descriptions.Item>
+              </Descriptions>
+            </Card>
+          </>
+        )}
       </div>
     </>
   );
