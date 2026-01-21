@@ -27,6 +27,8 @@ const adminApi = baseApi.injectEndpoints({
         url: `/users/user/${params}`,
         method: "GET",
       }),
+
+      providesTags: ["admin", "user"],
     }),
 
     userBlockByTN: builder.mutation({
@@ -123,6 +125,15 @@ const adminApi = baseApi.injectEndpoints({
 
       invalidatesTags: ["admin", "user"],
     }),
+
+    removeAdmin: builder.mutation({
+      query: (params) => ({
+        url: `/admins/remove-admin/${params}`,
+        method: "PATCH",
+      }),
+
+      invalidatesTags: ["admin", "user"],
+    }),
   }),
 });
 
@@ -140,4 +151,5 @@ export const {
   useUnblockAdminByTNMutation,
   useGetSingleDonorQuery,
   useMakeDonorAnAdminMutation,
+  useRemoveAdminMutation,
 } = adminApi;

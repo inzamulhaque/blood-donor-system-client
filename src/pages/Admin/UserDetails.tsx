@@ -1,6 +1,7 @@
 import { useParams } from "react-router-dom";
 import {
   useBlockAdminByTNMutation,
+  useRemoveAdminMutation,
   useUnblockAdminByTNMutation,
   useUserBlockByTNMutation,
   useUserDetailsByTNQuery,
@@ -29,6 +30,8 @@ const { useBreakpoint } = Grid;
 const UserDetails = () => {
   const [isBlockModalOpen, setIsBlockModalOpen] = useState<boolean>(false);
   const [isUnBlockModalOpen, setIsUnBlockModalOpen] = useState<boolean>(false);
+
+  const [isRemoveAdminModal, setIsRemoveAdminModal] = useState<boolean>(false);
   const [reason, setReason] = useState<string | null>(null);
 
   const { trackingNumber } = useParams();
@@ -42,6 +45,8 @@ const UserDetails = () => {
     useUserUnblockByTNMutation();
   const [adminUnblockByTN, { isLoading: adminUnblockIsLoading }] =
     useUnblockAdminByTNMutation();
+  const [removeAdmin, { isLoading: removeAdminIsLoading }] =
+    useRemoveAdminMutation();
   const user = useAppSelector(useCurrentUser);
 
   const screens = useBreakpoint();
@@ -118,12 +123,27 @@ const UserDetails = () => {
     }
   };
 
+  const handleRemoveAdmin = async () => {
+    setIsRemoveAdminModal(false);
+    const res = await removeAdmin(data?.data?.trackingNumber).unwrap();
+
+    console.log(res);
+
+    if (res?.success) {
+      toast.success(res?.message, {
+        duration: 7000,
+        position: "top-right",
+      });
+    }
+  };
+
   if (
     isLoading ||
     blockIsLoading ||
     unblockIsLoading ||
     adminBlockIsLoading ||
-    adminUnblockIsLoading
+    adminUnblockIsLoading ||
+    removeAdminIsLoading
   ) {
     return <Loader />;
   }
@@ -160,7 +180,7 @@ const UserDetails = () => {
                     )}
                   </Space>,
                 ]
-              : user?.role === "super-admin" && role !== "super-admin"
+              : user?.role === "super-admin" && role === "admin"
                 ? [
                     <Space key="actions">
                       {!isBlocked && (
@@ -184,9 +204,45 @@ const UserDetails = () => {
                           Unblock User
                         </Button>
                       )}
+
+                      <Button
+                        type="primary"
+                        danger
+                        onClick={() => {
+                          setIsRemoveAdminModal(true);
+                        }}
+                      >
+                        Remove From Admin
+                      </Button>
                     </Space>,
                   ]
-                : undefined
+                : user?.role === "super-admin" && role !== "super-admin"
+                  ? [
+                      <Space key="actions">
+                        {!isBlocked && (
+                          <Button
+                            type="primary"
+                            danger
+                            onClick={() => {
+                              setIsBlockModalOpen(true);
+                            }}
+                          >
+                            Block User
+                          </Button>
+                        )}
+
+                        {isBlocked && (
+                          <Button
+                            type="primary"
+                            color="primary"
+                            onClick={() => setIsUnBlockModalOpen(true)}
+                          >
+                            Unblock User
+                          </Button>
+                        )}
+                      </Space>,
+                    ]
+                  : undefined
           }
         >
           <Descriptions bordered size="middle" column={columns}>
@@ -196,6 +252,10 @@ const UserDetails = () => {
 
             <Descriptions.Item label="Email" span={1}>
               {data?.data?.email}
+            </Descriptions.Item>
+
+            <Descriptions.Item label="Role" span={1}>
+              {data?.data?.role?.toUpperCase()}
             </Descriptions.Item>
 
             <Descriptions.Item label="Tracking Number" span={1}>
@@ -299,6 +359,33 @@ const UserDetails = () => {
         onCancel={() => setIsUnBlockModalOpen(false)}
       >
         <Input value={data?.data?.trackingNumber} readOnly={true} disabled />
+      </Modal>
+
+      <Modal
+        title="Remove From Admin"
+        closable={{ "aria-label": "Custom Close Button" }}
+        okText="Remove Admin"
+        open={isRemoveAdminModal}
+        onOk={handleRemoveAdmin}
+        onCancel={() => setIsRemoveAdminModal(false)}
+      >
+        <Descriptions bordered column={1} size="middle">
+          <Descriptions.Item label="Name" span={1}>
+            {data?.data?.name}
+          </Descriptions.Item>
+
+          <Descriptions.Item label="Email" span={1}>
+            {data?.data?.email}
+          </Descriptions.Item>
+
+          <Descriptions.Item label="Phone Number" span={1}>
+            {data?.data?.phoneNumber}
+          </Descriptions.Item>
+
+          <Descriptions.Item label="Blood Group" span={1}>
+            <Tag color="volcano">{data?.data?.bloodGroup}</Tag>
+          </Descriptions.Item>
+        </Descriptions>
       </Modal>
     </>
   );
