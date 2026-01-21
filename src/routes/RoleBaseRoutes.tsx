@@ -9,6 +9,7 @@ import {
   TeamOutlined,
   UnorderedListOutlined,
   UserAddOutlined,
+  UsergroupDeleteOutlined,
 } from "@ant-design/icons";
 import type { ReactNode } from "react";
 
@@ -23,6 +24,7 @@ import Profile from "../components/dashboard/CommonPage/Profile";
 import EditProfile from "../components/dashboard/CommonPage/EditProfile";
 import DonateDates from "../components/dashboard/CommonPage/DonateDates";
 import MakeAdmin from "../pages/SuperAdmin/MakeAdmin";
+import AdminList from "../pages/SuperAdmin/AdminList";
 
 export type TRoleBaseRoute = {
   path?: string;
@@ -164,6 +166,14 @@ export const SUPER_ADMIN_ROUTES: TRoleBaseRoute[] = [
     name: "Make Admin",
     icon: <UserAddOutlined />,
     element: <MakeAdmin />,
+  },
+
+  {
+    path: "admin-list",
+    link: "/super-admin/dashboard/admin-list",
+    name: "Admin List",
+    icon: <UsergroupDeleteOutlined />,
+    element: <AdminList />,
   },
 ];
 

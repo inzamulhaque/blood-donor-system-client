@@ -6,6 +6,7 @@ import {
   Descriptions,
   Divider,
   Grid,
+  Modal,
   Row,
   Spin,
   Tag,
@@ -17,11 +18,17 @@ import IDInput from "../../components/shared/form/IDInput";
 import { SearchOutlined } from "@ant-design/icons";
 import simplifyZodErrors from "../../utils/SimplifyZodErrors";
 import { toast } from "sonner";
-import { useGetSingleDonorQuery } from "../../redux/features/admin/adminApi";
+import {
+  useGetSingleDonorQuery,
+  useMakeDonorAnAdminMutation,
+} from "../../redux/features/admin/adminApi";
+import Loader from "../../components/shared/Loader";
+import { useNavigate } from "react-router-dom";
 
 const { useBreakpoint } = Grid;
 
 const MakeAdmin = () => {
+  const navigate = useNavigate();
   const [formErrors, setFormErrors] = useState<Record<string, string>>({});
   const [params, setParams] = useState<Record<string, string>>({});
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
@@ -30,6 +37,9 @@ const MakeAdmin = () => {
   const { data, isLoading } = useGetSingleDonorQuery(params, {
     skip: !shouldFetch,
   });
+
+  const [makeAdmin, { isLoading: isMakeAdminLoading }] =
+    useMakeDonorAnAdminMutation();
 
   const screens = useBreakpoint();
   const columns = screens.md ? 2 : 1;
@@ -67,6 +77,38 @@ const MakeAdmin = () => {
     setParams(query);
     setShouldFetch(true);
   };
+
+  const handleMakeAdmin = async () => {
+    try {
+      const email = data?.data?.email;
+
+      const res = await makeAdmin({ email }).unwrap();
+
+      if (res?.success) {
+        toast.success(res?.message, {
+          duration: 5000,
+          position: "top-right",
+        });
+      }
+
+      navigate("/super-admin/dashboard/admin-list");
+    } catch (error) {
+      const errs: Record<string, unknown>[] = error?.data?.errorSources;
+
+      if (Array.isArray(errs)) {
+        errs.forEach((err) => {
+          toast.error(err.message as string, {
+            duration: 5000,
+            position: "top-right",
+          });
+        });
+      }
+    }
+  };
+
+  if (isMakeAdminLoading) {
+    return <Loader />;
+  }
 
   return (
     <>
@@ -183,7 +225,9 @@ const MakeAdmin = () => {
                 )}
 
                 <Descriptions.Item label="Phone Number" span={1}>
-                  {data?.data?.phoneNumber}
+                  <a href={`tel:${data?.data?.phoneNumber}`}>
+                    {data?.data?.phoneNumber}
+                  </a>
                 </Descriptions.Item>
 
                 {data?.data?.accountVisibility && (
@@ -220,6 +264,31 @@ const MakeAdmin = () => {
           </>
         )}
       </div>
+
+      <Modal
+        title="Make This Donor an Admin"
+        closable={{ "aria-label": "Custom Close Button" }}
+        okText="Make Admin"
+        onOk={handleMakeAdmin}
+        onCancel={() => setIsModalOpen(false)}
+        open={isModalOpen}
+      >
+        <Descriptions bordered column={1} size="middle">
+          <Descriptions.Item label="Name">{data?.data?.name}</Descriptions.Item>
+
+          <Descriptions.Item label="Email">
+            {data?.data?.email}
+          </Descriptions.Item>
+
+          <Descriptions.Item label="Phone Number">
+            {data?.data?.phoneNumber}
+          </Descriptions.Item>
+
+          <Descriptions.Item label="Blood Group">
+            {data?.data?.bloodGroup}
+          </Descriptions.Item>
+        </Descriptions>
+      </Modal>
     </>
   );
 };
