@@ -1,5 +1,6 @@
 import z from "zod";
 import { UPOZILAS_PABNA } from "../constants/upozila";
+import { BLOOD_GROUPS } from "../constants/bloodGroup";
 
 export const FinderRegisterSchema = z
   .object({
@@ -33,7 +34,7 @@ export const FinderRegisterSchema = z
         {
           message:
             "Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character",
-        }
+        },
       ),
 
     confirmPassword: z
@@ -46,3 +47,8 @@ export const FinderRegisterSchema = z
     path: ["confirmPassword"],
     message: "Passwords do not match",
   });
+
+export const FindDonorSchema = z.object({
+  upozila: z.enum(UPOZILAS_PABNA),
+  bloodGroup: z.enum(BLOOD_GROUPS),
+});

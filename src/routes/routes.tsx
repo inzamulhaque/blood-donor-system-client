@@ -78,6 +78,17 @@ const router = createBrowserRouter([
   },
 
   {
+    path: "/finder/dashboard",
+    element: (
+      <ProtectedRoute role={Roles.FINDER}>
+        <WithDashboardLayout />
+      </ProtectedRoute>
+    ),
+
+    children: generateRouterRoutes(FINDER_ROUTES),
+  },
+
+  {
     path: "/signin",
     element: (
       <PublicRoute>

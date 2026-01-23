@@ -120,7 +120,7 @@ const FindDonor = () => {
 
     if (values) {
       filterValues = Object.fromEntries(
-        Object.entries(values).filter(([, value]) => value !== "")
+        Object.entries(values).filter(([, value]) => value !== ""),
       );
     }
 
@@ -150,6 +150,7 @@ const FindDonor = () => {
                 ]}
               />
             </Col>
+
             <Col xs={24} sm={12} md={12} lg={8}>
               <IDSelect
                 label="BLOOD GROUP"

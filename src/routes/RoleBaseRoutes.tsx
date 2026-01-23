@@ -9,7 +9,6 @@ import {
   TeamOutlined,
   UnorderedListOutlined,
   UserAddOutlined,
-  UsergroupDeleteOutlined,
 } from "@ant-design/icons";
 import type { ReactNode } from "react";
 
@@ -24,7 +23,7 @@ import Profile from "../components/dashboard/CommonPage/Profile";
 import EditProfile from "../components/dashboard/CommonPage/EditProfile";
 import DonateDates from "../components/dashboard/CommonPage/DonateDates";
 import MakeAdmin from "../pages/SuperAdmin/MakeAdmin";
-import AdminList from "../pages/SuperAdmin/AdminList";
+import FinderDashboard from "../pages/Finder/FinderDashboard";
 
 export type TRoleBaseRoute = {
   path?: string;
@@ -167,17 +166,22 @@ export const SUPER_ADMIN_ROUTES: TRoleBaseRoute[] = [
     icon: <UserAddOutlined />,
     element: <MakeAdmin />,
   },
-
-  {
-    path: "admin-list",
-    link: "/super-admin/dashboard/admin-list",
-    name: "Admin List",
-    icon: <UsergroupDeleteOutlined />,
-    element: <AdminList />,
-  },
 ];
 
 export const DONOR_ROUTES: TRoleBaseRoute[] = [
+  {
+    path: "profile",
+    link: "/donor/dashboard/profile",
+    name: "Profile",
+    icon: <ProfileOutlined />,
+    element: <Profile />,
+  },
+
+  {
+    path: "profile/edit",
+    element: <EditProfile />,
+  },
+
   {
     path: "my-donation-list",
     link: "/dashboard/my-donation-list",
@@ -201,22 +205,51 @@ export const DONOR_ROUTES: TRoleBaseRoute[] = [
     icon: <SearchOutlined />,
     element: <Dashboard />,
   },
+
+  {
+    path: "change-password",
+    link: "/donor/dashboard/change-password",
+    name: "Change Password",
+    icon: <LockOutlined />,
+    element: <ChangePassword />,
+  },
 ];
 
 export const FINDER_ROUTES: TRoleBaseRoute[] = [
   {
-    path: "find-donor",
-    link: "/dashboard/find-donor",
-    name: "Find Donor",
-    icon: <SearchOutlined />,
-    element: <Dashboard />,
+    index: true,
+    link: "/finder/dashboard",
+    name: "Dashboard",
+    icon: <DashboardOutlined />,
+    element: <FinderDashboard />,
+  },
+
+  {
+    path: "profile",
+    link: "/finder/dashboard/profile",
+    name: "Profile",
+    icon: <ProfileOutlined />,
+    element: <Profile />,
+  },
+
+  {
+    path: "profile/edit",
+    element: <EditProfile />,
   },
 
   {
     path: "finder-to-donor",
-    link: "/dashboard/finder-to-donor",
+    link: "/finder/dashboard/finder-to-donor",
     name: "Became A Donor",
     icon: <ArrowsAltOutlined />,
     element: <Dashboard />,
+  },
+
+  {
+    path: "change-password",
+    link: "/finder/dashboard/change-password",
+    name: "Change Password",
+    icon: <LockOutlined />,
+    element: <ChangePassword />,
   },
 ];

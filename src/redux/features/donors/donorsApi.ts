@@ -16,7 +16,7 @@ const donorsApi = baseApi.injectEndpoints({
         method: "POST",
         body: payload,
       }),
-      invalidatesTags: ["donor"],
+      invalidatesTags: ["donor", "user"],
     }),
   }),
 });

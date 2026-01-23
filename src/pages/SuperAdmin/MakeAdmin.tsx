@@ -91,7 +91,7 @@ const MakeAdmin = () => {
         });
       }
 
-      navigate("/super-admin/dashboard/admin-list");
+      navigate("/super-admin/dashboard/users");
     } catch (error) {
       const errs: Record<string, unknown>[] = error?.data?.errorSources;
 
