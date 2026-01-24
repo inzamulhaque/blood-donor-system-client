@@ -247,7 +247,10 @@ const Footer = () => {
             }}
           >
             Developed with ❤️ by{" "}
-            <a href="https://www.linkedin.com/in/md-inzamul-haque/">
+            <a
+              target="_blank"
+              href="https://www.linkedin.com/in/md-inzamul-haque/"
+            >
               MD Inzamul Haque
             </a>
           </p>

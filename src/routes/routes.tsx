@@ -78,6 +78,17 @@ const router = createBrowserRouter([
   },
 
   {
+    path: "/donor/dashboard",
+    element: (
+      <ProtectedRoute role={Roles.DONOR}>
+        <WithDashboardLayout />
+      </ProtectedRoute>
+    ),
+
+    children: generateRouterRoutes(DONOR_ROUTES),
+  },
+
+  {
     path: "/finder/dashboard",
     element: (
       <ProtectedRoute role={Roles.FINDER}>

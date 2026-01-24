@@ -60,8 +60,9 @@ const FinderDashboard = () => {
 
         {!isLoading && data && data?.data?.length === 0 && (
           <>
-            <h3 style={{ textAlign: "center", opacity: 0.3, color: "red" }}>
-              No Donor Available In This Moment
+            <h3 style={{ textAlign: "center", opacity: 0.5, color: "red" }}>
+              No donors are available at the moment. <br /> Please contact our
+              admin through our <br /> Facebook page for further assistance!
             </h3>
           </>
         )}

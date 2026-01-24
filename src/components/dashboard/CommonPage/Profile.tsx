@@ -86,14 +86,6 @@ const Profile = () => {
             </Tag>
           </Descriptions.Item>
 
-          {user?.availability && (
-            <Descriptions.Item label="Availability">
-              <Tag color={user?.availability ? "green" : "orange"}>
-                {user?.availability ? "Available" : "Unavailable"}
-              </Tag>
-            </Descriptions.Item>
-          )}
-
           {user?.phoneNumber && (
             <Descriptions.Item label="Phone Number">
               {user?.phoneNumber}

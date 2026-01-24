@@ -1,5 +1,4 @@
 import {
-  AppstoreAddOutlined,
   ArrowsAltOutlined,
   CalendarOutlined,
   DashboardOutlined,
@@ -7,13 +6,11 @@ import {
   ProfileOutlined,
   SearchOutlined,
   TeamOutlined,
-  UnorderedListOutlined,
   UserAddOutlined,
 } from "@ant-design/icons";
 import type { ReactNode } from "react";
 
 import AdminDashboard from "../pages/Admin/AdminDashboard";
-import Dashboard from "../components/dashboard/Dashboard";
 import FindDonor from "../pages/Admin/FindDonor";
 import UserData from "../pages/Admin/UserData";
 import UserDetails from "../pages/Admin/UserDetails";
@@ -25,6 +22,7 @@ import DonateDates from "../components/dashboard/CommonPage/DonateDates";
 import MakeAdmin from "../pages/SuperAdmin/MakeAdmin";
 import FinderDashboard from "../pages/Finder/FinderDashboard";
 import BecameDonor from "../pages/Finder/BecameDonor";
+import DonorDashboard from "../pages/Donor/DonorDashboard";
 
 export type TRoleBaseRoute = {
   path?: string;
@@ -101,12 +99,6 @@ export const ADMIN_ROUTES: TRoleBaseRoute[] = [
     icon: <LockOutlined />,
     element: <ChangePassword />,
   },
-
-  {
-    path: "block-user/:trackingNumber",
-    link: "/admin/dashboard/block-user/:trackingNumber",
-    element: <Dashboard />,
-  },
 ];
 
 export const SUPER_ADMIN_ROUTES: TRoleBaseRoute[] = [
@@ -171,6 +163,14 @@ export const SUPER_ADMIN_ROUTES: TRoleBaseRoute[] = [
 
 export const DONOR_ROUTES: TRoleBaseRoute[] = [
   {
+    index: true,
+    link: "/donor/dashboard",
+    name: "Dashboard",
+    icon: <DashboardOutlined />,
+    element: <DonorDashboard />,
+  },
+
+  {
     path: "profile",
     link: "/donor/dashboard/profile",
     name: "Profile",
@@ -184,27 +184,19 @@ export const DONOR_ROUTES: TRoleBaseRoute[] = [
   },
 
   {
-    path: "my-donation-list",
-    link: "/dashboard/my-donation-list",
-    name: "My Donation List",
-    icon: <UnorderedListOutlined />,
-    element: <Dashboard />,
-  },
-
-  {
-    path: "add-new-donation",
-    link: "/dashboard/add-new-donation",
-    name: "Add New Donation",
-    icon: <AppstoreAddOutlined />,
-    element: <Dashboard />,
+    path: "donate-dates",
+    link: "/donor/dashboard/donate-dates",
+    name: "Donate Dates",
+    icon: <CalendarOutlined />,
+    element: <DonateDates />,
   },
 
   {
     path: "find-donor",
-    link: "/dashboard/find-donor",
+    link: "/donor/dashboard/find-donor",
     name: "Find Donor",
     icon: <SearchOutlined />,
-    element: <Dashboard />,
+    element: <FinderDashboard />,
   },
 
   {

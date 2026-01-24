@@ -18,7 +18,20 @@ const donorsApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: ["donor", "user"],
     }),
+
+    getDonateCount: builder.query({
+      query: () => ({
+        url: "/donors/donate-count",
+        method: "GET",
+      }),
+
+      providesTags: ["donor", "user"],
+    }),
   }),
 });
 
-export const { useGetMyDonateDatesQuery, useAddDonateDateMutation } = donorsApi;
+export const {
+  useGetMyDonateDatesQuery,
+  useAddDonateDateMutation,
+  useGetDonateCountQuery,
+} = donorsApi;
