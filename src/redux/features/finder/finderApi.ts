@@ -16,7 +16,7 @@ const finderApi = baseApi.injectEndpoints({
       query: (payload) => ({
         url: "/finders/finder-to-donor",
         method: "PATCH",
-        boldy: payload,
+        body: payload,
       }),
 
       invalidatesTags: ["finder", "user"],
@@ -24,4 +24,4 @@ const finderApi = baseApi.injectEndpoints({
   }),
 });
 
-export const { useSearchDonorQuery } = finderApi;
+export const { useSearchDonorQuery, useBecameDonorMutation } = finderApi;

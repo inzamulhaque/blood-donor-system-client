@@ -21,12 +21,23 @@ import IDSelect from "../../components/shared/form/IDSelect";
 import { BLOOD_GROUPS_OPTIONS } from "../../constants/bloodGroup";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { BecameDonorSchema } from "../../schemas/Finder";
+import { toast } from "sonner";
+import { useBecameDonorMutation } from "../../redux/features/finder/finderApi";
+import Loader from "../../components/shared/Loader";
+import { useAppDispatch } from "../../redux/hooks";
+import { logout } from "../../redux/features/auth/authSlice";
+import { useSignOutMutation } from "../../redux/features/auth/authApi";
 
 const { Title, Text, Paragraph } = Typography;
 
 const BecameDonor = () => {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [formErrors, setFormErrors] = useState<Record<string, string>>({});
+
+  const [becameDonor, { isLoading }] = useBecameDonorMutation();
+  const [signOut] = useSignOutMutation();
+
+  const dispatch = useAppDispatch();
 
   const simpleErroes = useMemo(() => {
     const serr = simplifyZodErrors(formErrors) || {};
@@ -35,12 +46,43 @@ const BecameDonor = () => {
   }, [formErrors]);
 
   const handleBecameDonor = async (values: FieldValues) => {
-    console.log(values);
+    setIsModalOpen(false);
+    try {
+      const res = await becameDonor(values).unwrap();
+
+      if (res?.success) {
+        dispatch(logout());
+        await signOut({});
+
+        toast.error(
+          "For security reasons, please sign in again to continue to your donor dashboard!",
+          {
+            duration: 5000,
+            position: "top-right",
+          },
+        );
+      }
+    } catch (error: any) {
+      const errs: Record<string, unknown>[] = error?.data?.errorSources;
+
+      if (Array.isArray(errs)) {
+        errs.forEach((err) => {
+          toast.error(err.message as string, {
+            duration: 5000,
+            position: "top-right",
+          });
+        });
+      }
+    }
   };
 
   const handleCancel = () => {
     setIsModalOpen(false);
   };
+
+  if (isLoading) {
+    return <Loader />;
+  }
 
   return (
     <>
