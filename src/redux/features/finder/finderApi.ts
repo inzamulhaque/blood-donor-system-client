@@ -11,6 +11,16 @@ const finderApi = baseApi.injectEndpoints({
 
       providesTags: ["donor"],
     }),
+
+    becameDonor: builder.mutation({
+      query: (payload) => ({
+        url: "/finders/finder-to-donor",
+        method: "PATCH",
+        boldy: payload,
+      }),
+
+      invalidatesTags: ["finder", "user"],
+    }),
   }),
 });
 

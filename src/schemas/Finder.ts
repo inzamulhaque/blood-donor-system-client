@@ -52,3 +52,7 @@ export const FindDonorSchema = z.object({
   upozila: z.enum(UPOZILAS_PABNA),
   bloodGroup: z.enum(BLOOD_GROUPS),
 });
+
+export const BecameDonorSchema = z.object({
+  bloodGroup: z.enum(BLOOD_GROUPS),
+});

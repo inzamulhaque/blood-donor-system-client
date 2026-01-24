@@ -1,4 +1,4 @@
-import { Col, Divider, Row, Spin } from "antd";
+import { Col, Divider, Pagination, Row, Spin } from "antd";
 import DonorSearchBar from "../../components/dashboard/components/DonorSearchBar";
 import { useSearchDonorQuery } from "../../redux/features/finder/finderApi";
 import { useState } from "react";
@@ -43,7 +43,7 @@ const FinderDashboard = () => {
           {!isLoading &&
             data &&
             data?.data?.length !== 0 &&
-            data?.data?.map((donor: any, index: number) => {
+            data?.data?.map((donor: Record<string, string>, index: number) => {
               return (
                 <Col key={index} xs={24} sm={24} md={12} lg={6}>
                   <DonorCard
@@ -64,6 +64,22 @@ const FinderDashboard = () => {
               No Donor Available In This Moment
             </h3>
           </>
+        )}
+
+        {!isLoading && data && data?.meta && data?.meta?.totalPage > 1 && (
+          <Pagination
+            align="end"
+            defaultCurrent={data?.meta?.page}
+            pageSize={data?.meta?.limit}
+            total={data?.meta?.total}
+            onChange={(page, pageSize) => {
+              setPage(page);
+              setLimit(pageSize);
+            }}
+            style={{
+              marginTop: "10px",
+            }}
+          />
         )}
       </div>
     </>

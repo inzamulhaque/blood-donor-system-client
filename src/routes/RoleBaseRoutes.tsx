@@ -24,6 +24,7 @@ import EditProfile from "../components/dashboard/CommonPage/EditProfile";
 import DonateDates from "../components/dashboard/CommonPage/DonateDates";
 import MakeAdmin from "../pages/SuperAdmin/MakeAdmin";
 import FinderDashboard from "../pages/Finder/FinderDashboard";
+import BecameDonor from "../pages/Finder/BecameDonor";
 
 export type TRoleBaseRoute = {
   path?: string;
@@ -242,7 +243,7 @@ export const FINDER_ROUTES: TRoleBaseRoute[] = [
     link: "/finder/dashboard/finder-to-donor",
     name: "Became A Donor",
     icon: <ArrowsAltOutlined />,
-    element: <Dashboard />,
+    element: <BecameDonor />,
   },
 
   {
