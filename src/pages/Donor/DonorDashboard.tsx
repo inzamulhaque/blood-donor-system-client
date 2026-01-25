@@ -24,6 +24,8 @@ const DonorDashboard = () => {
 
   const user = data?.data;
 
+  console.log(user);
+
   return (
     <>
       <div
@@ -117,7 +119,7 @@ const DonorDashboard = () => {
                 </Title>
 
                 <Tag
-                  color={user.accountStatus === "active" ? "green" : "red"}
+                  color={user?.accountStatus === "active" ? "green" : "red"}
                   style={{ fontSize: 14 }}
                 >
                   {user?.accountStatus.toUpperCase()}

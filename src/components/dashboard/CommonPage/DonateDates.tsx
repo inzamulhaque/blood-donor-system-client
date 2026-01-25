@@ -141,7 +141,7 @@ const DonateDates = () => {
                       style={{ color: "#1677ff", fontSize: 18 }}
                     />
                     <Title level={5} style={{ margin: 0 }}>
-                      {dayjs(date?.date).format("DD-MM-YYYY")}
+                      {dayjs(date?.date).format("DD MMM YYYY")}
                     </Title>
                   </Flex>
 
