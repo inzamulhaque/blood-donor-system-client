@@ -20,7 +20,21 @@ const userApi = baseApi.injectEndpoints({
 
       invalidatesTags: ["user"],
     }),
+
+    donorSignup: builder.mutation({
+      query: (payload) => ({
+        url: "/users/new-donor",
+        method: "POST",
+        body: payload,
+      }),
+
+      invalidatesTags: ["user", "donor"],
+    }),
   }),
 });
 
-export const { useGetMeQuery, useUpdateMyInfoMutation } = userApi;
+export const {
+  useGetMeQuery,
+  useUpdateMyInfoMutation,
+  useDonorSignupMutation,
+} = userApi;
