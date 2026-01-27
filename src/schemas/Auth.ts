@@ -28,7 +28,7 @@ export const ChangePasswordSchema = z
         {
           message:
             "Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character",
-        }
+        },
       ),
 
     confirmNewPassword: z
@@ -37,5 +37,34 @@ export const ChangePasswordSchema = z
   })
   .refine((data) => data.newPassword === data.confirmNewPassword, {
     path: ["confirmNewPassword"],
+    message: "Passwords do not match",
+  });
+
+export const ResetPasswordSchema = z
+  .object({
+    otp: z
+      .string()
+      .trim()
+      .regex(/^\d{5}$/, "OTP must be exactly 5 digits"),
+
+    password: z
+      .string()
+      .min(1, { message: "Password is required" })
+      .min(6, { message: "Password must be at least 6 characters long" })
+      .max(18, { message: "Password must not exceed 18 characters" })
+      .regex(
+        /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,18}$/,
+        {
+          message:
+            "Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character",
+        },
+      ),
+
+    confirmPassword: z.string().min(1, {
+      message: "Confirm password is required",
+    }),
+  })
+  .refine((data) => data.password === data.confirmPassword, {
+    path: ["confirmPassword"],
     message: "Passwords do not match",
   });

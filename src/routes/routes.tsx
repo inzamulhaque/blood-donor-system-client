@@ -22,6 +22,8 @@ import ProtectedRoute from "../components/layout/ProtectedRoute";
 import { Roles } from "../constants/userConstant";
 import PublicRoute from "../components/layout/PublicRoute";
 import VerifyEmail from "../pages/AuthPagaes/VerifyEmail";
+import ForgotPassword from "../pages/AuthPagaes/ForgotPassword";
+import ResetPassword from "../pages/AuthPagaes/ResetPassword";
 
 const router = createBrowserRouter([
   {
@@ -114,6 +116,24 @@ const router = createBrowserRouter([
     element: (
       <PublicRoute>
         <SignUp />
+      </PublicRoute>
+    ),
+  },
+
+  {
+    path: "/forget-password",
+    element: (
+      <PublicRoute>
+        <ForgotPassword />
+      </PublicRoute>
+    ),
+  },
+
+  {
+    path: "/reset-password",
+    element: (
+      <PublicRoute>
+        <ResetPassword />
       </PublicRoute>
     ),
   },

@@ -143,7 +143,6 @@ const VerifyEmail = () => {
             style={{ width: "100%" }}
             align="center"
           >
-            {/* Logo / Icon */}
             <div
               style={{
                 width: 64,
@@ -174,7 +173,6 @@ const VerifyEmail = () => {
 
             <Divider style={{ margin: "12px 0" }} />
 
-            {/* OTP Input */}
             <Input.OTP
               length={5}
               value={otp}

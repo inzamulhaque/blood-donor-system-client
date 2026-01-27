@@ -23,6 +23,7 @@ import { useNavigate } from "react-router-dom";
 import { useAppDispatch } from "../../redux/hooks";
 import { useFinderSignupMutation } from "../../redux/features/user/userApi";
 import { setTN } from "../../redux/features/user/userSlice";
+import Loader from "../shared/Loader";
 
 const FinderSignUp = () => {
   const [formErrors, setFormErrors] = useState<Record<string, string>>({});
@@ -88,6 +89,10 @@ const FinderSignUp = () => {
       }
     }
   };
+
+  if (isLoading) {
+    return <Loader />;
+  }
 
   return (
     <>

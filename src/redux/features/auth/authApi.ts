@@ -33,7 +33,6 @@ const authApi = baseApi.injectEndpoints({
         method: "POST",
         body: { otp: payload.otp },
       }),
-      invalidatesTags: ["user"],
     }),
 
     resendOtp: builder.mutation({
@@ -41,7 +40,22 @@ const authApi = baseApi.injectEndpoints({
         url: `/auth/resend-otp/${TN}`,
         method: "POST",
       }),
-      invalidatesTags: ["user"],
+    }),
+
+    forgotPassword: builder.mutation({
+      query: (payload) => ({
+        url: "/auth/forgot-password",
+        method: "POST",
+        body: payload,
+      }),
+    }),
+
+    resetPassword: builder.mutation({
+      query: (payload) => ({
+        url: `/auth/reset-password/${payload.TN}`,
+        method: "PATCH",
+        body: payload,
+      }),
     }),
   }),
 });
@@ -52,4 +66,6 @@ export const {
   useSignOutMutation,
   useVeriFyEmailMutation,
   useResendOtpMutation,
+  useForgotPasswordMutation,
+  useResetPasswordMutation,
 } = authApi;
