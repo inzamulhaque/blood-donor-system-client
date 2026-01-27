@@ -19,6 +19,10 @@ import { toast } from "sonner";
 import simplifyZodErrors from "../../utils/SimplifyZodErrors";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { FinderRegisterSchema } from "../../schemas/Finder";
+import { useNavigate } from "react-router-dom";
+import { useAppDispatch } from "../../redux/hooks";
+import { useFinderSignupMutation } from "../../redux/features/user/userApi";
+import { setTN } from "../../redux/features/user/userSlice";
 
 const FinderSignUp = () => {
   const [formErrors, setFormErrors] = useState<Record<string, string>>({});
@@ -28,6 +32,11 @@ const FinderSignUp = () => {
     Record<string, boolean>
   >({ terms: false, policy: false });
   const [openSection, setOpenSection] = useState<number>(1);
+
+  const navigate = useNavigate();
+
+  const dispatch = useAppDispatch();
+  const [finderSignUp, { isLoading }] = useFinderSignupMutation();
 
   const simpleErroes = useMemo(() => {
     const serr = simplifyZodErrors(formErrors) || {};
@@ -40,18 +49,44 @@ const FinderSignUp = () => {
         {
           duration: 7000,
           position: "top-center",
-        }
+        },
       );
     }
 
     return serr;
   }, [formErrors]);
 
-  const handleSubmit = (values: FieldValues) => {
+  const handleSubmit = async (values: FieldValues) => {
     setOpenSection(1);
     setAcceptTermsPolicy({ terms: false, policy: false });
     setFormDefaultValues(values);
-    console.log(values);
+
+    try {
+      const res = await finderSignUp(values).unwrap();
+
+      if (res?.success) {
+        toast.success(res?.message, {
+          duration: 5000,
+          position: "top-right",
+        });
+
+        setFormDefaultValues({});
+
+        dispatch(setTN({ trackingNumber: res?.data?.user?.trackingNumber }));
+        navigate("/verify-email");
+      }
+    } catch (error: any) {
+      const errs: Record<string, unknown>[] = error?.data?.errorSources;
+
+      if (Array.isArray(errs)) {
+        errs.forEach((err) => {
+          toast.error(err.message as string, {
+            duration: 5000,
+            position: "top-right",
+          });
+        });
+      }
+    }
   };
 
   return (

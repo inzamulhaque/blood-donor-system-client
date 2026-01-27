@@ -2,6 +2,7 @@ import { Col, Flex, Row } from "antd";
 import { motion } from "framer-motion";
 import "./ourTeam.css";
 import Card from "./Card";
+import inzamulImg from "../../assets/ourTeamImages/Inzamul.jpg";
 
 const OurAdmins = () => {
   return (
@@ -41,7 +42,7 @@ const OurAdmins = () => {
         >
           <Col xs={24} md={12} lg={8}>
             <Card
-              imgUrl="https://i.pravatar.cc/300?img=12"
+              imgUrl={inzamulImg}
               name="MD Inzamul Haque"
               designation="Chief Administrator"
               socialLink="https://www.linkedin.com/in/md-inzamul-haque/"
@@ -50,7 +51,7 @@ const OurAdmins = () => {
 
           <Col xs={24} md={12} lg={8}>
             <Card
-              imgUrl="https://i.pravatar.cc/300?img=12"
+              imgUrl={inzamulImg}
               name="MD Inzamul Haque"
               designation="Chief Administrator"
               socialLink="https://www.linkedin.com/in/md-inzamul-haque/"
@@ -59,7 +60,7 @@ const OurAdmins = () => {
 
           <Col xs={24} md={12} lg={8}>
             <Card
-              imgUrl="https://i.pravatar.cc/300?img=12"
+              imgUrl={inzamulImg}
               name="MD Inzamul Haque"
               designation="Chief Administrator"
               socialLink="https://www.linkedin.com/in/md-inzamul-haque/"

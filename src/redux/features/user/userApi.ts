@@ -30,6 +30,16 @@ const userApi = baseApi.injectEndpoints({
 
       invalidatesTags: ["user", "donor"],
     }),
+
+    finderSignup: builder.mutation({
+      query: (payload) => ({
+        url: "/users/new-finder",
+        method: "POST",
+        body: payload,
+      }),
+
+      invalidatesTags: ["user", "finder"],
+    }),
   }),
 });
 
@@ -37,4 +47,5 @@ export const {
   useGetMeQuery,
   useUpdateMyInfoMutation,
   useDonorSignupMutation,
+  useFinderSignupMutation,
 } = userApi;
