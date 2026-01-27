@@ -159,6 +159,14 @@ export const SUPER_ADMIN_ROUTES: TRoleBaseRoute[] = [
     icon: <UserAddOutlined />,
     element: <MakeAdmin />,
   },
+
+  {
+    path: "change-password",
+    link: "/super-admin/dashboard/change-password",
+    name: "Change Password",
+    icon: <LockOutlined />,
+    element: <ChangePassword />,
+  },
 ];
 
 export const DONOR_ROUTES: TRoleBaseRoute[] = [
