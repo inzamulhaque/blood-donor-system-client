@@ -7,7 +7,7 @@ const donorsApi = baseApi.injectEndpoints({
         url: "/donors/donate-date",
         method: "GET",
       }),
-      providesTags: ["donor"],
+      providesTags: ["donor", "user"],
     }),
 
     addDonateDate: builder.mutation({
