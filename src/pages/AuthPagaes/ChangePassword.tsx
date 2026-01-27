@@ -1,7 +1,7 @@
 import { Button, Divider } from "antd";
 import "./authStyle.css";
 import { useMemo, useState } from "react";
-import type { FieldValues } from "react-hook-form";
+import type { FieldErrors, FieldValues } from "react-hook-form";
 import IDForm from "../../components/shared/form/IDForm";
 import IDPassword from "../../components/shared/form/IDPassword";
 import simplifyZodErrors from "../../utils/SimplifyZodErrors";
@@ -12,9 +12,12 @@ import { toast } from "sonner";
 
 import Loader from "../../components/shared/Loader";
 import { useChangePasswordMutation } from "../../redux/features/auth/authApi";
+import type { TError } from "../../type";
 
 const ChangePassword = () => {
-  const [formErrors, setFormErrors] = useState<Record<string, string>>({});
+  const [formErrors, setFormErrors] = useState<
+    FieldErrors<Record<string, unknown>>
+  >({});
   const [changePassword, { isLoading }] = useChangePasswordMutation();
 
   const simpleErroes = useMemo(() => {
@@ -33,12 +36,13 @@ const ChangePassword = () => {
           position: "top-right",
         });
       }
-    } catch (error) {
-      const errs: Record<string, unknown>[] = error?.data?.errorSources;
+    } catch (error: unknown) {
+      const apiError = error as TError;
+      const errs = apiError?.data?.errorSources;
 
       if (Array.isArray(errs)) {
         errs.forEach((err) => {
-          toast.error(err.message as string, {
+          toast.error(err?.message, {
             duration: 5000,
             position: "top-right",
           });

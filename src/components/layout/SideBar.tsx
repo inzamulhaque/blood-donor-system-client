@@ -19,6 +19,7 @@ import { logout, useCurrentUser } from "../../redux/features/auth/authSlice";
 import { toast } from "sonner";
 import { useSignOutMutation } from "../../redux/features/auth/authApi";
 import Loader from "../shared/Loader";
+import type { TError } from "../../type";
 
 const { Sider } = Layout;
 
@@ -74,12 +75,13 @@ const SideBar = () => {
         duration: 5000,
         position: "top-right",
       });
-    } catch (error) {
-      const errs: Record<string, unknown>[] = error?.data?.errorSources;
+    } catch (error: unknown) {
+      const apiError = error as TError;
+      const errs = apiError?.data?.errorSources;
 
       if (Array.isArray(errs)) {
         errs.forEach((err) => {
-          toast.error(err.message as string, {
+          toast.error(err?.message, {
             duration: 5000,
             position: "top-right",
           });

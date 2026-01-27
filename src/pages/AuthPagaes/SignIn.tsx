@@ -5,7 +5,7 @@ import {
 } from "@ant-design/icons";
 import { Button, Card, Typography } from "antd";
 import { motion } from "framer-motion";
-import type { FieldValues } from "react-hook-form";
+import type { FieldErrors, FieldValues } from "react-hook-form";
 import { Link } from "react-router-dom";
 import "./authStyle.css";
 import IDForm from "../../components/shared/form/IDForm";
@@ -23,12 +23,15 @@ import verifyToken from "../../utils/verifyToken";
 import { useNavigate } from "react-router-dom";
 import { useAppDispatch } from "../../redux/hooks";
 import { setUser, type TUser } from "../../redux/features/auth/authSlice";
+import type { TError } from "../../type";
 
 const { Text } = Typography;
 
 const SignIn = () => {
   const dispatch = useAppDispatch();
-  const [formErrors, setFormErrors] = useState<Record<string, string>>({});
+  const [formErrors, setFormErrors] = useState<
+    FieldErrors<Record<string, unknown>>
+  >({});
 
   const [signin, { isLoading }] = useSigninMutation();
 
@@ -45,7 +48,7 @@ const SignIn = () => {
         {
           duration: 7000,
           position: "top-center",
-        }
+        },
       );
     }
 
@@ -70,12 +73,13 @@ const SignIn = () => {
           navigate(`/${userData.role as string}/dashboard`);
         }
       }
-    } catch (error: any) {
-      const errs: Record<string, unknown>[] = error?.data?.errorSources;
+    } catch (error: unknown) {
+      const apiError = error as TError;
+      const errs = apiError?.data?.errorSources;
 
       if (Array.isArray(errs)) {
         errs.forEach((err) => {
-          toast.error(err.message as string, {
+          toast.error(err?.message, {
             duration: 5000,
             position: "top-right",
           });

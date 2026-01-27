@@ -1,6 +1,6 @@
 import { useMemo, useState } from "react";
 import FormHeader from "./FormHeader";
-import type { FieldValues } from "react-hook-form";
+import type { FieldErrors, FieldValues } from "react-hook-form";
 import { motion } from "framer-motion";
 import IDForm from "../shared/form/IDForm";
 import IDSelect from "../shared/form/IDSelect";
@@ -24,9 +24,12 @@ import { useAppDispatch } from "../../redux/hooks";
 import { useFinderSignupMutation } from "../../redux/features/user/userApi";
 import { setTN } from "../../redux/features/user/userSlice";
 import Loader from "../shared/Loader";
+import type { TError } from "../../type";
 
 const FinderSignUp = () => {
-  const [formErrors, setFormErrors] = useState<Record<string, string>>({});
+  const [formErrors, setFormErrors] = useState<
+    FieldErrors<Record<string, unknown>>
+  >({});
   const [formDefaultValues, setFormDefaultValues] = useState<FieldValues>({});
 
   const [acceptTermsPolicy, setAcceptTermsPolicy] = useState<
@@ -76,12 +79,13 @@ const FinderSignUp = () => {
         dispatch(setTN({ trackingNumber: res?.data?.user?.trackingNumber }));
         navigate("/verify-email");
       }
-    } catch (error: any) {
-      const errs: Record<string, unknown>[] = error?.data?.errorSources;
+    } catch (error: unknown) {
+      const apiError = error as TError;
+      const errs = apiError?.data?.errorSources;
 
       if (Array.isArray(errs)) {
         errs.forEach((err) => {
-          toast.error(err.message as string, {
+          toast.error(err?.message, {
             duration: 5000,
             position: "top-right",
           });

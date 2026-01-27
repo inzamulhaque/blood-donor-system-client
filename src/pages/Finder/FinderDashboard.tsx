@@ -3,6 +3,8 @@ import DonorSearchBar from "../../components/dashboard/components/DonorSearchBar
 import { useSearchDonorQuery } from "../../redux/features/finder/finderApi";
 import { useState } from "react";
 import DonorCard from "../../components/dashboard/components/DonorCard";
+import type { TBloodGroup } from "../../constants/bloodGroup";
+import type { TUpozilaPabna } from "../../constants/upozila";
 
 const FinderDashboard = () => {
   const [page, setPage] = useState<number>(1);
@@ -17,8 +19,6 @@ const FinderDashboard = () => {
       skip: skipSearch,
     },
   );
-
-  console.log(data);
 
   return (
     <>
@@ -49,8 +49,8 @@ const FinderDashboard = () => {
                   <DonorCard
                     name={donor?.name}
                     email={donor?.email}
-                    bloodGroup={donor?.bloodGroup}
-                    upozila={donor?.upozila}
+                    bloodGroup={donor?.bloodGroup as TBloodGroup}
+                    upozila={donor?.upozila as TUpozilaPabna}
                     phoneNumber={donor?.phoneNumber}
                   />
                 </Col>

@@ -1,4 +1,4 @@
-import type { FieldValues } from "react-hook-form";
+import type { FieldErrors, FieldValues } from "react-hook-form";
 import IDForm from "../../shared/form/IDForm";
 import { useMemo, useState } from "react";
 import simplifyZodErrors from "../../../utils/SimplifyZodErrors";
@@ -16,7 +16,9 @@ type TSearchDonorProps = {
 };
 
 const DonorSearchBar = ({ setSkipSearch, setParams }: TSearchDonorProps) => {
-  const [formErrors, setFormErrors] = useState<Record<string, string>>({});
+  const [formErrors, setFormErrors] = useState<
+    FieldErrors<Record<string, unknown>>
+  >({});
 
   const simpleErroes = useMemo(() => {
     const serr = simplifyZodErrors(formErrors) || {};

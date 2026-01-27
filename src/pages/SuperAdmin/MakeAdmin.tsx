@@ -13,7 +13,7 @@ import {
 } from "antd";
 import { useMemo, useState } from "react";
 import IDForm from "../../components/shared/form/IDForm";
-import type { FieldValues } from "react-hook-form";
+import type { FieldErrors, FieldValues } from "react-hook-form";
 import IDInput from "../../components/shared/form/IDInput";
 import { SearchOutlined } from "@ant-design/icons";
 import simplifyZodErrors from "../../utils/SimplifyZodErrors";
@@ -24,12 +24,15 @@ import {
 } from "../../redux/features/admin/adminApi";
 import Loader from "../../components/shared/Loader";
 import { useNavigate } from "react-router-dom";
+import type { TError } from "../../type";
 
 const { useBreakpoint } = Grid;
 
 const MakeAdmin = () => {
   const navigate = useNavigate();
-  const [formErrors, setFormErrors] = useState<Record<string, string>>({});
+  const [formErrors, setFormErrors] = useState<
+    FieldErrors<Record<string, unknown>>
+  >({});
   const [params, setParams] = useState<Record<string, string>>({});
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [shouldFetch, setShouldFetch] = useState<boolean>(false);
@@ -92,12 +95,13 @@ const MakeAdmin = () => {
       }
 
       navigate("/super-admin/dashboard/users");
-    } catch (error) {
-      const errs: Record<string, unknown>[] = error?.data?.errorSources;
+    } catch (error: unknown) {
+      const apiError = error as TError;
+      const errs = apiError?.data?.errorSources;
 
       if (Array.isArray(errs)) {
         errs.forEach((err) => {
-          toast.error(err.message as string, {
+          toast.error(err?.message, {
             duration: 5000,
             position: "top-right",
           });

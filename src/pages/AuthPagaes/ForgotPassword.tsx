@@ -1,7 +1,7 @@
 import { ArrowLeftOutlined, MailOutlined } from "@ant-design/icons";
 import { Button, Card } from "antd";
 import { motion } from "framer-motion";
-import type { FieldValues } from "react-hook-form";
+import type { FieldErrors, FieldValues } from "react-hook-form";
 import { Link } from "react-router-dom";
 import "./authStyle.css";
 import IDForm from "../../components/shared/form/IDForm";
@@ -16,9 +16,12 @@ import Loader from "../../components/shared/Loader";
 import { useNavigate } from "react-router-dom";
 import { useAppDispatch } from "../../redux/hooks";
 import { setTN } from "../../redux/features/user/userSlice";
+import type { TError } from "../../type";
 
 const ForgotPassword = () => {
-  const [formErrors, setFormErrors] = useState<Record<string, string>>({});
+  const [formErrors, setFormErrors] = useState<
+    FieldErrors<Record<string, unknown>>
+  >({});
 
   const [forgotPassword, { isLoading }] = useForgotPasswordMutation();
   const dispatch = useAppDispatch();
@@ -45,12 +48,13 @@ const ForgotPassword = () => {
 
         navigate("/reset-password");
       }
-    } catch (error: any) {
-      const errs: Record<string, unknown>[] = error?.data?.errorSources;
+    } catch (error: unknown) {
+      const apiError = error as TError;
+      const errs = apiError?.data?.errorSources;
 
       if (Array.isArray(errs)) {
         errs.forEach((err) => {
-          toast.error(err.message as string, {
+          toast.error(err?.message, {
             duration: 5000,
             position: "top-right",
           });

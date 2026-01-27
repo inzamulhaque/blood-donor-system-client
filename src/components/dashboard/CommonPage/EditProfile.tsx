@@ -1,7 +1,7 @@
 import { Button, Col, Divider, Row } from "antd";
 
 import { useMemo, useState } from "react";
-import type { FieldValues } from "react-hook-form";
+import type { FieldErrors, FieldValues } from "react-hook-form";
 
 import {
   NumberOutlined,
@@ -23,6 +23,7 @@ import IDInput from "../../shared/form/IDInput";
 import IDSelect from "../../shared/form/IDSelect";
 import { BLOOD_GROUPS_OPTIONS } from "../../../constants/bloodGroup";
 import { UPOZILAS_PABNA_OPTIONS } from "../../../constants/upozila";
+import type { TError } from "../../../type";
 
 const EditProfile = () => {
   const location = useLocation();
@@ -33,7 +34,9 @@ const EditProfile = () => {
     useUpdateMyInfoMutation();
   const user = data?.data;
 
-  const [formErrors, setFormErrors] = useState<Record<string, string>>({});
+  const [formErrors, setFormErrors] = useState<
+    FieldErrors<Record<string, unknown>>
+  >({});
 
   const simpleErroes = useMemo(() => {
     const serr = simplifyZodErrors(formErrors) || {};
@@ -59,12 +62,13 @@ const EditProfile = () => {
 
         navigate(redirectTo);
       }
-    } catch (error) {
-      const errs: Record<string, unknown>[] = error?.data?.errorSources;
+    } catch (error: unknown) {
+      const apiError = error as TError;
+      const errs = apiError?.data?.errorSources;
 
       if (Array.isArray(errs)) {
         errs.forEach((err) => {
-          toast.error(err.message as string, {
+          toast.error(err?.message, {
             duration: 5000,
             position: "top-right",
           });

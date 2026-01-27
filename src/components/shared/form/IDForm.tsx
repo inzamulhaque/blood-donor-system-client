@@ -6,6 +6,7 @@ import {
   type FieldValues,
   type SubmitHandler,
   FormProvider,
+  type FieldErrors,
 } from "react-hook-form";
 
 type TFormConfig = {
@@ -16,7 +17,9 @@ type TFormConfig = {
 type TFormProps = {
   onSubmit: SubmitHandler<FieldValues>;
   children: ReactNode;
-  setFormErrors: React.Dispatch<React.SetStateAction<Record<string, string>>>;
+  setFormErrors: React.Dispatch<
+    React.SetStateAction<FieldErrors<Record<string, unknown>>>
+  >;
 } & TFormConfig;
 
 const IDForm = ({
@@ -39,7 +42,10 @@ const IDForm = ({
   const methods = useForm(formConfig);
 
   useEffect(() => {
-    setFormErrors(methods?.formState?.errors);
+    const formErrors: FieldErrors<Record<string, unknown>> =
+      methods?.formState?.errors;
+
+    setFormErrors(formErrors);
   }, [methods.formState.errors]);
 
   const submit: SubmitHandler<FieldValues> = (data) => {

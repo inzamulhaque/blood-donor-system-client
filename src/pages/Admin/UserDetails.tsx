@@ -127,8 +127,6 @@ const UserDetails = () => {
     setIsRemoveAdminModal(false);
     const res = await removeAdmin(data?.data?.trackingNumber).unwrap();
 
-    console.log(res);
-
     if (res?.success) {
       toast.success(res?.message, {
         duration: 7000,

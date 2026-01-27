@@ -20,18 +20,21 @@ import NextOrSignupBtn from "./NextOrSignupBtn";
 import FormHeader from "./FormHeader";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { DonorUserRegisterSchema } from "../../schemas/Donor";
-import type { FieldValues } from "react-hook-form";
+import type { FieldErrors, FieldValues } from "react-hook-form";
 import simplifyZodErrors from "../../utils/SimplifyZodErrors";
 import { toast } from "sonner";
 import { useDonorSignupMutation } from "../../redux/features/user/userApi";
 import Loader from "../shared/Loader";
 import { useAppDispatch } from "../../redux/hooks";
 import { setTN } from "../../redux/features/user/userSlice";
+import type { TError } from "../../type";
 
 const { Text } = Typography;
 
 const DonorSignUp = () => {
-  const [formErrors, setFormErrors] = useState<Record<string, string>>({});
+  const [formErrors, setFormErrors] = useState<
+    FieldErrors<Record<string, unknown>>
+  >({});
   const [formDefaultValues, setFormDefaultValues] = useState<FieldValues>({});
 
   const [acceptTermsPolicy, setAcceptTermsPolicy] = useState<
@@ -81,8 +84,9 @@ const DonorSignUp = () => {
         dispatch(setTN({ trackingNumber: res?.data?.user?.trackingNumber }));
         navigate("/verify-email");
       }
-    } catch (error: any) {
-      const errs: Record<string, unknown>[] = error?.data?.errorSources;
+    } catch (error: unknown) {
+      const apiError = error as TError;
+      const errs = apiError?.data?.errorSources;
 
       if (Array.isArray(errs)) {
         errs.forEach((err) => {

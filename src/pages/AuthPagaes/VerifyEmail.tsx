@@ -12,6 +12,7 @@ import {
 } from "../../redux/features/auth/authApi";
 import Loader from "../../components/shared/Loader";
 import { toast } from "sonner";
+import type { TError } from "../../type";
 
 dayjs.extend(duration);
 const { Title, Text } = Typography;
@@ -61,12 +62,13 @@ const VerifyEmail = () => {
 
         dispatch(removeTN());
       }
-    } catch (error: any) {
-      const errs: Record<string, unknown>[] = error?.data?.errorSources;
+    } catch (error: unknown) {
+      const apiError = error as TError;
+      const errs = apiError?.data?.errorSources;
 
       if (Array.isArray(errs)) {
         errs.forEach((err) => {
-          toast.error(err.message as string, {
+          toast.error(err?.message, {
             duration: 5000,
             position: "top-right",
           });
@@ -88,12 +90,13 @@ const VerifyEmail = () => {
         setSeconds(300);
         setIsResendDisabled(true);
       }
-    } catch (error: any) {
-      const errs: Record<string, unknown>[] = error?.data?.errorSources;
+    } catch (error: unknown) {
+      const apiError = error as TError;
+      const errs = apiError?.data?.errorSources;
 
       if (Array.isArray(errs)) {
         errs.forEach((err) => {
-          toast.error(err.message as string, {
+          toast.error(err?.message, {
             duration: 5000,
             position: "top-right",
           });

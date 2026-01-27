@@ -21,18 +21,21 @@ import { useMemo, useState } from "react";
 import IDForm from "../../shared/form/IDForm";
 import IDDate from "../../shared/form/IDDate";
 import IDTextArea from "../../shared/form/IDTextArea";
-import type { FieldValues } from "react-hook-form";
+import type { FieldErrors, FieldValues } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { DonateDateSchema } from "../../../schemas/Donor";
 import simplifyZodErrors from "../../../utils/SimplifyZodErrors";
 import { toast } from "sonner";
+import type { TError } from "../../../type";
 
 const { Text, Title } = Typography;
 
 const DonateDates = () => {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 
-  const [formErrors, setFormErrors] = useState<Record<string, string>>({});
+  const [formErrors, setFormErrors] = useState<
+    FieldErrors<Record<string, unknown>>
+  >({});
 
   const { data, isLoading } = useGetMyDonateDatesQuery({});
   const [addDonateDate, { isLoading: isAdding }] = useAddDonateDateMutation();
@@ -67,12 +70,13 @@ const DonateDates = () => {
           position: "top-right",
         });
       }
-    } catch (error) {
-      const errs: Record<string, unknown>[] = error?.data?.errorSources;
+    } catch (error: unknown) {
+      const apiError = error as TError;
+      const errs = apiError?.data?.errorSources;
 
       if (Array.isArray(errs)) {
         errs.forEach((err) => {
-          toast.error(err.message as string, {
+          toast.error(err?.message, {
             duration: 5000,
             position: "top-right",
           });
@@ -126,7 +130,7 @@ const DonateDates = () => {
         </div>
 
         <Row gutter={[20, 20]}>
-          {dates.map((date: Record<string, any>, index: number) => (
+          {dates.map((date: Record<string, Date | string>, index: number) => (
             <Col xs={24} sm={24} md={12} lg={8} key={index}>
               <Card
                 hoverable
@@ -145,7 +149,9 @@ const DonateDates = () => {
                     </Title>
                   </Flex>
 
-                  <Text type="secondary">{date?.note || "No note added"}</Text>
+                  <Text type="secondary">
+                    {(date?.note as string) || "No note added"}
+                  </Text>
 
                   <Tag color="green" style={{ width: "fit-content" }}>
                     Donated

@@ -24,8 +24,6 @@ const DonorDashboard = () => {
 
   const user = data?.data;
 
-  console.log(user);
-
   return (
     <>
       <div

@@ -23,8 +23,6 @@ const IDDate = ({
   err,
   disabledDate,
 }: TInputProps) => {
-  console.log({ disabledDate });
-
   return (
     <>
       <Controller

@@ -14,7 +14,7 @@ import {
   Typography,
 } from "antd";
 import { useMemo, useState } from "react";
-import type { FieldValues } from "react-hook-form";
+import type { FieldErrors, FieldValues } from "react-hook-form";
 import simplifyZodErrors from "../../utils/SimplifyZodErrors";
 import IDForm from "../../components/shared/form/IDForm";
 import IDSelect from "../../components/shared/form/IDSelect";
@@ -27,12 +27,15 @@ import Loader from "../../components/shared/Loader";
 import { useAppDispatch } from "../../redux/hooks";
 import { logout } from "../../redux/features/auth/authSlice";
 import { useSignOutMutation } from "../../redux/features/auth/authApi";
+import type { TError } from "../../type";
 
 const { Title, Text, Paragraph } = Typography;
 
 const BecameDonor = () => {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
-  const [formErrors, setFormErrors] = useState<Record<string, string>>({});
+  const [formErrors, setFormErrors] = useState<
+    FieldErrors<Record<string, unknown>>
+  >({});
 
   const [becameDonor, { isLoading }] = useBecameDonorMutation();
   const [signOut] = useSignOutMutation();
@@ -62,12 +65,13 @@ const BecameDonor = () => {
           },
         );
       }
-    } catch (error: any) {
-      const errs: Record<string, unknown>[] = error?.data?.errorSources;
+    } catch (error: unknown) {
+      const apiError = error as TError;
+      const errs = apiError?.data?.errorSources;
 
       if (Array.isArray(errs)) {
         errs.forEach((err) => {
-          toast.error(err.message as string, {
+          toast.error(err?.message, {
             duration: 5000,
             position: "top-right",
           });

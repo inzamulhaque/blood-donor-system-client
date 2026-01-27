@@ -20,7 +20,7 @@ import {
 import { useState } from "react";
 import { useAllUserQuery } from "../../redux/features/admin/adminApi";
 import IDForm from "../../components/shared/form/IDForm";
-import type { FieldValues } from "react-hook-form";
+import type { FieldErrors, FieldValues } from "react-hook-form";
 import IDInput from "../../components/shared/form/IDInput";
 import { Link, useLocation } from "react-router-dom";
 import { useAppSelector } from "../../redux/hooks";
@@ -32,7 +32,9 @@ const UserData = () => {
   const [page, setPage] = useState<number>(1);
   const [limit, setLimit] = useState<number>(10);
 
-  const [formErrors, setFormErrors] = useState<Record<string, string>>({});
+  const [formErrors, setFormErrors] = useState<
+    FieldErrors<Record<string, unknown>>
+  >({});
 
   const [params, setParams] = useState<Record<string, string>>();
 

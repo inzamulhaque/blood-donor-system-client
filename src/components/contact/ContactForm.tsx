@@ -1,7 +1,7 @@
 import IDForm from "../shared/form/IDForm";
 import "./contact.css";
 import IDInput from "../shared/form/IDInput";
-import type { FieldValues } from "react-hook-form";
+import type { FieldErrors, FieldValues } from "react-hook-form";
 import { Button, Col, Row } from "antd";
 import IDTextArea from "../shared/form/IDTextArea";
 import { SendOutlined } from "@ant-design/icons";
@@ -13,7 +13,9 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { ContactSchema } from "../../schemas/Contact";
 
 const ContactForm = () => {
-  const [formErrors, setFormErrors] = useState<Record<string, string>>({});
+  const [formErrors, setFormErrors] = useState<
+    FieldErrors<Record<string, unknown>>
+  >({});
   const [formDefaultValues, setFormDefaultValues] = useState<FieldValues>({});
 
   const simpleErroes = useMemo(() => {
@@ -27,7 +29,7 @@ const ContactForm = () => {
         {
           duration: 7000,
           position: "top-center",
-        }
+        },
       );
     }
 
@@ -36,7 +38,6 @@ const ContactForm = () => {
 
   const handleSubmit = (values: FieldValues) => {
     setFormDefaultValues(values);
-    console.log({ values });
   };
   return (
     <>

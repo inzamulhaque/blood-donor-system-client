@@ -13,7 +13,7 @@ import {
 import IDSelect from "../../components/shared/form/IDSelect";
 import { UPOZILAS_PABNA_OPTIONS } from "../../constants/upozila";
 import IDForm from "../../components/shared/form/IDForm";
-import type { FieldValues } from "react-hook-form";
+import type { FieldErrors, FieldValues } from "react-hook-form";
 import { useState } from "react";
 import { BLOOD_GROUPS_OPTIONS } from "../../constants/bloodGroup";
 import { SearchOutlined } from "@ant-design/icons";
@@ -109,7 +109,9 @@ const FindDonor = () => {
   const [page, setPage] = useState<number>(1);
   const [limit, setLimit] = useState<number>(10);
 
-  const [formErrors, setFormErrors] = useState<Record<string, string>>({});
+  const [formErrors, setFormErrors] = useState<
+    FieldErrors<Record<string, unknown>>
+  >({});
 
   const [params, setParams] = useState<Record<string, string>>();
 

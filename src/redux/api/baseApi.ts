@@ -9,6 +9,7 @@ import { createApi } from "@reduxjs/toolkit/query/react";
 import type { RootState } from "../store";
 import { toast } from "sonner";
 import { logout, setUser } from "../features/auth/authSlice";
+import type { TError } from "../../type";
 
 const baseQuery = fetchBaseQuery({
   baseUrl: "https://blood-donor-system-server.vercel.app/api/v1",
@@ -32,14 +33,16 @@ const baseQueryWithRefreshToken: BaseQueryFn<
   let result = await baseQuery(args, api, extraOptions);
 
   if (result?.error?.status === 404) {
-    toast.error(result?.error?.data?.message, {
+    const apiError = result?.error as TError;
+    toast.error(apiError?.data?.message, {
       duration: 7000,
       position: "top-right",
     });
   }
 
   if (result?.error?.status === 403) {
-    toast.error(result?.error?.data?.message, {
+    const apiError = result?.error as TError;
+    toast.error(apiError?.data?.message, {
       duration: 7000,
       position: "top-right",
     });

@@ -11,7 +11,7 @@ import {
   Tag,
 } from "antd";
 import { useMemo, useState } from "react";
-import type { FieldValues } from "react-hook-form";
+import type { FieldErrors, FieldValues } from "react-hook-form";
 import IDForm from "../../components/shared/form/IDForm";
 import IDInput from "../../components/shared/form/IDInput";
 import {
@@ -31,12 +31,15 @@ import { DonorSchema } from "../../schemas/Donor";
 import simplifyZodErrors from "../../utils/SimplifyZodErrors";
 import { useAddNewDonorMutation } from "../../redux/features/admin/adminApi";
 import { toast } from "sonner";
+import type { TError } from "../../type";
 
 const { useBreakpoint } = Grid;
 
 const AddDonor = () => {
-  const [donor, setDonor] = useState<Record<string, unknown> | null>(null);
-  const [formErrors, setFormErrors] = useState<Record<string, string>>({});
+  const [donor, setDonor] = useState<Record<string, string> | null>(null);
+  const [formErrors, setFormErrors] = useState<
+    FieldErrors<Record<string, unknown>>
+  >({});
   const { trackingNumber } = useAppSelector(useCurrentUser) || {};
 
   const [addDonor, { isLoading }] = useAddNewDonorMutation();
@@ -52,8 +55,6 @@ const AddDonor = () => {
 
   const handleAddDonor = async (values: FieldValues) => {
     try {
-      console.log(values);
-
       const res = await addDonor(values).unwrap();
 
       if (res?.success) {
@@ -63,12 +64,13 @@ const AddDonor = () => {
           position: "top-right",
         });
       }
-    } catch (error: any) {
-      const errs: Record<string, unknown>[] = error?.data?.errorSources;
+    } catch (error: unknown) {
+      const apiError = error as TError;
+      const errs = apiError?.data?.errorSources;
 
       if (Array.isArray(errs)) {
         errs.forEach((err) => {
-          toast.error(err.message as string, {
+          toast.error(err?.message, {
             duration: 5000,
             position: "top-right",
           });

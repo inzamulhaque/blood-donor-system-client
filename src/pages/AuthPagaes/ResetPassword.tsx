@@ -5,7 +5,7 @@ import {
 } from "@ant-design/icons";
 import { Button, Card, Space, Typography } from "antd";
 import { motion } from "framer-motion";
-import type { FieldValues } from "react-hook-form";
+import type { FieldErrors, FieldValues } from "react-hook-form";
 import { Link, Navigate } from "react-router-dom";
 import "./authStyle.css";
 import IDForm from "../../components/shared/form/IDForm";
@@ -27,6 +27,7 @@ import dayjs from "dayjs";
 import duration from "dayjs/plugin/duration";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { removeTN, useCurrentTN } from "../../redux/features/user/userSlice";
+import type { TError } from "../../type";
 
 dayjs.extend(duration);
 
@@ -35,7 +36,9 @@ const { Text } = Typography;
 const ResetPassword = () => {
   const [seconds, setSeconds] = useState<number>(300);
   const [isResendDisabled, setIsResendDisabled] = useState<boolean>(true);
-  const [formErrors, setFormErrors] = useState<Record<string, string>>({});
+  const [formErrors, setFormErrors] = useState<
+    FieldErrors<Record<string, unknown>>
+  >({});
 
   const [resetPassword, { isLoading }] = useResetPasswordMutation();
   const [resendOtp, { isLoading: resendIsLoading }] = useResendOtpMutation();
@@ -81,12 +84,13 @@ const ResetPassword = () => {
 
         dispatch(removeTN());
       }
-    } catch (error: any) {
-      const errs: Record<string, unknown>[] = error?.data?.errorSources;
+    } catch (error: unknown) {
+      const apiError = error as TError;
+      const errs = apiError?.data?.errorSources;
 
       if (Array.isArray(errs)) {
         errs.forEach((err) => {
-          toast.error(err.message as string, {
+          toast.error(err?.message, {
             duration: 5000,
             position: "top-right",
           });
@@ -108,12 +112,13 @@ const ResetPassword = () => {
         setSeconds(300);
         setIsResendDisabled(true);
       }
-    } catch (error: any) {
-      const errs: Record<string, unknown>[] = error?.data?.errorSources;
+    } catch (error: unknown) {
+      const apiError = error as TError;
+      const errs = apiError?.data?.errorSources;
 
       if (Array.isArray(errs)) {
         errs.forEach((err) => {
-          toast.error(err.message as string, {
+          toast.error(err?.message, {
             duration: 5000,
             position: "top-right",
           });
