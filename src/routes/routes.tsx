@@ -21,7 +21,7 @@ import {
 import ProtectedRoute from "../components/layout/ProtectedRoute";
 import { Roles } from "../constants/userConstant";
 import PublicRoute from "../components/layout/PublicRoute";
-import VerifyEmail from "../pages/AuthPagaes/VeriFyEmail";
+import VerifyEmail from "../pages/AuthPagaes/VerifyEmail";
 
 const router = createBrowserRouter([
   {

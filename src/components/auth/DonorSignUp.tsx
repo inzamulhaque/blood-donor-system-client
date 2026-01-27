@@ -2,7 +2,7 @@ import { Typography } from "antd";
 import { useMemo, useState } from "react";
 
 import IDForm from "../shared/form/IDForm";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import IDInput from "../shared/form/IDInput";
 import {
   LockOutlined,
@@ -23,6 +23,10 @@ import { DonorUserRegisterSchema } from "../../schemas/Donor";
 import type { FieldValues } from "react-hook-form";
 import simplifyZodErrors from "../../utils/SimplifyZodErrors";
 import { toast } from "sonner";
+import { useDonorSignupMutation } from "../../redux/features/user/userApi";
+import Loader from "../shared/Loader";
+import { useAppDispatch } from "../../redux/hooks";
+import { setTN } from "../../redux/features/user/userSlice";
 
 const { Text } = Typography;
 
@@ -35,6 +39,11 @@ const DonorSignUp = () => {
   >({ terms: false, policy: false });
   const [openSection, setOpenSection] = useState<number>(1);
 
+  const navigate = useNavigate();
+
+  const dispatch = useAppDispatch();
+  const [donorSignUp, { isLoading }] = useDonorSignupMutation();
+
   const simpleErroes = useMemo(() => {
     const serr = simplifyZodErrors(formErrors) || {};
 
@@ -46,19 +55,50 @@ const DonorSignUp = () => {
         {
           duration: 7000,
           position: "top-center",
-        }
+        },
       );
     }
 
     return serr;
   }, [formErrors]);
 
-  const handleSubmit = (values: FieldValues) => {
+  const handleSubmit = async (values: FieldValues) => {
     setOpenSection(1);
     setAcceptTermsPolicy({ terms: false, policy: false });
     setFormDefaultValues(values);
-    console.log({ values });
+
+    try {
+      const res = await donorSignUp(values).unwrap();
+
+      if (res?.success) {
+        toast.success(res?.message, {
+          duration: 5000,
+          position: "top-right",
+        });
+
+        setFormDefaultValues({});
+
+        dispatch(setTN({ trackingNumber: res?.data?.user?.trackingNumber }));
+        navigate("/verify-email");
+      }
+    } catch (error: any) {
+      const errs: Record<string, unknown>[] = error?.data?.errorSources;
+
+      if (Array.isArray(errs)) {
+        errs.forEach((err) => {
+          toast.error(err.message as string, {
+            duration: 5000,
+            position: "top-right",
+          });
+        });
+      }
+    }
   };
+
+  if (isLoading) {
+    return <Loader />;
+  }
+
   return (
     <>
       <FormHeader

@@ -3,6 +3,15 @@ import { useEffect, useState } from "react";
 import dayjs from "dayjs";
 import duration from "dayjs/plugin/duration";
 import { HeartFilled } from "@ant-design/icons";
+import { useAppDispatch, useAppSelector } from "../../redux/hooks";
+import { removeTN, useCurrentTN } from "../../redux/features/user/userSlice";
+import { Navigate } from "react-router-dom";
+import {
+  useResendOtpMutation,
+  useVeriFyEmailMutation,
+} from "../../redux/features/auth/authApi";
+import Loader from "../../components/shared/Loader";
+import { toast } from "sonner";
 
 dayjs.extend(duration);
 const { Title, Text } = Typography;
@@ -11,6 +20,12 @@ const VerifyEmail = () => {
   const [otp, setOtp] = useState<string>("");
   const [seconds, setSeconds] = useState<number>(300);
   const [isResendDisabled, setIsResendDisabled] = useState<boolean>(true);
+  const [goSignin, setGoSignin] = useState<boolean>(false);
+
+  const dispatch = useAppDispatch();
+  const trackingNumber = useAppSelector(useCurrentTN);
+  const [verifyEmail, { isLoading }] = useVeriFyEmailMutation();
+  const [resendOtp, { isLoading: resendIsLoading }] = useResendOtpMutation();
 
   useEffect(() => {
     if (seconds === 0) {
@@ -29,16 +44,76 @@ const VerifyEmail = () => {
     return dayjs.duration(sec, "seconds").format("mm:ss");
   };
 
-  const handleVerify = () => {
-    console.log(otp);
+  const handleVerify = async () => {
+    try {
+      const res = await verifyEmail({
+        trackingNumber,
+        otp: Number(otp),
+      }).unwrap();
+
+      if (res.success) {
+        setGoSignin(true);
+
+        toast.success(res.message, {
+          duration: 5000,
+          position: "top-right",
+        });
+
+        dispatch(removeTN());
+      }
+    } catch (error: any) {
+      const errs: Record<string, unknown>[] = error?.data?.errorSources;
+
+      if (Array.isArray(errs)) {
+        errs.forEach((err) => {
+          toast.error(err.message as string, {
+            duration: 5000,
+            position: "top-right",
+          });
+        });
+      }
+    }
   };
 
-  const handleResendOtp = () => {
-    console.log("Resend OTP");
+  const handleResendOtp = async () => {
+    try {
+      const res = await resendOtp(trackingNumber).unwrap();
 
-    setSeconds(300);
-    setIsResendDisabled(true);
+      if (res.success) {
+        toast.success(res.message, {
+          duration: 5000,
+          position: "top-right",
+        });
+
+        setSeconds(300);
+        setIsResendDisabled(true);
+      }
+    } catch (error: any) {
+      const errs: Record<string, unknown>[] = error?.data?.errorSources;
+
+      if (Array.isArray(errs)) {
+        errs.forEach((err) => {
+          toast.error(err.message as string, {
+            duration: 5000,
+            position: "top-right",
+          });
+        });
+      }
+    }
   };
+
+  if (!trackingNumber) {
+    if (goSignin) {
+      return <Navigate to={"/signin"} replace={true} />;
+    } else {
+      return <Navigate to={"/signup"} replace={true} />;
+    }
+  }
+
+  if (isLoading || resendIsLoading) {
+    return <Loader />;
+  }
+
   return (
     <>
       <div
@@ -49,7 +124,6 @@ const VerifyEmail = () => {
           alignItems: "center",
           background:
             "radial-gradient(circle at top, #ffebee 0%, #ffffff 60%, #fff 100%)",
-          padding: 16,
         }}
       >
         <div

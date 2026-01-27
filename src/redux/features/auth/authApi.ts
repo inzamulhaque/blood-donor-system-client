@@ -26,6 +26,23 @@ const authApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: ["user"],
     }),
+
+    veriFyEmail: builder.mutation({
+      query: (payload) => ({
+        url: `/auth/verify-otp/${payload.trackingNumber}`,
+        method: "POST",
+        body: { otp: payload.otp },
+      }),
+      invalidatesTags: ["user"],
+    }),
+
+    resendOtp: builder.mutation({
+      query: (TN) => ({
+        url: `/auth/resend-otp/${TN}`,
+        method: "POST",
+      }),
+      invalidatesTags: ["user"],
+    }),
   }),
 });
 
@@ -33,4 +50,6 @@ export const {
   useSigninMutation,
   useChangePasswordMutation,
   useSignOutMutation,
+  useVeriFyEmailMutation,
+  useResendOtpMutation,
 } = authApi;
