@@ -9,12 +9,12 @@ import { useAppSelector } from "../../redux/hooks";
 import { useCurrentUser } from "../../redux/features/auth/authSlice";
 
 const AdminDashboard = () => {
+  const user = useAppSelector(useCurrentUser);
+
   const { data: donorAndFinderCount, isLoading } =
     useGetDonorAndFinderCountQuery({});
   const { data: donorByBloodGroup } = useGetDonorByBloodGroupQuery({});
   const { data: adminCount } = useGetAdminCountQuery({});
-
-  const user = useAppSelector(useCurrentUser);
 
   if (isLoading) {
     return <Loader />;

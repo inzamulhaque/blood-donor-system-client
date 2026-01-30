@@ -129,7 +129,7 @@ const DonateDates = () => {
           )}
         </div>
 
-        <Row gutter={[20, 20]}>
+        <Row gutter={[20, 20]} align="stretch">
           {dates.map((date: Record<string, Date | string>, index: number) => (
             <Col xs={24} sm={24} md={12} lg={8} key={index}>
               <Card
