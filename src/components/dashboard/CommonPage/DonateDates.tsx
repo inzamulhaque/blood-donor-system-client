@@ -137,6 +137,7 @@ const DonateDates = () => {
                 style={{
                   borderRadius: 12,
                   width: "100%",
+                  height: "100%",
                 }}
               >
                 <Flex vertical gap={12}>
