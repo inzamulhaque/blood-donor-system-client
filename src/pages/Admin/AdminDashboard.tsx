@@ -11,11 +11,7 @@ import { useCurrentUser } from "../../redux/features/auth/authSlice";
 const AdminDashboard = () => {
   const user = useAppSelector(useCurrentUser);
   const skip =
-    user?.role === "super-admin"
-      ? false
-      : user?.role === "admin"
-        ? true
-        : false;
+    user?.role === "super-admin" ? false : user?.role === "admin" ? true : true;
 
   const { data: donorAndFinderCount, isLoading } =
     useGetDonorAndFinderCountQuery({});
