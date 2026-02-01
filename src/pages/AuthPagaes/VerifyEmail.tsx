@@ -127,6 +127,7 @@ const VerifyEmail = () => {
           alignItems: "center",
           background:
             "radial-gradient(circle at top, #ffebee 0%, #ffffff 60%, #fff 100%)",
+          padding: "0 16px",
         }}
       >
         <div

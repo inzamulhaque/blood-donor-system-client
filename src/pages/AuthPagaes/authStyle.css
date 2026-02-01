@@ -5,6 +5,7 @@
   justify-content: center;
   align-items: center;
   position: relative;
+  padding: 0 16px;
   background: linear-gradient(135deg, #c62828 0%, #8e24aa 100%);
 }
 
