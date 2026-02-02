@@ -3,6 +3,7 @@ import {
   CalendarOutlined,
   DashboardOutlined,
   LockOutlined,
+  MessageOutlined,
   ProfileOutlined,
   SearchOutlined,
   TeamOutlined,
@@ -23,6 +24,7 @@ import MakeAdmin from "../pages/SuperAdmin/MakeAdmin";
 import FinderDashboard from "../pages/Finder/FinderDashboard";
 import BecameDonor from "../pages/Finder/BecameDonor";
 import DonorDashboard from "../pages/Donor/DonorDashboard";
+import AllMessages from "../pages/Admin/AllMessages";
 
 export type TRoleBaseRoute = {
   path?: string;
@@ -90,6 +92,14 @@ export const ADMIN_ROUTES: TRoleBaseRoute[] = [
     name: "Donate Dates",
     icon: <CalendarOutlined />,
     element: <DonateDates />,
+  },
+
+  {
+    path: "messages",
+    link: "/admin/dashboard/messages",
+    name: "Messages",
+    icon: <MessageOutlined />,
+    element: <AllMessages />,
   },
 
   {
