@@ -69,8 +69,6 @@ const AllMessages = () => {
     },
   ];
 
-  console.log(data);
-
   return (
     <>
       <style>

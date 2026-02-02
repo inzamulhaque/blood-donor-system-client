@@ -25,6 +25,7 @@ import FinderDashboard from "../pages/Finder/FinderDashboard";
 import BecameDonor from "../pages/Finder/BecameDonor";
 import DonorDashboard from "../pages/Donor/DonorDashboard";
 import AllMessages from "../pages/Admin/AllMessages";
+import SingleMessage from "../pages/Admin/SingleMessage";
 
 export type TRoleBaseRoute = {
   path?: string;
@@ -103,6 +104,11 @@ export const ADMIN_ROUTES: TRoleBaseRoute[] = [
   },
 
   {
+    path: "messages/:id",
+    element: <SingleMessage />,
+  },
+
+  {
     path: "change-password",
     link: "/admin/dashboard/change-password",
     name: "Change Password",
@@ -168,6 +174,19 @@ export const SUPER_ADMIN_ROUTES: TRoleBaseRoute[] = [
     name: "Make Admin",
     icon: <UserAddOutlined />,
     element: <MakeAdmin />,
+  },
+
+  {
+    path: "messages",
+    link: "/admin/dashboard/messages",
+    name: "Messages",
+    icon: <MessageOutlined />,
+    element: <AllMessages />,
+  },
+
+  {
+    path: "messages/:id",
+    element: <SingleMessage />,
   },
 
   {

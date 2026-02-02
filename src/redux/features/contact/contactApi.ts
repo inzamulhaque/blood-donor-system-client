@@ -10,7 +10,15 @@ const contactApi = baseApi.injectEndpoints({
       }),
       providesTags: ["contact"],
     }),
+
+    getSingleMessage: builder.query({
+      query: (id) => ({
+        url: `/contact/message/${id}`,
+        method: "GET",
+      }),
+      providesTags: ["contact"],
+    }),
   }),
 });
 
-export const { useGetAllMessagesQuery } = contactApi;
+export const { useGetAllMessagesQuery, useGetSingleMessageQuery } = contactApi;
