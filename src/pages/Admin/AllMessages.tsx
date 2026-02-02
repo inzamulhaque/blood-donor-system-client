@@ -3,6 +3,7 @@ import {
   Divider,
   Pagination,
   Table,
+  Tag,
   type TableColumnsType,
 } from "antd";
 import { useGetAllMessagesQuery } from "../../redux/features/contact/contactApi";
@@ -10,6 +11,7 @@ import Loader from "../../components/shared/Loader";
 import { useState } from "react";
 import type { TContact } from "../../type";
 import { Link, useLocation } from "react-router-dom";
+import { CheckCircleOutlined, MailOutlined } from "@ant-design/icons";
 
 const AllMessages = () => {
   const location = useLocation();
@@ -53,8 +55,27 @@ const AllMessages = () => {
     },
 
     {
+      title: "Status",
+      key: "isReaded",
+      align: "center",
+      dataIndex: "isReaded",
+      render: (isReaded: boolean) => {
+        return isReaded ? (
+          <Tag icon={<CheckCircleOutlined />} color="success">
+            Read
+          </Tag>
+        ) : (
+          <Tag icon={<MailOutlined />} color="processing">
+            Unread
+          </Tag>
+        );
+      },
+    },
+
+    {
       title: "Action",
       key: "_id",
+      align: "center",
       dataIndex: "_id",
 
       render: (id) => {
