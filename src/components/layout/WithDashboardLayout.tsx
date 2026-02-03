@@ -1,6 +1,6 @@
 import { AnimatePresence } from "motion/react";
 import SideBar from "./SideBar";
-import { Outlet } from "react-router-dom";
+import { Link, Outlet } from "react-router-dom";
 import { Layout } from "antd";
 import { Header } from "antd/es/layout/layout";
 import logo from "../../assets/al-dima-logo.png";
@@ -24,11 +24,13 @@ const WithDashboardLayout = () => {
               zIndex: 5,
             }}
           >
-            <img
-              src={logo}
-              alt="Ihsan Al-Dima Logo"
-              style={{ height: "40px", verticalAlign: "middle" }}
-            />
+            <Link to="/">
+              <img
+                src={logo}
+                alt="Ihsan Al-Dima Logo"
+                style={{ height: "40px", verticalAlign: "middle" }}
+              />
+            </Link>
           </Header>
 
           <AnimatePresence mode="wait">
