@@ -18,7 +18,20 @@ const contactApi = baseApi.injectEndpoints({
       }),
       providesTags: ["contact"],
     }),
+
+    sendMessage: builder.mutation({
+      query: (body) => ({
+        url: "/contact/send-message",
+        method: "POST",
+        body,
+      }),
+      invalidatesTags: ["contact"],
+    }),
   }),
 });
 
-export const { useGetAllMessagesQuery, useGetSingleMessageQuery } = contactApi;
+export const {
+  useGetAllMessagesQuery,
+  useGetSingleMessageQuery,
+  useSendMessageMutation,
+} = contactApi;

@@ -11,6 +11,9 @@ import simplifyZodErrors from "../../utils/SimplifyZodErrors";
 import { toast } from "sonner";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { ContactSchema } from "../../schemas/Contact";
+import { useSendMessageMutation } from "../../redux/features/contact/contactApi";
+import Loader from "../shared/Loader";
+import type { TError } from "../../type";
 
 const ContactForm = () => {
   const [formErrors, setFormErrors] = useState<
@@ -36,9 +39,39 @@ const ContactForm = () => {
     return serr;
   }, [formErrors]);
 
-  const handleSubmit = (values: FieldValues) => {
+  const [sendMessage, { isLoading }] = useSendMessageMutation();
+
+  const handleSubmit = async (values: FieldValues) => {
     setFormDefaultValues(values);
+    try {
+      const res = await sendMessage(values).unwrap();
+
+      if (res?.success) {
+        toast.success("Signed in successfully!", {
+          duration: 5000,
+          position: "top-right",
+        });
+
+        setFormDefaultValues({});
+      }
+    } catch (error: unknown) {
+      const apiError = error as TError;
+      const errs = apiError?.data?.errorSources;
+
+      if (Array.isArray(errs)) {
+        errs.forEach((err) => {
+          toast.error(err?.message, {
+            duration: 5000,
+            position: "top-right",
+          });
+        });
+      }
+    }
   };
+
+  if (isLoading) {
+    return <Loader />;
+  }
   return (
     <>
       <div

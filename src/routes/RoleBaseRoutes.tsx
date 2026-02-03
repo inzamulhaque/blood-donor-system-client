@@ -178,7 +178,7 @@ export const SUPER_ADMIN_ROUTES: TRoleBaseRoute[] = [
 
   {
     path: "messages",
-    link: "/admin/dashboard/messages",
+    link: "/super-admin/dashboard/messages",
     name: "Messages",
     icon: <MessageOutlined />,
     element: <AllMessages />,
