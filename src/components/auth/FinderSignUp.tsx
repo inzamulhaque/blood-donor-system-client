@@ -207,6 +207,13 @@ const FinderSignUp = () => {
           totalSection={3}
           openSection={openSection}
         />
+
+        <div style={{ textAlign: "center" }}>
+          <Text type="secondary">Already have an account? </Text>
+          <Link to="/signin" style={{ color: "#c62828", fontWeight: "600" }}>
+            Sign In now
+          </Link>
+        </div>
       </IDForm>
     </>
   );
