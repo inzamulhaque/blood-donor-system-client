@@ -1,6 +1,6 @@
 # Blood Donor Management System
 
-### [Live Link](https://blood-donor-system-client.vercel.app) | [Server side repository](https://github.com/inzamulhaque/blood-donor-system-server) | [API Documentation](https://documenter.getpostman.com/view/49556725/2sB3dMxr7U)
+### [Live Link](https://blood-donor-system-client.vercel.app) | [Server Side Repository](https://github.com/inzamulhaque/blood-donor-system-server) | [API Documentation](https://documenter.getpostman.com/view/49556725/2sB3dMxr7U)
 
 A modern, responsive web application for managing blood donation programs. This platform connects blood donors with people in need, featuring role-based access control and automated donor availability management.
 
@@ -54,13 +54,17 @@ If you need to run this application locally so follow this process.
 Firstly clone server side repository from GitHub. using this code:
 
 `git clone git@github.com:inzamulhaque/blood-donor-system-server.git`
+
 Or
+
 `git clone https://github.com/inzamulhaque/blood-donor-system-server.git`
 
 Then clone client side repository GitHub. using this code:
 
 `git clone git@github.com:inzamulhaque/blood-donor-system-client.git`
+
 Or
+
 `git clone https://github.com/inzamulhaque/blood-donor-system-client.git`
 
 When applications are cloned successfully applications open with VSCode or author text editor. Open the terminal or command prompt at this project. Install all necessary dependencies.  
