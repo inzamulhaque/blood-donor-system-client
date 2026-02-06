@@ -19,12 +19,15 @@ import { toast } from "sonner";
 import simplifyZodErrors from "../../utils/SimplifyZodErrors";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { FinderRegisterSchema } from "../../schemas/Finder";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useAppDispatch } from "../../redux/hooks";
 import { useFinderSignupMutation } from "../../redux/features/user/userApi";
 import { setTN } from "../../redux/features/user/userSlice";
 import Loader from "../shared/Loader";
 import type { TError } from "../../type";
+import { Typography } from "antd";
+
+const { Text } = Typography;
 
 const FinderSignUp = () => {
   const [formErrors, setFormErrors] = useState<
